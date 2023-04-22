@@ -20,7 +20,7 @@ public class ResizingForm extends javax.swing.JFrame
     public ResizingForm()
     {
         initComponents();
-        
+        setSize(400, 275);
     }
 
     /**
@@ -33,7 +33,6 @@ public class ResizingForm extends javax.swing.JFrame
     private void initComponents()
     {
 
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(32767, 10));
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
@@ -42,20 +41,21 @@ public class ResizingForm extends javax.swing.JFrame
         displaySizeButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(filler1, new org.netbeans.lib.awtextra.AbsoluteConstraints(126, 6, -1, 20));
+        getContentPane().setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Resizing Test");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, -1, -1));
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(120, 20, 148, 32);
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jTextArea1.setText("Lets resize all this");
         jScrollPane1.setViewportView(jTextArea1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 80, 230, 110));
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(80, 80, 230, 110);
 
         rightArrowButton.setText(">");
         rightArrowButton.addActionListener(new java.awt.event.ActionListener()
@@ -65,7 +65,8 @@ public class ResizingForm extends javax.swing.JFrame
                 rightArrowButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(rightArrowButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 210, 50, 40));
+        getContentPane().add(rightArrowButton);
+        rightArrowButton.setBounds(260, 210, 50, 40);
 
         leftArrowButton.setText("<");
         leftArrowButton.addActionListener(new java.awt.event.ActionListener()
@@ -75,7 +76,8 @@ public class ResizingForm extends javax.swing.JFrame
                 leftArrowButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(leftArrowButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 213, 50, 40));
+        getContentPane().add(leftArrowButton);
+        leftArrowButton.setBounds(80, 213, 50, 40);
 
         displaySizeButton.setText("Display Size");
         displaySizeButton.addActionListener(new java.awt.event.ActionListener()
@@ -85,7 +87,8 @@ public class ResizingForm extends javax.swing.JFrame
                 displaySizeButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(displaySizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, -1, -1));
+        getContentPane().add(displaySizeButton);
+        displaySizeButton.setBounds(140, 220, 110, 23);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -94,6 +97,8 @@ public class ResizingForm extends javax.swing.JFrame
     {//GEN-HEADEREND:event_leftArrowButtonActionPerformed
         // Decrease the size of the form
         setSize(getWidth() - 25, getHeight() - 25);
+        jTextArea1.setLocation(jTextArea1.getX()-10, jTextArea1.getY() -2 );
+        leftArrowButton.setLocation(leftArrowButton.getX() - 10, leftArrowButton.getY() -2);
     }//GEN-LAST:event_leftArrowButtonActionPerformed
 
     private void rightArrowButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_rightArrowButtonActionPerformed
@@ -215,7 +220,6 @@ public class ResizingForm extends javax.swing.JFrame
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton displaySizeButton;
-    private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
