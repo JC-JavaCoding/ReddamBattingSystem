@@ -35,35 +35,54 @@ public class Email_JavaMail
         String to = "janchristiaan.jacobs@reddam.house" ;
         String from = "janchristiaan.jacobs@gmail.com" ;//securesally
         
-        // Get system properties
-        Properties properties = new Properties();
-        // Setup mail server
-        String host = "smtp.gmail.com";
-        properties.put( "mail.smtp.auth" ,"true");
-        properties.put( "mail.smtp.starttls.enable" ,"true");
-        properties.put( "mail.smtp.host" ,host);
-        properties.put("mail.smtp.port" , "587");
-        
-        //sending from gmail:
-        // Get the default Session object.
-        session = Session.getInstance(properties, new javax.mail.Authenticator()
-            {
-                @Override
-                protected javax.mail.PasswordAuthentication getPasswordAuthentication()
-                {
-                    return new javax.mail.PasswordAuthentication(from, passkey);
-                }
-            }
-        );
+//        // Get system properties
+//        Properties properties = System.getProperties();
+//        // Setup mail server
+//        String host = "smtp.gmail.com";
+//        properties.put( "mail.smtp.auth" ,"true");
+//        properties.put( "mail.smtp.starttls.enable" ,"true");
+//        properties.put( "mail.smtp.host" ,host);
+//        properties.put("mail.smtp.port" , "587");
+//        
+//        //sending from gmail:
+//        // Get the default Session object.
+//        session = Session.getInstance(properties, new javax.mail.Authenticator()
+//            {
+//                @Override
+//                protected javax.mail.PasswordAuthentication getPasswordAuthentication()
+//                {
+//                    return new javax.mail.PasswordAuthentication(from, passkey);
+//                }
+//            }
+//        );
         
         //mailMessage(to, from, "This is the Subject Line!", "This is actual message");
-        mailAttachment(to, from, "This is the Subject Line!", "This is actual message", "C:/Users/janch/OneDrive/Pictures/Artworks & their annotations 1.png");
+        //(to, from, "This is the Subject Line!", "This is actual message", "C:/Users/janch/OneDrive/Pictures/Artworks & their annotations 1.png");
     }
     
     public static void mailAttachment(String to, String from, String header, String text, String filepath)
     {
         try 
         {
+            Properties properties = System.getProperties();
+            // Setup mail server
+            String host = "smtp.gmail.com";
+            properties.put( "mail.smtp.auth" ,"true");
+            properties.put( "mail.smtp.starttls.enable" ,"true");
+            properties.put( "mail.smtp.host" ,host);
+            properties.put("mail.smtp.port" , "587");
+
+            //sending from gmail:
+            // Get the default Session object.
+            session = Session.getInstance(properties, new javax.mail.Authenticator()
+                {
+                    @Override
+                    protected javax.mail.PasswordAuthentication getPasswordAuthentication()
+                    {
+                        return new javax.mail.PasswordAuthentication(from, passkey);
+                    }
+                }
+            );
             // Create a default MimeMessage object.
             Message message = new MimeMessage(session);
 
