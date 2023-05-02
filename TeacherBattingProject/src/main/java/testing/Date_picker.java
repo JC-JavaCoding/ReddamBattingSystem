@@ -4,6 +4,7 @@
  */
 package testing;
 
+
 /**
  *
  * @author janch
@@ -17,6 +18,7 @@ public class Date_picker extends javax.swing.JFrame
     public Date_picker()
     {
         initComponents();
+        
         
     }
 

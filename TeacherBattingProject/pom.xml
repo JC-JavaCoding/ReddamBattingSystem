@@ -23,6 +23,12 @@
             <artifactId>AbsoluteLayout</artifactId>
             <version>SNAPSHOT</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.swinglabs.swingx/swingx-core -->
+        <dependency>
+            <groupId>org.swinglabs.swingx</groupId>
+            <artifactId>swingx-graphics</artifactId>
+            <version>1.6.5-1</version>
+        </dependency>
         <dependency>
             <groupId>com.sun.mail</groupId>
             <artifactId>javax.mail</artifactId>
