@@ -4,7 +4,9 @@
  */
 package testing;
 
+import org.jdesktop.swingx.plaf.DatePickerAddon;
 
+//C:\Users\janch\.m2\repository\org\swinglabs\swingx\swingx-all\1.6.5-1\swingx-all-1.6.5-1.jar
 /**
  *
  * @author janch
@@ -19,6 +21,7 @@ public class Date_picker extends javax.swing.JFrame
     {
         initComponents();
         
+        DatePickerAddon dpA = new DatePickerAddon();
         
     }
 
@@ -32,17 +35,25 @@ public class Date_picker extends javax.swing.JFrame
     private void initComponents()
     {
 
+        jXDatePicker1 = new org.jdesktop.swingx.JXDatePicker();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(234, Short.MAX_VALUE)
+                .addComponent(jXDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(220, 220, 220))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 359, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(111, 111, 111)
+                .addComponent(jXDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(224, Short.MAX_VALUE))
         );
 
         pack();
@@ -87,5 +98,6 @@ public class Date_picker extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private org.jdesktop.swingx.JXDatePicker jXDatePicker1;
     // End of variables declaration//GEN-END:variables
 }
