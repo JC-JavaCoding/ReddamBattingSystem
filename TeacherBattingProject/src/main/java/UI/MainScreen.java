@@ -5,6 +5,7 @@
 package UI;
 
 import java.awt.Color;
+import javax.swing.JComponent;
 
 /**
  *
@@ -12,7 +13,8 @@ import java.awt.Color;
  */
 public class MainScreen extends javax.swing.JFrame
 {
-    Color baseBlue = new Color(0, 0, 51);
+    Color baseBlue = new Color(0, 0, 51),
+            lightBlue = new Color(0,51,102);
     /**
      * Creates new form MainScreen
      */
@@ -40,23 +42,35 @@ public class MainScreen extends javax.swing.JFrame
         jLabel3 = new javax.swing.JLabel();
         panel2ButtonPane1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        hideSidePanelButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
-        panel4HeaderPanel = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        panel3BodyPanel1 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        battingTable = new javax.swing.JTable();
+        panel2HeaderPanel = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        showSidePanelButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         panel3HeaderPanel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        panel2HeaderPanel = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
+        showSidePanelButton1 = new javax.swing.JButton();
+        panel3BodyPanel = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        panel4HeaderPanel = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        showSidePanelButton2 = new javax.swing.JButton();
+        panel4BodyPanel = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
 
         jMenuItem1.setText("jMenuItem1");
 
         jMenuItem2.setText("jMenuItem2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         menuPanel.setBackground(new java.awt.Color(0, 0, 51));
 
@@ -94,12 +108,16 @@ public class MainScreen extends javax.swing.JFrame
         );
         panel1ButtonPaneLayout.setVerticalGroup(
             panel1ButtonPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
         );
 
         panel2ButtonPane.setBackground(new java.awt.Color(0, 0, 51));
         panel2ButtonPane.addMouseListener(new java.awt.event.MouseAdapter()
         {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                panel2ButtonPaneMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt)
             {
                 panel2ButtonPaneMouseEntered(evt);
@@ -126,12 +144,16 @@ public class MainScreen extends javax.swing.JFrame
         );
         panel2ButtonPaneLayout.setVerticalGroup(
             panel2ButtonPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
+            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
         );
 
         panel2ButtonPane1.setBackground(new java.awt.Color(0, 0, 51));
         panel2ButtonPane1.addMouseListener(new java.awt.event.MouseAdapter()
         {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                panel2ButtonPane1MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt)
             {
                 panel2ButtonPane1MouseEntered(evt);
@@ -157,8 +179,33 @@ public class MainScreen extends javax.swing.JFrame
         );
         panel2ButtonPane1Layout.setVerticalGroup(
             panel2ButtonPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
         );
+
+        hideSidePanelButton.setBackground(menuPanel.getBackground());
+        hideSidePanelButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        hideSidePanelButton.setForeground(new java.awt.Color(166, 142, 60));
+        hideSidePanelButton.setText("<<");
+        hideSidePanelButton.setBorder(null);
+        hideSidePanelButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        hideSidePanelButton.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseEntered(java.awt.event.MouseEvent evt)
+            {
+                hideSidePanelButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt)
+            {
+                hideSidePanelButtonMouseExited(evt);
+            }
+        });
+        hideSidePanelButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                hideSidePanelButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
         menuPanel.setLayout(menuPanelLayout);
@@ -167,10 +214,17 @@ public class MainScreen extends javax.swing.JFrame
             .addComponent(panel1ButtonPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(panel2ButtonPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(panel2ButtonPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(hideSidePanelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         menuPanelLayout.setVerticalGroup(
             menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuPanelLayout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(hideSidePanelButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panel1ButtonPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(panel2ButtonPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -181,43 +235,135 @@ public class MainScreen extends javax.swing.JFrame
 
         jPanel1.setLayout(new java.awt.CardLayout());
 
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        panel4HeaderPanel.setBackground(new java.awt.Color(0, 0, 51));
+        panel3BodyPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Statistics");
+        jLabel9.setIcon(new javax.swing.ImageIcon("C:\\Users\\janch\\OneDrive\\Pictures\\Reddam-house-logo.jpg.jpeg")); // NOI18N
 
-        javax.swing.GroupLayout panel4HeaderPanelLayout = new javax.swing.GroupLayout(panel4HeaderPanel);
-        panel4HeaderPanel.setLayout(panel4HeaderPanelLayout);
-        panel4HeaderPanelLayout.setHorizontalGroup(
-            panel4HeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel4HeaderPanelLayout.createSequentialGroup()
-                .addGap(324, 324, 324)
-                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
-                .addGap(264, 264, 264))
+        jScrollPane2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        battingTable.setBackground(new java.awt.Color(255, 255, 255));
+        battingTable.setForeground(new java.awt.Color(51, 51, 51));
+        battingTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][]
+            {
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
+            },
+            new String []
+            {
+                "Days", "L1", "L2", "L3", "L4", "L5", "Title 7", "L7", "L8", "L9", "L10", "L11", "L12", "L13", "L14"
+            }
+        )
+        {
+            Class[] types = new Class []
+            {
+                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int columnIndex)
+            {
+                return types [columnIndex];
+            }
+        });
+        battingTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        battingTable.setGridColor(new java.awt.Color(204, 204, 204));
+        battingTable.setRowHeight(60);
+        battingTable.setShowGrid(true);
+        jScrollPane2.setViewportView(battingTable);
+
+        javax.swing.GroupLayout panel3BodyPanel1Layout = new javax.swing.GroupLayout(panel3BodyPanel1);
+        panel3BodyPanel1.setLayout(panel3BodyPanel1Layout);
+        panel3BodyPanel1Layout.setHorizontalGroup(
+            panel3BodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel3BodyPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel9)
+                .addContainerGap())
+            .addGroup(panel3BodyPanel1Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 979, Short.MAX_VALUE)
+                .addGap(71, 71, 71))
         );
-        panel4HeaderPanelLayout.setVerticalGroup(
-            panel4HeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
+        panel3BodyPanel1Layout.setVerticalGroup(
+            panel3BodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel3BodyPanel1Layout.createSequentialGroup()
+                .addGap(121, 121, 121)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel9)
+                .addContainerGap())
         );
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel4HeaderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        panel2HeaderPanel.setBackground(new java.awt.Color(0, 0, 51));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Batting");
+
+        showSidePanelButton.setBackground(menuPanel.getBackground());
+        showSidePanelButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        showSidePanelButton.setForeground(new java.awt.Color(166, 142, 60));
+        showSidePanelButton.setText(">>");
+        showSidePanelButton.setBorder(null);
+        showSidePanelButton.setVisible(false);
+        showSidePanelButton.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseEntered(java.awt.event.MouseEvent evt)
+            {
+                showSidePanelButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt)
+            {
+                showSidePanelButtonMouseExited(evt);
+            }
+        });
+        showSidePanelButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                showSidePanelButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panel2HeaderPanelLayout = new javax.swing.GroupLayout(panel2HeaderPanel);
+        panel2HeaderPanel.setLayout(panel2HeaderPanelLayout);
+        panel2HeaderPanelLayout.setHorizontalGroup(
+            panel2HeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel2HeaderPanelLayout.createSequentialGroup()
+                .addComponent(showSidePanelButton)
+                .addGap(268, 268, 268)
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
+                .addGap(294, 294, 294))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(panel4HeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 654, Short.MAX_VALUE))
+        panel2HeaderPanelLayout.setVerticalGroup(
+            panel2HeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel2HeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
+                .addComponent(showSidePanelButton))
         );
 
-        jPanel1.add(jPanel4, "card4");
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panel2HeaderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panel3BodyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(panel2HeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(panel3BodyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel2, "card2");
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -228,18 +374,67 @@ public class MainScreen extends javax.swing.JFrame
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Teacher");
 
+        showSidePanelButton1.setBackground(menuPanel.getBackground());
+        showSidePanelButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        showSidePanelButton1.setForeground(new java.awt.Color(166, 142, 60));
+        showSidePanelButton1.setText(">>");
+        showSidePanelButton1.setBorder(null);
+        showSidePanelButton.setVisible(false);
+        showSidePanelButton1.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseEntered(java.awt.event.MouseEvent evt)
+            {
+                showSidePanelButton1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt)
+            {
+                showSidePanelButton1MouseExited(evt);
+            }
+        });
+        showSidePanelButton1.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                showSidePanelButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panel3HeaderPanelLayout = new javax.swing.GroupLayout(panel3HeaderPanel);
         panel3HeaderPanel.setLayout(panel3HeaderPanelLayout);
         panel3HeaderPanelLayout.setHorizontalGroup(
             panel3HeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel3HeaderPanelLayout.createSequentialGroup()
-                .addGap(324, 324, 324)
-                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
-                .addGap(264, 264, 264))
+            .addGroup(panel3HeaderPanelLayout.createSequentialGroup()
+                .addComponent(showSidePanelButton1)
+                .addGap(272, 272, 272)
+                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
+                .addGap(290, 290, 290))
         );
         panel3HeaderPanelLayout.setVerticalGroup(
             panel3HeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
+            .addGroup(panel3HeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
+                .addComponent(showSidePanelButton1))
+        );
+
+        panel3BodyPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel8.setIcon(new javax.swing.ImageIcon("C:\\Users\\janch\\OneDrive\\Pictures\\Reddam-house-logo.jpg.jpeg")); // NOI18N
+
+        javax.swing.GroupLayout panel3BodyPanelLayout = new javax.swing.GroupLayout(panel3BodyPanel);
+        panel3BodyPanel.setLayout(panel3BodyPanelLayout);
+        panel3BodyPanelLayout.setHorizontalGroup(
+            panel3BodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel3BodyPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addContainerGap())
+        );
+        panel3BodyPanelLayout.setVerticalGroup(
+            panel3BodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel3BodyPanelLayout.createSequentialGroup()
+                .addContainerGap(531, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -247,69 +442,107 @@ public class MainScreen extends javax.swing.JFrame
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panel3HeaderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panel3BodyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(panel3HeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 654, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(panel3BodyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
         jPanel1.add(jPanel3, "card3");
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
-        panel2HeaderPanel.setBackground(new java.awt.Color(0, 0, 51));
+        panel4HeaderPanel.setBackground(new java.awt.Color(0, 0, 51));
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Batting");
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("Statistics");
 
-        javax.swing.GroupLayout panel2HeaderPanelLayout = new javax.swing.GroupLayout(panel2HeaderPanel);
-        panel2HeaderPanel.setLayout(panel2HeaderPanelLayout);
-        panel2HeaderPanelLayout.setHorizontalGroup(
-            panel2HeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel2HeaderPanelLayout.createSequentialGroup()
-                .addGap(324, 324, 324)
-                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
-                .addGap(264, 264, 264))
+        showSidePanelButton2.setBackground(menuPanel.getBackground());
+        showSidePanelButton2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        showSidePanelButton2.setForeground(new java.awt.Color(166, 142, 60));
+        showSidePanelButton2.setText(">>");
+        showSidePanelButton2.setBorder(null);
+        showSidePanelButton.setVisible(false);
+        showSidePanelButton2.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseEntered(java.awt.event.MouseEvent evt)
+            {
+                showSidePanelButton2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt)
+            {
+                showSidePanelButton2MouseExited(evt);
+            }
+        });
+        showSidePanelButton2.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                showSidePanelButton2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panel4HeaderPanelLayout = new javax.swing.GroupLayout(panel4HeaderPanel);
+        panel4HeaderPanel.setLayout(panel4HeaderPanelLayout);
+        panel4HeaderPanelLayout.setHorizontalGroup(
+            panel4HeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel4HeaderPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(showSidePanelButton2)
+                .addGap(259, 259, 259)
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
+                .addGap(297, 297, 297))
         );
-        panel2HeaderPanelLayout.setVerticalGroup(
-            panel2HeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
+        panel4HeaderPanelLayout.setVerticalGroup(
+            panel4HeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel4HeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
+                .addComponent(showSidePanelButton2))
         );
 
-        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        panel4BodyPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        jLabel7.setIcon(new javax.swing.ImageIcon("C:\\Users\\janch\\OneDrive\\Pictures\\Reddam-house-logo.jpg.jpeg")); // NOI18N
+
+        javax.swing.GroupLayout panel4BodyPanelLayout = new javax.swing.GroupLayout(panel4BodyPanel);
+        panel4BodyPanel.setLayout(panel4BodyPanelLayout);
+        panel4BodyPanelLayout.setHorizontalGroup(
+            panel4BodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel4BodyPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addContainerGap())
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 654, Short.MAX_VALUE)
+        panel4BodyPanelLayout.setVerticalGroup(
+            panel4BodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel4BodyPanelLayout.createSequentialGroup()
+                .addGap(0, 537, Short.MAX_VALUE)
+                .addComponent(jLabel7))
         );
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel2HeaderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panel4HeaderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panel4BodyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(panel4HeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(panel2HeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(panel4BodyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jPanel1.add(jPanel2, "card2");
+        jPanel1.add(jPanel4, "card4");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -333,37 +566,37 @@ public class MainScreen extends javax.swing.JFrame
     private void panel1ButtonPaneMouseEntered(java.awt.event.MouseEvent evt)//GEN-FIRST:event_panel1ButtonPaneMouseEntered
     {//GEN-HEADEREND:event_panel1ButtonPaneMouseEntered
         // TODO add your handling code here:
-        panel1ButtonPane.setBackground(panel1ButtonPane.getBackground().brighter());
+        lightenBackColour(panel1ButtonPane);
     }//GEN-LAST:event_panel1ButtonPaneMouseEntered
 
     private void panel1ButtonPaneMouseExited(java.awt.event.MouseEvent evt)//GEN-FIRST:event_panel1ButtonPaneMouseExited
     {//GEN-HEADEREND:event_panel1ButtonPaneMouseExited
         // TODO add your handling code here:
-        panel1ButtonPane.setBackground(baseBlue);
+        resetBackColour(panel1ButtonPane);
     }//GEN-LAST:event_panel1ButtonPaneMouseExited
 
     private void panel2ButtonPane1MouseEntered(java.awt.event.MouseEvent evt)//GEN-FIRST:event_panel2ButtonPane1MouseEntered
     {//GEN-HEADEREND:event_panel2ButtonPane1MouseEntered
         // TODO add your handling code here:
-        panel2ButtonPane1.setBackground(panel1ButtonPane.getBackground().brighter());
+        lightenBackColour(panel2ButtonPane1);
     }//GEN-LAST:event_panel2ButtonPane1MouseEntered
 
     private void panel2ButtonPane1MouseExited(java.awt.event.MouseEvent evt)//GEN-FIRST:event_panel2ButtonPane1MouseExited
     {//GEN-HEADEREND:event_panel2ButtonPane1MouseExited
         // TODO add your handling code here:
-        panel2ButtonPane1.setBackground(baseBlue);
+        resetBackColour(panel2ButtonPane1);
     }//GEN-LAST:event_panel2ButtonPane1MouseExited
 
     private void panel2ButtonPaneMouseEntered(java.awt.event.MouseEvent evt)//GEN-FIRST:event_panel2ButtonPaneMouseEntered
     {//GEN-HEADEREND:event_panel2ButtonPaneMouseEntered
         // TODO add your handling code here:
-        panel2ButtonPane.setBackground(panel1ButtonPane.getBackground().brighter());
+        lightenBackColour(panel2ButtonPane);
     }//GEN-LAST:event_panel2ButtonPaneMouseEntered
 
     private void panel2ButtonPaneMouseExited(java.awt.event.MouseEvent evt)//GEN-FIRST:event_panel2ButtonPaneMouseExited
     {//GEN-HEADEREND:event_panel2ButtonPaneMouseExited
         // TODO add your handling code here:
-        panel2ButtonPane.setBackground(baseBlue);
+        resetBackColour(panel2ButtonPane);
     }//GEN-LAST:event_panel2ButtonPaneMouseExited
 
     private void panel1ButtonPaneMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_panel1ButtonPaneMouseClicked
@@ -374,6 +607,109 @@ public class MainScreen extends javax.swing.JFrame
         jPanel4.setVisible(false);
     }//GEN-LAST:event_panel1ButtonPaneMouseClicked
 
+    private void panel2ButtonPane1MouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_panel2ButtonPane1MouseClicked
+    {//GEN-HEADEREND:event_panel2ButtonPane1MouseClicked
+        // TODO add your handling code here:
+        jPanel2.setVisible(false);
+        jPanel3.setVisible(true);
+        jPanel4.setVisible(false);
+    }//GEN-LAST:event_panel2ButtonPane1MouseClicked
+
+    private void panel2ButtonPaneMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_panel2ButtonPaneMouseClicked
+    {//GEN-HEADEREND:event_panel2ButtonPaneMouseClicked
+        // TODO add your handling code here:
+        jPanel2.setVisible(false);
+        jPanel3.setVisible(false);
+        jPanel4.setVisible(true);
+    }//GEN-LAST:event_panel2ButtonPaneMouseClicked
+
+    private void hideSidePanelButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_hideSidePanelButtonActionPerformed
+    {//GEN-HEADEREND:event_hideSidePanelButtonActionPerformed
+        // TODO add your handling code here:
+        menuPanel.setVisible(false);
+        
+        if (jPanel1.isVisible()) showSidePanelButton.setVisible(true);
+        else if (jPanel3.isVisible()) showSidePanelButton1.setVisible(true);
+        else showSidePanelButton2.setVisible(true);
+    }//GEN-LAST:event_hideSidePanelButtonActionPerformed
+
+    private void showSidePanelButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_showSidePanelButtonActionPerformed
+    {//GEN-HEADEREND:event_showSidePanelButtonActionPerformed
+        // TODO add your handling code here:
+        menuPanel.setVisible(true);
+        showSidePanelButton.setVisible(false);
+    }//GEN-LAST:event_showSidePanelButtonActionPerformed
+
+    private void showSidePanelButtonMouseEntered(java.awt.event.MouseEvent evt)//GEN-FIRST:event_showSidePanelButtonMouseEntered
+    {//GEN-HEADEREND:event_showSidePanelButtonMouseEntered
+        // TODO add your handling code here:
+        lightenBackColour(showSidePanelButton);
+    }//GEN-LAST:event_showSidePanelButtonMouseEntered
+
+    private void showSidePanelButtonMouseExited(java.awt.event.MouseEvent evt)//GEN-FIRST:event_showSidePanelButtonMouseExited
+    {//GEN-HEADEREND:event_showSidePanelButtonMouseExited
+        // TODO add your handling code here:
+        resetBackColour(showSidePanelButton);
+    }//GEN-LAST:event_showSidePanelButtonMouseExited
+
+    private void hideSidePanelButtonMouseEntered(java.awt.event.MouseEvent evt)//GEN-FIRST:event_hideSidePanelButtonMouseEntered
+    {//GEN-HEADEREND:event_hideSidePanelButtonMouseEntered
+        // TODO add your handling code here:
+        lightenBackColour(hideSidePanelButton);
+    }//GEN-LAST:event_hideSidePanelButtonMouseEntered
+
+    private void hideSidePanelButtonMouseExited(java.awt.event.MouseEvent evt)//GEN-FIRST:event_hideSidePanelButtonMouseExited
+    {//GEN-HEADEREND:event_hideSidePanelButtonMouseExited
+        // TODO add your handling code here:
+        resetBackColour(hideSidePanelButton);
+    }//GEN-LAST:event_hideSidePanelButtonMouseExited
+
+    private void showSidePanelButton1MouseEntered(java.awt.event.MouseEvent evt)//GEN-FIRST:event_showSidePanelButton1MouseEntered
+    {//GEN-HEADEREND:event_showSidePanelButton1MouseEntered
+        // TODO add your handling code here:
+        lightenBackColour(showSidePanelButton1);
+    }//GEN-LAST:event_showSidePanelButton1MouseEntered
+
+    private void showSidePanelButton1MouseExited(java.awt.event.MouseEvent evt)//GEN-FIRST:event_showSidePanelButton1MouseExited
+    {//GEN-HEADEREND:event_showSidePanelButton1MouseExited
+        // TODO add your handling code here:
+        resetBackColour(showSidePanelButton1);
+    }//GEN-LAST:event_showSidePanelButton1MouseExited
+
+    private void showSidePanelButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_showSidePanelButton1ActionPerformed
+    {//GEN-HEADEREND:event_showSidePanelButton1ActionPerformed
+        // TODO add your handling code here:
+        menuPanel.setVisible(true);
+        showSidePanelButton1.setVisible(false);
+    }//GEN-LAST:event_showSidePanelButton1ActionPerformed
+
+    private void showSidePanelButton2ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_showSidePanelButton2ActionPerformed
+    {//GEN-HEADEREND:event_showSidePanelButton2ActionPerformed
+        // TODO add your handling code here:
+        menuPanel.setVisible(true);
+        showSidePanelButton2.setVisible(false);
+    }//GEN-LAST:event_showSidePanelButton2ActionPerformed
+
+    private void showSidePanelButton2MouseEntered(java.awt.event.MouseEvent evt)//GEN-FIRST:event_showSidePanelButton2MouseEntered
+    {//GEN-HEADEREND:event_showSidePanelButton2MouseEntered
+        // TODO add your handling code here:
+        lightenBackColour(showSidePanelButton2);
+    }//GEN-LAST:event_showSidePanelButton2MouseEntered
+
+    private void showSidePanelButton2MouseExited(java.awt.event.MouseEvent evt)//GEN-FIRST:event_showSidePanelButton2MouseExited
+    {//GEN-HEADEREND:event_showSidePanelButton2MouseExited
+        // TODO add your handling code here:
+        resetBackColour(showSidePanelButton2);
+    }//GEN-LAST:event_showSidePanelButton2MouseExited
+
+    private void lightenBackColour(JComponent c)
+    {
+        c.setBackground(lightBlue);
+    }
+    private void resetBackColour(JComponent c)
+    {
+        c.setBackground(baseBlue);
+    }
     /**
      * @param args the command line arguments
      */
@@ -386,14 +722,10 @@ public class MainScreen extends javax.swing.JFrame
          */
         try
         {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
-            {
-                if ("Nimbus".equals(info.getName()))
-                {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
+//            {
+                javax.swing.UIManager.setLookAndFeel("com.formdev.flatlaf.FlatDarkLaf");
+//            }
         } catch (ClassNotFoundException ex)
         {
             java.util.logging.Logger.getLogger(MainScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
@@ -420,25 +752,36 @@ public class MainScreen extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable battingTable;
+    private javax.swing.JButton hideSidePanelButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel menuPanel;
     private javax.swing.JPanel panel1ButtonPane;
     private javax.swing.JPanel panel2ButtonPane;
     private javax.swing.JPanel panel2ButtonPane1;
     private javax.swing.JPanel panel2HeaderPanel;
+    private javax.swing.JPanel panel3BodyPanel;
+    private javax.swing.JPanel panel3BodyPanel1;
     private javax.swing.JPanel panel3HeaderPanel;
+    private javax.swing.JPanel panel4BodyPanel;
     private javax.swing.JPanel panel4HeaderPanel;
+    private javax.swing.JButton showSidePanelButton;
+    private javax.swing.JButton showSidePanelButton1;
+    private javax.swing.JButton showSidePanelButton2;
     // End of variables declaration//GEN-END:variables
 }
