@@ -140,7 +140,7 @@ public class MainScreen extends javax.swing.JFrame
             .addGroup(panel2ButtonPaneLayout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel2ButtonPaneLayout.setVerticalGroup(
             panel2ButtonPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -379,7 +379,7 @@ public class MainScreen extends javax.swing.JFrame
         showSidePanelButton1.setForeground(new java.awt.Color(166, 142, 60));
         showSidePanelButton1.setText(">>");
         showSidePanelButton1.setBorder(null);
-        showSidePanelButton.setVisible(false);
+        showSidePanelButton1.setVisible(false);
         showSidePanelButton1.addMouseListener(new java.awt.event.MouseAdapter()
         {
             public void mouseEntered(java.awt.event.MouseEvent evt)
@@ -448,7 +448,7 @@ public class MainScreen extends javax.swing.JFrame
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(panel3HeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
                 .addComponent(panel3BodyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
@@ -469,7 +469,7 @@ public class MainScreen extends javax.swing.JFrame
         showSidePanelButton2.setForeground(new java.awt.Color(166, 142, 60));
         showSidePanelButton2.setText(">>");
         showSidePanelButton2.setBorder(null);
-        showSidePanelButton.setVisible(false);
+        showSidePanelButton2.setVisible(false);
         showSidePanelButton2.addMouseListener(new java.awt.event.MouseAdapter()
         {
             public void mouseEntered(java.awt.event.MouseEvent evt)
@@ -628,7 +628,7 @@ public class MainScreen extends javax.swing.JFrame
         // TODO add your handling code here:
         menuPanel.setVisible(false);
         
-        if (jPanel1.isVisible()) showSidePanelButton.setVisible(true);
+        if (jPanel2.isVisible()) showSidePanelButton.setVisible(true);
         else if (jPanel3.isVisible()) showSidePanelButton1.setVisible(true);
         else showSidePanelButton2.setVisible(true);
     }//GEN-LAST:event_hideSidePanelButtonActionPerformed
