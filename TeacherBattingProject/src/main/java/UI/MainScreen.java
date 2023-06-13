@@ -36,33 +36,36 @@ public class MainScreen extends javax.swing.JFrame
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         menuPanel = new javax.swing.JPanel();
-        panel1ButtonPane = new javax.swing.JPanel();
+        battingButtonPane = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        panel2ButtonPane = new javax.swing.JPanel();
+        statisticsButtonPane = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        panel2ButtonPane1 = new javax.swing.JPanel();
+        teacherButtonPane1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         hideSidePanelButton = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        panel3BodyPanel1 = new javax.swing.JPanel();
+        mainViewPanel = new javax.swing.JPanel();
+        battingViewPanel = new javax.swing.JPanel();
+        battingBodyPanel1 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         battingTable = new javax.swing.JTable();
-        panel2HeaderPanel = new javax.swing.JPanel();
+        battingTopMainPanel = new javax.swing.JPanel();
+        sendTableButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        battingHeaderPanel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         showSidePanelButton = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
-        panel3HeaderPanel = new javax.swing.JPanel();
+        teacherViewPanel = new javax.swing.JPanel();
+        teacherHeaderPanel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         showSidePanelButton1 = new javax.swing.JButton();
-        panel3BodyPanel = new javax.swing.JPanel();
+        teacherBodyPanel = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        panel4HeaderPanel = new javax.swing.JPanel();
+        statisticsViewPanel = new javax.swing.JPanel();
+        statisticsHeaderPanel = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         showSidePanelButton2 = new javax.swing.JButton();
-        panel4BodyPanel = new javax.swing.JPanel();
+        statisticsBodyPanel = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
 
         jMenuItem1.setText("jMenuItem1");
@@ -74,20 +77,20 @@ public class MainScreen extends javax.swing.JFrame
 
         menuPanel.setBackground(new java.awt.Color(0, 0, 51));
 
-        panel1ButtonPane.setBackground(new java.awt.Color(0, 0, 51));
-        panel1ButtonPane.addMouseListener(new java.awt.event.MouseAdapter()
+        battingButtonPane.setBackground(new java.awt.Color(0, 0, 51));
+        battingButtonPane.addMouseListener(new java.awt.event.MouseAdapter()
         {
             public void mouseClicked(java.awt.event.MouseEvent evt)
             {
-                panel1ButtonPaneMouseClicked(evt);
+                battingButtonPaneMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt)
             {
-                panel1ButtonPaneMouseEntered(evt);
+                battingButtonPaneMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt)
             {
-                panel1ButtonPaneMouseExited(evt);
+                battingButtonPaneMouseExited(evt);
             }
         });
 
@@ -97,34 +100,34 @@ public class MainScreen extends javax.swing.JFrame
         jLabel1.setText("Batting");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        javax.swing.GroupLayout panel1ButtonPaneLayout = new javax.swing.GroupLayout(panel1ButtonPane);
-        panel1ButtonPane.setLayout(panel1ButtonPaneLayout);
-        panel1ButtonPaneLayout.setHorizontalGroup(
-            panel1ButtonPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel1ButtonPaneLayout.createSequentialGroup()
+        javax.swing.GroupLayout battingButtonPaneLayout = new javax.swing.GroupLayout(battingButtonPane);
+        battingButtonPane.setLayout(battingButtonPaneLayout);
+        battingButtonPaneLayout.setHorizontalGroup(
+            battingButtonPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(battingButtonPaneLayout.createSequentialGroup()
                 .addGap(60, 60, 60)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        panel1ButtonPaneLayout.setVerticalGroup(
-            panel1ButtonPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        battingButtonPaneLayout.setVerticalGroup(
+            battingButtonPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
         );
 
-        panel2ButtonPane.setBackground(new java.awt.Color(0, 0, 51));
-        panel2ButtonPane.addMouseListener(new java.awt.event.MouseAdapter()
+        statisticsButtonPane.setBackground(new java.awt.Color(0, 0, 51));
+        statisticsButtonPane.addMouseListener(new java.awt.event.MouseAdapter()
         {
             public void mouseClicked(java.awt.event.MouseEvent evt)
             {
-                panel2ButtonPaneMouseClicked(evt);
+                statisticsButtonPaneMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt)
             {
-                panel2ButtonPaneMouseEntered(evt);
+                statisticsButtonPaneMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt)
             {
-                panel2ButtonPaneMouseExited(evt);
+                statisticsButtonPaneMouseExited(evt);
             }
         });
 
@@ -133,34 +136,34 @@ public class MainScreen extends javax.swing.JFrame
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Statistics");
 
-        javax.swing.GroupLayout panel2ButtonPaneLayout = new javax.swing.GroupLayout(panel2ButtonPane);
-        panel2ButtonPane.setLayout(panel2ButtonPaneLayout);
-        panel2ButtonPaneLayout.setHorizontalGroup(
-            panel2ButtonPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel2ButtonPaneLayout.createSequentialGroup()
+        javax.swing.GroupLayout statisticsButtonPaneLayout = new javax.swing.GroupLayout(statisticsButtonPane);
+        statisticsButtonPane.setLayout(statisticsButtonPaneLayout);
+        statisticsButtonPaneLayout.setHorizontalGroup(
+            statisticsButtonPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(statisticsButtonPaneLayout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        panel2ButtonPaneLayout.setVerticalGroup(
-            panel2ButtonPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        statisticsButtonPaneLayout.setVerticalGroup(
+            statisticsButtonPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
         );
 
-        panel2ButtonPane1.setBackground(new java.awt.Color(0, 0, 51));
-        panel2ButtonPane1.addMouseListener(new java.awt.event.MouseAdapter()
+        teacherButtonPane1.setBackground(new java.awt.Color(0, 0, 51));
+        teacherButtonPane1.addMouseListener(new java.awt.event.MouseAdapter()
         {
             public void mouseClicked(java.awt.event.MouseEvent evt)
             {
-                panel2ButtonPane1MouseClicked(evt);
+                teacherButtonPane1MouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt)
             {
-                panel2ButtonPane1MouseEntered(evt);
+                teacherButtonPane1MouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt)
             {
-                panel2ButtonPane1MouseExited(evt);
+                teacherButtonPane1MouseExited(evt);
             }
         });
 
@@ -168,17 +171,17 @@ public class MainScreen extends javax.swing.JFrame
         jLabel2.setForeground(new java.awt.Color(204, 204, 204));
         jLabel2.setText("Teacher");
 
-        javax.swing.GroupLayout panel2ButtonPane1Layout = new javax.swing.GroupLayout(panel2ButtonPane1);
-        panel2ButtonPane1.setLayout(panel2ButtonPane1Layout);
-        panel2ButtonPane1Layout.setHorizontalGroup(
-            panel2ButtonPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel2ButtonPane1Layout.createSequentialGroup()
+        javax.swing.GroupLayout teacherButtonPane1Layout = new javax.swing.GroupLayout(teacherButtonPane1);
+        teacherButtonPane1.setLayout(teacherButtonPane1Layout);
+        teacherButtonPane1Layout.setHorizontalGroup(
+            teacherButtonPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(teacherButtonPane1Layout.createSequentialGroup()
                 .addGap(58, 58, 58)
                 .addComponent(jLabel2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        panel2ButtonPane1Layout.setVerticalGroup(
-            panel2ButtonPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        teacherButtonPane1Layout.setVerticalGroup(
+            teacherButtonPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
         );
 
@@ -211,9 +214,9 @@ public class MainScreen extends javax.swing.JFrame
         menuPanel.setLayout(menuPanelLayout);
         menuPanelLayout.setHorizontalGroup(
             menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel1ButtonPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(panel2ButtonPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(panel2ButtonPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(battingButtonPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(teacherButtonPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(statisticsButtonPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(hideSidePanelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -225,19 +228,19 @@ public class MainScreen extends javax.swing.JFrame
                 .addGap(26, 26, 26)
                 .addComponent(hideSidePanelButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(panel1ButtonPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(battingButtonPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(panel2ButtonPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(teacherButtonPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(panel2ButtonPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(statisticsButtonPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.setLayout(new java.awt.CardLayout());
+        mainViewPanel.setLayout(new java.awt.CardLayout());
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        battingViewPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        panel3BodyPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        battingBodyPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel9.setIcon(new javax.swing.ImageIcon("C:\\Users\\janch\\OneDrive\\Pictures\\Reddam-house-logo.jpg.jpeg")); // NOI18N
 
@@ -275,30 +278,76 @@ public class MainScreen extends javax.swing.JFrame
         battingTable.setShowGrid(true);
         jScrollPane2.setViewportView(battingTable);
 
-        javax.swing.GroupLayout panel3BodyPanel1Layout = new javax.swing.GroupLayout(panel3BodyPanel1);
-        panel3BodyPanel1.setLayout(panel3BodyPanel1Layout);
-        panel3BodyPanel1Layout.setHorizontalGroup(
-            panel3BodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel3BodyPanel1Layout.createSequentialGroup()
+        battingTopMainPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        sendTableButton.setBackground(new java.awt.Color(118, 117, 53));
+        sendTableButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        sendTableButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/paper-airplane-clipartpng.png"))); // NOI18N
+        sendTableButton.setText("Send");
+        sendTableButton.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        sendTableButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                sendTableButtonActionPerformed(evt);
+            }
+        });
+
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("search teacher");
+
+        javax.swing.GroupLayout battingTopMainPanelLayout = new javax.swing.GroupLayout(battingTopMainPanel);
+        battingTopMainPanel.setLayout(battingTopMainPanelLayout);
+        battingTopMainPanelLayout.setHorizontalGroup(
+            battingTopMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, battingTopMainPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(sendTableButton)
+                .addContainerGap())
+        );
+        battingTopMainPanelLayout.setVerticalGroup(
+            battingTopMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(battingTopMainPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(battingTopMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sendTableButton)
+                    .addComponent(jButton1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout battingBodyPanel1Layout = new javax.swing.GroupLayout(battingBodyPanel1);
+        battingBodyPanel1.setLayout(battingBodyPanel1Layout);
+        battingBodyPanel1Layout.setHorizontalGroup(
+            battingBodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, battingBodyPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel9)
                 .addContainerGap())
-            .addGroup(panel3BodyPanel1Layout.createSequentialGroup()
+            .addGroup(battingBodyPanel1Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 979, Short.MAX_VALUE)
-                .addGap(71, 71, 71))
+                .addGroup(battingBodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(battingBodyPanel1Layout.createSequentialGroup()
+                        .addComponent(battingTopMainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(battingBodyPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 979, Short.MAX_VALUE)
+                        .addGap(71, 71, 71))))
         );
-        panel3BodyPanel1Layout.setVerticalGroup(
-            panel3BodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel3BodyPanel1Layout.createSequentialGroup()
-                .addGap(121, 121, 121)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
+        battingBodyPanel1Layout.setVerticalGroup(
+            battingBodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(battingBodyPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(battingTopMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9)
                 .addContainerGap())
         );
 
-        panel2HeaderPanel.setBackground(new java.awt.Color(0, 0, 51));
+        battingHeaderPanel.setBackground(new java.awt.Color(0, 0, 51));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(204, 204, 204));
@@ -330,44 +379,44 @@ public class MainScreen extends javax.swing.JFrame
             }
         });
 
-        javax.swing.GroupLayout panel2HeaderPanelLayout = new javax.swing.GroupLayout(panel2HeaderPanel);
-        panel2HeaderPanel.setLayout(panel2HeaderPanelLayout);
-        panel2HeaderPanelLayout.setHorizontalGroup(
-            panel2HeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel2HeaderPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout battingHeaderPanelLayout = new javax.swing.GroupLayout(battingHeaderPanel);
+        battingHeaderPanel.setLayout(battingHeaderPanelLayout);
+        battingHeaderPanelLayout.setHorizontalGroup(
+            battingHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(battingHeaderPanelLayout.createSequentialGroup()
                 .addComponent(showSidePanelButton)
                 .addGap(268, 268, 268)
                 .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
                 .addGap(294, 294, 294))
         );
-        panel2HeaderPanelLayout.setVerticalGroup(
-            panel2HeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel2HeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        battingHeaderPanelLayout.setVerticalGroup(
+            battingHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(battingHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
                 .addComponent(showSidePanelButton))
         );
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel2HeaderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(panel3BodyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        javax.swing.GroupLayout battingViewPanelLayout = new javax.swing.GroupLayout(battingViewPanel);
+        battingViewPanel.setLayout(battingViewPanelLayout);
+        battingViewPanelLayout.setHorizontalGroup(
+            battingViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(battingHeaderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(battingBodyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+        battingViewPanelLayout.setVerticalGroup(
+            battingViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, battingViewPanelLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(panel2HeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(battingHeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(panel3BodyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(battingBodyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel2, "card2");
+        mainViewPanel.add(battingViewPanel, "card2");
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        teacherViewPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        panel3HeaderPanel.setBackground(new java.awt.Color(0, 0, 51));
+        teacherHeaderPanel.setBackground(new java.awt.Color(0, 0, 51));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(204, 204, 204));
@@ -399,65 +448,65 @@ public class MainScreen extends javax.swing.JFrame
             }
         });
 
-        javax.swing.GroupLayout panel3HeaderPanelLayout = new javax.swing.GroupLayout(panel3HeaderPanel);
-        panel3HeaderPanel.setLayout(panel3HeaderPanelLayout);
-        panel3HeaderPanelLayout.setHorizontalGroup(
-            panel3HeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel3HeaderPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout teacherHeaderPanelLayout = new javax.swing.GroupLayout(teacherHeaderPanel);
+        teacherHeaderPanel.setLayout(teacherHeaderPanelLayout);
+        teacherHeaderPanelLayout.setHorizontalGroup(
+            teacherHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(teacherHeaderPanelLayout.createSequentialGroup()
                 .addComponent(showSidePanelButton1)
                 .addGap(272, 272, 272)
                 .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
                 .addGap(290, 290, 290))
         );
-        panel3HeaderPanelLayout.setVerticalGroup(
-            panel3HeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel3HeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        teacherHeaderPanelLayout.setVerticalGroup(
+            teacherHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(teacherHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
                 .addComponent(showSidePanelButton1))
         );
 
-        panel3BodyPanel.setBackground(new java.awt.Color(255, 255, 255));
+        teacherBodyPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel8.setIcon(new javax.swing.ImageIcon("C:\\Users\\janch\\OneDrive\\Pictures\\Reddam-house-logo.jpg.jpeg")); // NOI18N
 
-        javax.swing.GroupLayout panel3BodyPanelLayout = new javax.swing.GroupLayout(panel3BodyPanel);
-        panel3BodyPanel.setLayout(panel3BodyPanelLayout);
-        panel3BodyPanelLayout.setHorizontalGroup(
-            panel3BodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel3BodyPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout teacherBodyPanelLayout = new javax.swing.GroupLayout(teacherBodyPanel);
+        teacherBodyPanel.setLayout(teacherBodyPanelLayout);
+        teacherBodyPanelLayout.setHorizontalGroup(
+            teacherBodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, teacherBodyPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel8)
                 .addContainerGap())
         );
-        panel3BodyPanelLayout.setVerticalGroup(
-            panel3BodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel3BodyPanelLayout.createSequentialGroup()
+        teacherBodyPanelLayout.setVerticalGroup(
+            teacherBodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, teacherBodyPanelLayout.createSequentialGroup()
                 .addContainerGap(531, Short.MAX_VALUE)
                 .addComponent(jLabel8)
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel3HeaderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(panel3BodyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        javax.swing.GroupLayout teacherViewPanelLayout = new javax.swing.GroupLayout(teacherViewPanel);
+        teacherViewPanel.setLayout(teacherViewPanelLayout);
+        teacherViewPanelLayout.setHorizontalGroup(
+            teacherViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(teacherHeaderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(teacherBodyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(panel3HeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        teacherViewPanelLayout.setVerticalGroup(
+            teacherViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(teacherViewPanelLayout.createSequentialGroup()
+                .addComponent(teacherHeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(panel3BodyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(teacherBodyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
 
-        jPanel1.add(jPanel3, "card3");
+        mainViewPanel.add(teacherViewPanel, "card3");
 
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        statisticsViewPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        panel4HeaderPanel.setBackground(new java.awt.Color(0, 0, 51));
+        statisticsHeaderPanel.setBackground(new java.awt.Color(0, 0, 51));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(204, 204, 204));
@@ -489,60 +538,60 @@ public class MainScreen extends javax.swing.JFrame
             }
         });
 
-        javax.swing.GroupLayout panel4HeaderPanelLayout = new javax.swing.GroupLayout(panel4HeaderPanel);
-        panel4HeaderPanel.setLayout(panel4HeaderPanelLayout);
-        panel4HeaderPanelLayout.setHorizontalGroup(
-            panel4HeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel4HeaderPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout statisticsHeaderPanelLayout = new javax.swing.GroupLayout(statisticsHeaderPanel);
+        statisticsHeaderPanel.setLayout(statisticsHeaderPanelLayout);
+        statisticsHeaderPanelLayout.setHorizontalGroup(
+            statisticsHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(statisticsHeaderPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(showSidePanelButton2)
                 .addGap(259, 259, 259)
                 .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
                 .addGap(297, 297, 297))
         );
-        panel4HeaderPanelLayout.setVerticalGroup(
-            panel4HeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel4HeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        statisticsHeaderPanelLayout.setVerticalGroup(
+            statisticsHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(statisticsHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
                 .addComponent(showSidePanelButton2))
         );
 
-        panel4BodyPanel.setBackground(new java.awt.Color(255, 255, 255));
+        statisticsBodyPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel7.setIcon(new javax.swing.ImageIcon("C:\\Users\\janch\\OneDrive\\Pictures\\Reddam-house-logo.jpg.jpeg")); // NOI18N
 
-        javax.swing.GroupLayout panel4BodyPanelLayout = new javax.swing.GroupLayout(panel4BodyPanel);
-        panel4BodyPanel.setLayout(panel4BodyPanelLayout);
-        panel4BodyPanelLayout.setHorizontalGroup(
-            panel4BodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel4BodyPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout statisticsBodyPanelLayout = new javax.swing.GroupLayout(statisticsBodyPanel);
+        statisticsBodyPanel.setLayout(statisticsBodyPanelLayout);
+        statisticsBodyPanelLayout.setHorizontalGroup(
+            statisticsBodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statisticsBodyPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel7)
                 .addContainerGap())
         );
-        panel4BodyPanelLayout.setVerticalGroup(
-            panel4BodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel4BodyPanelLayout.createSequentialGroup()
+        statisticsBodyPanelLayout.setVerticalGroup(
+            statisticsBodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statisticsBodyPanelLayout.createSequentialGroup()
                 .addGap(0, 537, Short.MAX_VALUE)
                 .addComponent(jLabel7))
         );
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel4HeaderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(panel4BodyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        javax.swing.GroupLayout statisticsViewPanelLayout = new javax.swing.GroupLayout(statisticsViewPanel);
+        statisticsViewPanel.setLayout(statisticsViewPanelLayout);
+        statisticsViewPanelLayout.setHorizontalGroup(
+            statisticsViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(statisticsHeaderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(statisticsBodyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(panel4HeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        statisticsViewPanelLayout.setVerticalGroup(
+            statisticsViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(statisticsViewPanelLayout.createSequentialGroup()
+                .addComponent(statisticsHeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(panel4BodyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(statisticsBodyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jPanel1.add(jPanel4, "card4");
+        mainViewPanel.add(statisticsViewPanel, "card4");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -551,85 +600,85 @@ public class MainScreen extends javax.swing.JFrame
             .addGroup(layout.createSequentialGroup()
                 .addComponent(menuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(mainViewPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(menuPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mainViewPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void panel1ButtonPaneMouseEntered(java.awt.event.MouseEvent evt)//GEN-FIRST:event_panel1ButtonPaneMouseEntered
-    {//GEN-HEADEREND:event_panel1ButtonPaneMouseEntered
+    private void battingButtonPaneMouseEntered(java.awt.event.MouseEvent evt)//GEN-FIRST:event_battingButtonPaneMouseEntered
+    {//GEN-HEADEREND:event_battingButtonPaneMouseEntered
         // TODO add your handling code here:
-        lightenBackColour(panel1ButtonPane);
-    }//GEN-LAST:event_panel1ButtonPaneMouseEntered
+        lightenBackColour(battingButtonPane);
+    }//GEN-LAST:event_battingButtonPaneMouseEntered
 
-    private void panel1ButtonPaneMouseExited(java.awt.event.MouseEvent evt)//GEN-FIRST:event_panel1ButtonPaneMouseExited
-    {//GEN-HEADEREND:event_panel1ButtonPaneMouseExited
+    private void battingButtonPaneMouseExited(java.awt.event.MouseEvent evt)//GEN-FIRST:event_battingButtonPaneMouseExited
+    {//GEN-HEADEREND:event_battingButtonPaneMouseExited
         // TODO add your handling code here:
-        resetBackColour(panel1ButtonPane);
-    }//GEN-LAST:event_panel1ButtonPaneMouseExited
+        resetBackColour(battingButtonPane);
+    }//GEN-LAST:event_battingButtonPaneMouseExited
 
-    private void panel2ButtonPane1MouseEntered(java.awt.event.MouseEvent evt)//GEN-FIRST:event_panel2ButtonPane1MouseEntered
-    {//GEN-HEADEREND:event_panel2ButtonPane1MouseEntered
+    private void teacherButtonPane1MouseEntered(java.awt.event.MouseEvent evt)//GEN-FIRST:event_teacherButtonPane1MouseEntered
+    {//GEN-HEADEREND:event_teacherButtonPane1MouseEntered
         // TODO add your handling code here:
-        lightenBackColour(panel2ButtonPane1);
-    }//GEN-LAST:event_panel2ButtonPane1MouseEntered
+        lightenBackColour(teacherButtonPane1);
+    }//GEN-LAST:event_teacherButtonPane1MouseEntered
 
-    private void panel2ButtonPane1MouseExited(java.awt.event.MouseEvent evt)//GEN-FIRST:event_panel2ButtonPane1MouseExited
-    {//GEN-HEADEREND:event_panel2ButtonPane1MouseExited
+    private void teacherButtonPane1MouseExited(java.awt.event.MouseEvent evt)//GEN-FIRST:event_teacherButtonPane1MouseExited
+    {//GEN-HEADEREND:event_teacherButtonPane1MouseExited
         // TODO add your handling code here:
-        resetBackColour(panel2ButtonPane1);
-    }//GEN-LAST:event_panel2ButtonPane1MouseExited
+        resetBackColour(teacherButtonPane1);
+    }//GEN-LAST:event_teacherButtonPane1MouseExited
 
-    private void panel2ButtonPaneMouseEntered(java.awt.event.MouseEvent evt)//GEN-FIRST:event_panel2ButtonPaneMouseEntered
-    {//GEN-HEADEREND:event_panel2ButtonPaneMouseEntered
+    private void statisticsButtonPaneMouseEntered(java.awt.event.MouseEvent evt)//GEN-FIRST:event_statisticsButtonPaneMouseEntered
+    {//GEN-HEADEREND:event_statisticsButtonPaneMouseEntered
         // TODO add your handling code here:
-        lightenBackColour(panel2ButtonPane);
-    }//GEN-LAST:event_panel2ButtonPaneMouseEntered
+        lightenBackColour(statisticsButtonPane);
+    }//GEN-LAST:event_statisticsButtonPaneMouseEntered
 
-    private void panel2ButtonPaneMouseExited(java.awt.event.MouseEvent evt)//GEN-FIRST:event_panel2ButtonPaneMouseExited
-    {//GEN-HEADEREND:event_panel2ButtonPaneMouseExited
+    private void statisticsButtonPaneMouseExited(java.awt.event.MouseEvent evt)//GEN-FIRST:event_statisticsButtonPaneMouseExited
+    {//GEN-HEADEREND:event_statisticsButtonPaneMouseExited
         // TODO add your handling code here:
-        resetBackColour(panel2ButtonPane);
-    }//GEN-LAST:event_panel2ButtonPaneMouseExited
+        resetBackColour(statisticsButtonPane);
+    }//GEN-LAST:event_statisticsButtonPaneMouseExited
 
-    private void panel1ButtonPaneMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_panel1ButtonPaneMouseClicked
-    {//GEN-HEADEREND:event_panel1ButtonPaneMouseClicked
+    private void battingButtonPaneMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_battingButtonPaneMouseClicked
+    {//GEN-HEADEREND:event_battingButtonPaneMouseClicked
         // TODO add your handling code here:
-        jPanel2.setVisible(true);
-        jPanel3.setVisible(false);
-        jPanel4.setVisible(false);
-    }//GEN-LAST:event_panel1ButtonPaneMouseClicked
+        battingViewPanel.setVisible(true);
+        teacherViewPanel.setVisible(false);
+        statisticsViewPanel.setVisible(false);
+    }//GEN-LAST:event_battingButtonPaneMouseClicked
 
-    private void panel2ButtonPane1MouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_panel2ButtonPane1MouseClicked
-    {//GEN-HEADEREND:event_panel2ButtonPane1MouseClicked
+    private void teacherButtonPane1MouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_teacherButtonPane1MouseClicked
+    {//GEN-HEADEREND:event_teacherButtonPane1MouseClicked
         // TODO add your handling code here:
-        jPanel2.setVisible(false);
-        jPanel3.setVisible(true);
-        jPanel4.setVisible(false);
-    }//GEN-LAST:event_panel2ButtonPane1MouseClicked
+        battingViewPanel.setVisible(false);
+        teacherViewPanel.setVisible(true);
+        statisticsViewPanel.setVisible(false);
+    }//GEN-LAST:event_teacherButtonPane1MouseClicked
 
-    private void panel2ButtonPaneMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_panel2ButtonPaneMouseClicked
-    {//GEN-HEADEREND:event_panel2ButtonPaneMouseClicked
+    private void statisticsButtonPaneMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_statisticsButtonPaneMouseClicked
+    {//GEN-HEADEREND:event_statisticsButtonPaneMouseClicked
         // TODO add your handling code here:
-        jPanel2.setVisible(false);
-        jPanel3.setVisible(false);
-        jPanel4.setVisible(true);
-    }//GEN-LAST:event_panel2ButtonPaneMouseClicked
+        battingViewPanel.setVisible(false);
+        teacherViewPanel.setVisible(false);
+        statisticsViewPanel.setVisible(true);
+    }//GEN-LAST:event_statisticsButtonPaneMouseClicked
 
     private void hideSidePanelButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_hideSidePanelButtonActionPerformed
     {//GEN-HEADEREND:event_hideSidePanelButtonActionPerformed
         // TODO add your handling code here:
         menuPanel.setVisible(false);
         
-        if (jPanel2.isVisible()) showSidePanelButton.setVisible(true);
-        else if (jPanel3.isVisible()) showSidePanelButton1.setVisible(true);
+        if (battingViewPanel.isVisible()) showSidePanelButton.setVisible(true);
+        else if (teacherViewPanel.isVisible()) showSidePanelButton1.setVisible(true);
         else showSidePanelButton2.setVisible(true);
     }//GEN-LAST:event_hideSidePanelButtonActionPerformed
 
@@ -702,6 +751,11 @@ public class MainScreen extends javax.swing.JFrame
         resetBackColour(showSidePanelButton2);
     }//GEN-LAST:event_showSidePanelButton2MouseExited
 
+    private void sendTableButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_sendTableButtonActionPerformed
+    {//GEN-HEADEREND:event_sendTableButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sendTableButtonActionPerformed
+
     private void lightenBackColour(JComponent c)
     {
         c.setBackground(lightBlue);
@@ -752,8 +806,14 @@ public class MainScreen extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel battingBodyPanel1;
+    private javax.swing.JPanel battingButtonPane;
+    private javax.swing.JPanel battingHeaderPanel;
     private javax.swing.JTable battingTable;
+    private javax.swing.JPanel battingTopMainPanel;
+    private javax.swing.JPanel battingViewPanel;
     private javax.swing.JButton hideSidePanelButton;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -765,23 +825,20 @@ public class MainScreen extends javax.swing.JFrame
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JPanel mainViewPanel;
     private javax.swing.JPanel menuPanel;
-    private javax.swing.JPanel panel1ButtonPane;
-    private javax.swing.JPanel panel2ButtonPane;
-    private javax.swing.JPanel panel2ButtonPane1;
-    private javax.swing.JPanel panel2HeaderPanel;
-    private javax.swing.JPanel panel3BodyPanel;
-    private javax.swing.JPanel panel3BodyPanel1;
-    private javax.swing.JPanel panel3HeaderPanel;
-    private javax.swing.JPanel panel4BodyPanel;
-    private javax.swing.JPanel panel4HeaderPanel;
+    private javax.swing.JButton sendTableButton;
     private javax.swing.JButton showSidePanelButton;
     private javax.swing.JButton showSidePanelButton1;
     private javax.swing.JButton showSidePanelButton2;
+    private javax.swing.JPanel statisticsBodyPanel;
+    private javax.swing.JPanel statisticsButtonPane;
+    private javax.swing.JPanel statisticsHeaderPanel;
+    private javax.swing.JPanel statisticsViewPanel;
+    private javax.swing.JPanel teacherBodyPanel;
+    private javax.swing.JPanel teacherButtonPane1;
+    private javax.swing.JPanel teacherHeaderPanel;
+    private javax.swing.JPanel teacherViewPanel;
     // End of variables declaration//GEN-END:variables
 }
