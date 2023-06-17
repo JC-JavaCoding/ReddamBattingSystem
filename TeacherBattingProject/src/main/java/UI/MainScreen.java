@@ -4,6 +4,8 @@
  */
 package UI;
 
+import com.formdev.flatlaf.ui.FlatButtonBorder;
+import com.formdev.flatlaf.ui.FlatLineBorder;
 import java.awt.Color;
 import javax.swing.JComponent;
 
@@ -51,6 +53,7 @@ public class MainScreen extends javax.swing.JFrame
         battingTable = new javax.swing.JTable();
         battingTopMainPanel = new javax.swing.JPanel();
         sendTableButton = new javax.swing.JButton();
+        absenteesViewPanel = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         battingHeaderPanel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -61,6 +64,10 @@ public class MainScreen extends javax.swing.JFrame
         showSidePanelButton1 = new javax.swing.JButton();
         teacherBodyPanel = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        timetableJTable = new javax.swing.JTable();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTree1 = new javax.swing.JTree();
         statisticsViewPanel = new javax.swing.JPanel();
         statisticsHeaderPanel = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -280,11 +287,14 @@ public class MainScreen extends javax.swing.JFrame
 
         battingTopMainPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        sendTableButton.setBackground(new java.awt.Color(118, 117, 53));
+        sendTableButton.setBackground(new java.awt.Color(166, 142, 60));
         sendTableButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        sendTableButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/paper-airplane-clipartpng.png"))); // NOI18N
+        sendTableButton.setForeground(new java.awt.Color(255, 255, 255));
+        sendTableButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Send_Icon.png"))); // NOI18N
         sendTableButton.setText("Send");
         sendTableButton.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        FlatLineBorder flBorder = new FlatLineBorder(sendTableButton.getInsets(), sendTableButton.getBackground());
+        sendTableButton.setBorder(flBorder);
         sendTableButton.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -293,17 +303,12 @@ public class MainScreen extends javax.swing.JFrame
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("search teacher");
-
         javax.swing.GroupLayout battingTopMainPanelLayout = new javax.swing.GroupLayout(battingTopMainPanel);
         battingTopMainPanel.setLayout(battingTopMainPanelLayout);
         battingTopMainPanelLayout.setHorizontalGroup(
             battingTopMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, battingTopMainPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(sendTableButton)
                 .addContainerGap())
         );
@@ -311,10 +316,37 @@ public class MainScreen extends javax.swing.JFrame
             battingTopMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(battingTopMainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(battingTopMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(sendTableButton)
-                    .addComponent(jButton1))
+                .addComponent(sendTableButton)
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
+
+        absenteesViewPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("search teacher");
+        jButton1.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout absenteesViewPanelLayout = new javax.swing.GroupLayout(absenteesViewPanel);
+        absenteesViewPanel.setLayout(absenteesViewPanelLayout);
+        absenteesViewPanelLayout.setHorizontalGroup(
+            absenteesViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(absenteesViewPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        absenteesViewPanelLayout.setVerticalGroup(
+            absenteesViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(absenteesViewPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addContainerGap(202, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout battingBodyPanel1Layout = new javax.swing.GroupLayout(battingBodyPanel1);
@@ -328,20 +360,25 @@ public class MainScreen extends javax.swing.JFrame
             .addGroup(battingBodyPanel1Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addGroup(battingBodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(battingBodyPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, battingBodyPanel1Layout.createSequentialGroup()
+                        .addGap(951, 951, 951)
                         .addComponent(battingTopMainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
-                    .addGroup(battingBodyPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 979, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, battingBodyPanel1Layout.createSequentialGroup()
+                        .addGroup(battingBodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(absenteesViewPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2))
                         .addGap(71, 71, 71))))
         );
         battingBodyPanel1Layout.setVerticalGroup(
             battingBodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(battingBodyPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(battingTopMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+                .addComponent(battingTopMainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(absenteesViewPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(29, 29, 29)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9)
                 .addContainerGap())
@@ -386,7 +423,7 @@ public class MainScreen extends javax.swing.JFrame
             .addGroup(battingHeaderPanelLayout.createSequentialGroup()
                 .addComponent(showSidePanelButton)
                 .addGap(268, 268, 268)
-                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(294, 294, 294))
         );
         battingHeaderPanelLayout.setVerticalGroup(
@@ -469,19 +506,83 @@ public class MainScreen extends javax.swing.JFrame
 
         jLabel8.setIcon(new javax.swing.ImageIcon("C:\\Users\\janch\\OneDrive\\Pictures\\Reddam-house-logo.jpg.jpeg")); // NOI18N
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        timetableJTable.setBackground(new java.awt.Color(255, 255, 255));
+        timetableJTable.setForeground(new java.awt.Color(51, 51, 51));
+        timetableJTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][]
+            {
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
+            },
+            new String []
+            {
+                "Days", "L1", "L2", "L3", "L4", "L5", "L6", "L7", "L8", "L9", "L10", "L11", "L12", "L13", "L14"
+            }
+        )
+        {
+            Class[] types = new Class []
+            {
+                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int columnIndex)
+            {
+                return types [columnIndex];
+            }
+        });
+        timetableJTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        timetableJTable.setGridColor(new java.awt.Color(204, 204, 204));
+        timetableJTable.setRowHeight(60);
+        timetableJTable.setShowGrid(true);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(timetableJTable, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(timetableJTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTree1.setBackground(new java.awt.Color(204, 204, 204));
+        jTree1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jTree1.setForeground(new java.awt.Color(0, 0, 51));
+        jScrollPane1.setViewportView(jTree1);
+
         javax.swing.GroupLayout teacherBodyPanelLayout = new javax.swing.GroupLayout(teacherBodyPanel);
         teacherBodyPanel.setLayout(teacherBodyPanelLayout);
         teacherBodyPanelLayout.setHorizontalGroup(
             teacherBodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, teacherBodyPanelLayout.createSequentialGroup()
+            .addGroup(teacherBodyPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel8)
+                .addGroup(teacherBodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel8)
+                    .addGroup(teacherBodyPanelLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(51, 51, 51)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         teacherBodyPanelLayout.setVerticalGroup(
             teacherBodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, teacherBodyPanelLayout.createSequentialGroup()
-                .addContainerGap(531, Short.MAX_VALUE)
+                .addGap(52, 52, 52)
+                .addGroup(teacherBodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addComponent(jLabel8)
                 .addContainerGap())
         );
@@ -756,6 +857,11 @@ public class MainScreen extends javax.swing.JFrame
         // TODO add your handling code here:
     }//GEN-LAST:event_sendTableButtonActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
+    {//GEN-HEADEREND:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     private void lightenBackColour(JComponent c)
     {
         c.setBackground(lightBlue);
@@ -806,6 +912,7 @@ public class MainScreen extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel absenteesViewPanel;
     private javax.swing.JPanel battingBodyPanel1;
     private javax.swing.JPanel battingButtonPane;
     private javax.swing.JPanel battingHeaderPanel;
@@ -825,7 +932,10 @@ public class MainScreen extends javax.swing.JFrame
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTree jTree1;
     private javax.swing.JPanel mainViewPanel;
     private javax.swing.JPanel menuPanel;
     private javax.swing.JButton sendTableButton;
@@ -840,5 +950,6 @@ public class MainScreen extends javax.swing.JFrame
     private javax.swing.JPanel teacherButtonPane1;
     private javax.swing.JPanel teacherHeaderPanel;
     private javax.swing.JPanel teacherViewPanel;
+    private javax.swing.JTable timetableJTable;
     // End of variables declaration//GEN-END:variables
 }
