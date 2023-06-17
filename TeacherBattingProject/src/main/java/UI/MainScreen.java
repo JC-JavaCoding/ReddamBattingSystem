@@ -623,7 +623,7 @@ public class MainScreen extends javax.swing.JFrame
         tblViewTimeTable.setShowGrid(true);
         tblViewTimeTable.setSurrendersFocusOnKeystroke(true);
         // tblViewTimeTable.setRowHeight(tblViewTimeTable.getHeight() / 5 +1);
-        System.out.println(tblViewTimeTable.getModel().getHeight() + "");
+        //System.out.println(tblViewTimeTable.getModel().getHeight() + "");
         tblViewTimeTable.addMouseListener(new java.awt.event.MouseAdapter()
         {
             public void mouseClicked(java.awt.event.MouseEvent evt)

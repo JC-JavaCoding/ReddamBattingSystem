@@ -28,12 +28,17 @@ public class Teacher
         this.tt = tt;
     }
 
-    public boolean add(Class e)
+    @Override
+    public String toString()
+    {
+        return "Teacher{" + "fullName=" + fullName + ", classID=" + classID + "\nEXTRAMURALS\n" + getExtraMuralsAsString() + "\nBATTINGS:\n" + getBattingsAsString() + "\nBattings\n" + getClassesAsString() + ",\n tt=" + tt + '}';
+    }
+    public boolean addClass(Class e)
     {
         return classesTaught.add(e);
     }
 
-    public boolean add(BattingLesson e)
+    public boolean addBattingLesson(BattingLesson e)
     {
         return battings.add(e);
     }
@@ -58,19 +63,48 @@ public class Teacher
         this.classID = classID;
     }
 
-    public ArrayList<ExtraMural> getExtraMurals()
+    public ArrayList<ExtraMural> getExtraMuralsAsArrayList()
     {
         return extraMurals;
     }
+    private String getExtraMuralsAsString()
+    {
+        String extraMuralsStr = "";
+        for (ExtraMural e : extraMurals)
+        {
+            extraMuralsStr += e.toString() + ",\t";
+        }
+        
+        return extraMuralsStr;
+    }
 
-    public ArrayList<BattingLesson> getBattings()
+    public ArrayList<BattingLesson> getBattingsAsArrayList()
     {
         return battings;
     }
-
-    public ArrayList<Class> getClassesTaught()
+    private String getBattingsAsString()
+    {
+        String battingsStr = "";
+        for (BattingLesson b : battings)
+        {
+            battingsStr += b.toString() + ",\t";
+        }
+        
+        return battingsStr;
+    }
+    public ArrayList<Class> getClassesTaughtAsArrayList()
     {
         return classesTaught;
+    }
+    private String getClassesAsString()
+    {
+        String classesTaughtStr = "";
+        for (Classes.Class currClass : classesTaught)
+        {
+            classesTaughtStr += currClass.toString() + ",\t";
+        }
+        
+        return classesTaughtStr;
     }
 
     public TimeTable getTt()
@@ -78,7 +112,7 @@ public class Teacher
         return tt;
     }
 
-    public boolean add(ExtraMural e)
+    public boolean addExtraMural(ExtraMural e)
     {
         return extraMurals.add(e);
     }

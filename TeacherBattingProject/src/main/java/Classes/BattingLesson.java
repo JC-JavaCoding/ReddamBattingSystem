@@ -56,6 +56,12 @@ public class BattingLesson
         return date;
     }
 
+    @Override
+    public String toString()
+    {
+        return "BattingLesson{" + "teacherOnDuty=" + teacherOnDuty + ", battingClass=" + battingClass + ", lessonNumbers=" + lessonNumbers + ", date=" + date + '}';
+    }
+
     public void setDate(LocalDate date)
     {
         this.date = date;

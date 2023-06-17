@@ -18,5 +18,11 @@ public class ExtraMural
         this.extraMuralName = extraMuralName;
         this.weeklyTime = weeklyTime;
     }
+
+    @Override
+    public String toString()
+    {
+        return "ExtraMural{" + "extraMuralName=" + extraMuralName + ", weeklyTime=" + weeklyTime + '}';
+    }
     
 }

@@ -1002,7 +1002,7 @@
                                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblViewTimeTableMouseClicked"/>
                               </Events>
                               <AuxValues>
-                                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="// tblViewTimeTable.setRowHeight(tblViewTimeTable.getHeight() / 5 +1);&#xd;&#xa;System.out.println(tblViewTimeTable.getModel().getHeight() + &quot;&quot;);&#xd;&#xa;"/>
+                                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="// tblViewTimeTable.setRowHeight(tblViewTimeTable.getHeight() / 5 +1);&#xd;&#xa;//System.out.println(tblViewTimeTable.getModel().getHeight() + &quot;&quot;);&#xd;&#xa;"/>
                               </AuxValues>
                             </Component>
                           </SubComponents>
