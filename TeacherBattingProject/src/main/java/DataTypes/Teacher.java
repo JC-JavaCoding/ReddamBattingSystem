@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Classes;
+package DataTypes;
 
 import java.util.ArrayList;
 
@@ -15,10 +15,10 @@ public class Teacher
     private String fullName, classID;
     private ArrayList <ExtraMural> extraMurals;
     private ArrayList <BattingLesson> battings;
-    private ArrayList <Class> classesTaught;
+    private ArrayList <Lesson> classesTaught;
     private TimeTable tt;
 
-    public Teacher(String fullName, String classID, ArrayList<ExtraMural> extraMurals, ArrayList<BattingLesson> battings, ArrayList<Class> classesTaught, TimeTable tt)
+    public Teacher(String fullName, String classID, ArrayList<ExtraMural> extraMurals, ArrayList<BattingLesson> battings, ArrayList<Lesson> classesTaught, TimeTable tt)
     {
         this.fullName = fullName;
         this.classID = classID;
@@ -33,7 +33,7 @@ public class Teacher
     {
         return "Teacher{" + "fullName=" + fullName + ", classID=" + classID + "\nEXTRAMURALS\n" + getExtraMuralsAsString() + "\nBATTINGS:\n" + getBattingsAsString() + "\nBattings\n" + getClassesAsString() + ",\n tt=" + tt + '}';
     }
-    public boolean addClass(Class e)
+    public boolean addClass(Lesson e)
     {
         return classesTaught.add(e);
     }
@@ -92,14 +92,14 @@ public class Teacher
         
         return battingsStr;
     }
-    public ArrayList<Class> getClassesTaughtAsArrayList()
+    public ArrayList<Lesson> getClassesTaughtAsArrayList()
     {
         return classesTaught;
     }
     private String getClassesAsString()
     {
         String classesTaughtStr = "";
-        for (Classes.Class currClass : classesTaught)
+        for (DataTypes.Lesson currClass : classesTaught)
         {
             classesTaughtStr += currClass.toString() + ",\t";
         }

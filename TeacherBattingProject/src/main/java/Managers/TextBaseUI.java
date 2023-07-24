@@ -4,7 +4,10 @@
  */
 package Managers;
 
-import Classes.*;
+import DataTypes.BattingLesson;
+import DataTypes.TimeTable;
+import DataTypes.Teacher;
+import DataTypes.ExtraMural;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -16,7 +19,7 @@ public class TextBaseUI
 {
     public static ArrayList<ExtraMural> extraMurals = new ArrayList<>(); 
     public static ArrayList<BattingLesson> battings = new ArrayList<>(); 
-    public static ArrayList<Classes.Class> classes = new ArrayList<>(); 
+    public static ArrayList<DataTypes.Lesson> classes = new ArrayList<>(); 
     public static ArrayList <Teacher> teachers = new ArrayList<>();
     
     public static void main(String[] args)
@@ -40,12 +43,12 @@ public class TextBaseUI
         {
             extraMurals.add(new ExtraMural("ExtraMural"+ i, (int)(Math.random() * 9 + 1)));
             battings.add(new BattingLesson(null, 
-                    new Classes.Class("Bobb"+i,
+                    new DataTypes.Lesson("Bobb"+i,
                             "Subject" +i,
                             "Grade"+ i), 
                     getRandomLessons(), 
                     LocalDate.now()));
-            classes.add(new Classes.Class("Bob"+i,
+            classes.add(new DataTypes.Lesson("Bob"+i,
                             "Subject" +i,
                             "Grade"+ i));
         }

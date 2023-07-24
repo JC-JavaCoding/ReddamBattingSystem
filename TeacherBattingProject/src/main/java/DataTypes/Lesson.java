@@ -2,21 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Classes;
+package DataTypes;
 
 /**
  *
  * @author janch
  */
-public class Class
+public class Lesson
 {
     private String classID, subject, grade;
+    private Teacher teacher;
 
-    public Class(String classID, String subject, String grade)
+    public Lesson(String classID, String subject, String grade, Teacher teacher)
     {
         this.classID = classID;
         this.subject = subject;
         this.grade = grade;
+        this.teacher = teacher;
     }
 
     public String getClassID()
