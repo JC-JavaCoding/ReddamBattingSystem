@@ -15,14 +15,12 @@ public class BattingLesson
 {
     private Teacher teacherOnDuty;
     private Lesson battingClass;
-    private int lessonNumber;
     private LocalDate date;
 
-    public BattingLesson(Teacher teacherOnDuty, Lesson battingClass, int lessonNumber, LocalDate date)
+    public BattingLesson(Teacher teacherOnDuty, Lesson battingClass, LocalDate date)
     {
         this.teacherOnDuty = teacherOnDuty;
         this.battingClass = battingClass;
-        this.lessonNumber = lessonNumber;
         this.date = date;
     }
 
@@ -54,7 +52,7 @@ public class BattingLesson
     @Override
     public String toString()
     {
-        return "BattingLesson{" + "teacherOnDuty=" + teacherOnDuty + ", battingClass=" + battingClass + ", lessonNumbers=" + lessonNumber + ", date=" + date + '}';
+        return "BattingLesson{" + "teacherOnDuty=" + teacherOnDuty + ", battingClass=" + battingClass + ",date=" + date + '}';
     }
 
     public void setDate(LocalDate date)

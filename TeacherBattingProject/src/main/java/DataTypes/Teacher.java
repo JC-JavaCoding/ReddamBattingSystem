@@ -12,36 +12,28 @@ import java.util.ArrayList;
  */
 public class Teacher
 {
-    private String fullName, classID;
+    private String fullName;
     private ArrayList <ExtraMural> extraMurals;
-    private ArrayList <BattingLesson> battings;
     private ArrayList <Lesson> classesTaught;
     private TimeTable tt;
 
-    public Teacher(String fullName, String classID, ArrayList<ExtraMural> extraMurals, ArrayList<BattingLesson> battings, ArrayList<Lesson> classesTaught, TimeTable tt)
+    public Teacher(String fullName, ArrayList<ExtraMural> extraMurals, ArrayList<Lesson> classesTaught)
     {
         this.fullName = fullName;
-        this.classID = classID;
         this.extraMurals = extraMurals;
-        this.battings = battings;
         this.classesTaught = classesTaught;
-        this.tt = tt;
     }
 
     @Override
     public String toString()
     {
-        return "Teacher{" + "fullName=" + fullName + ", classID=" + classID + "\nEXTRAMURALS\n" + getExtraMuralsAsString() + "\nBATTINGS:\n" + getBattingsAsString() + "\nBattings\n" + getClassesAsString() + ",\n tt=" + tt + '}';
+        return "Teacher{" + "fullName=" + fullName + "\nEXTRAMURALS\n" + getExtraMuralsAsString() + "\nBattings\n" + getClassesAsString() + "\n tt=" + tt + '}';
     }
     public boolean addClass(Lesson e)
     {
         return classesTaught.add(e);
     }
 
-    public boolean addBattingLesson(BattingLesson e)
-    {
-        return battings.add(e);
-    }
 
     public String getFullName()
     {
@@ -51,16 +43,6 @@ public class Teacher
     public void setFullName(String fullName)
     {
         this.fullName = fullName;
-    }
-
-    public String getClassID()
-    {
-        return classID;
-    }
-
-    public void setClassID(String classID)
-    {
-        this.classID = classID;
     }
 
     public ArrayList<ExtraMural> getExtraMuralsAsArrayList()
@@ -78,20 +60,6 @@ public class Teacher
         return extraMuralsStr;
     }
 
-    public ArrayList<BattingLesson> getBattingsAsArrayList()
-    {
-        return battings;
-    }
-    private String getBattingsAsString()
-    {
-        String battingsStr = "";
-        for (BattingLesson b : battings)
-        {
-            battingsStr += b.toString() + ",\t";
-        }
-        
-        return battingsStr;
-    }
     public ArrayList<Lesson> getClassesTaughtAsArrayList()
     {
         return classesTaught;

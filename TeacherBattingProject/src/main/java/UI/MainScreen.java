@@ -119,10 +119,10 @@ public class MainScreen extends javax.swing.JFrame
         battingButtonPane.setLayout(battingButtonPaneLayout);
         battingButtonPaneLayout.setHorizontalGroup(
             battingButtonPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(battingButtonPaneLayout.createSequentialGroup()
-                .addGap(60, 60, 60)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, battingButtonPaneLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(36, 36, 36))
         );
         battingButtonPaneLayout.setVerticalGroup(
             battingButtonPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,9 +156,9 @@ public class MainScreen extends javax.swing.JFrame
         statisticsButtonPaneLayout.setHorizontalGroup(
             statisticsButtonPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(statisticsButtonPaneLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addGap(22, 22, 22)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         statisticsButtonPaneLayout.setVerticalGroup(
             statisticsButtonPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,10 +190,10 @@ public class MainScreen extends javax.swing.JFrame
         teacherButtonPane1.setLayout(teacherButtonPane1Layout);
         teacherButtonPane1Layout.setHorizontalGroup(
             teacherButtonPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(teacherButtonPane1Layout.createSequentialGroup()
-                .addGap(58, 58, 58)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, teacherButtonPane1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(37, 37, 37))
         );
         teacherButtonPane1Layout.setVerticalGroup(
             teacherButtonPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -500,14 +500,14 @@ public class MainScreen extends javax.swing.JFrame
             .addGroup(teacherHeaderPanelLayout.createSequentialGroup()
                 .addComponent(showSidePanelButton1)
                 .addGap(272, 272, 272)
-                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
+                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
                 .addGap(290, 290, 290))
         );
         teacherHeaderPanelLayout.setVerticalGroup(
             teacherHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(teacherHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
-                .addComponent(showSidePanelButton1))
+                .addComponent(showSidePanelButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         teacherBodyPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -616,7 +616,7 @@ public class MainScreen extends javax.swing.JFrame
         tblViewTimeTable.setEnabled(false);
         tblViewTimeTable.setGridColor(new java.awt.Color(51, 51, 51));
         tblViewTimeTable.setOpaque(false);
-        tblViewTimeTable.setRowHeight(105);
+        tblViewTimeTable.setRowHeight(60);
         tblViewTimeTable.setRowMargin(1);
         tblViewTimeTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tblViewTimeTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -640,7 +640,7 @@ public class MainScreen extends javax.swing.JFrame
             .addGroup(teacherBulkInfoPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(681, Short.MAX_VALUE))
+                .addContainerGap(701, Short.MAX_VALUE))
             .addGroup(teacherBulkInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(teacherBulkInfoPanelLayout.createSequentialGroup()
                     .addContainerGap()
@@ -724,7 +724,7 @@ public class MainScreen extends javax.swing.JFrame
             teacherViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(teacherHeaderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, teacherViewPanelLayout.createSequentialGroup()
-                .addGap(6, 6, 6)
+                .addGap(0, 0, 0)
                 .addComponent(teacherBodyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         teacherViewPanelLayout.setVerticalGroup(
@@ -780,7 +780,7 @@ public class MainScreen extends javax.swing.JFrame
                 .addContainerGap()
                 .addComponent(showSidePanelButton2)
                 .addGap(259, 259, 259)
-                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
                 .addGap(297, 297, 297))
         );
         statisticsHeaderPanelLayout.setVerticalGroup(

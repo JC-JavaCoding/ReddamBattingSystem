@@ -10,31 +10,31 @@ package DataTypes;
  */
 public class Lesson
 {
-    private String classID, subject, grade;
-    private Teacher teacher;
+    private String lessonID, subject;
+    private int slotNr, grade;
 
-    public Lesson(String classID, String subject, String grade, Teacher teacher)
+    public Lesson(String lessonID, String subject, int grade, int inSlotNr)
     {
-        this.classID = classID;
+        this.lessonID = lessonID;
         this.subject = subject;
         this.grade = grade;
-        this.teacher = teacher;
+        this.slotNr = inSlotNr;
     }
 
-    public String getClassID()
+    public String getLessonID()
     {
-        return classID;
+        return lessonID;
     }
 
     @Override
     public String toString()
     {
-        return "Class{" + "classID=" + classID + ", subject=" + subject + ", grade=" + grade + '}';
+        return "Class{" + "classID=" + lessonID + ", subject=" + subject + ", grade=" + grade + '}';
     }
 
-    public void setClassID(String classID)
+    public void setLessonID(String lessonID)
     {
-        this.classID = classID;
+        this.lessonID = lessonID;
     }
 
     public String getSubject()
@@ -47,12 +47,12 @@ public class Lesson
         this.subject = subject;
     }
 
-    public String getGrade()
+    public int getGrade()
     {
         return grade;
     }
 
-    public void setGrade(String grade)
+    public void setGrade(int grade)
     {
         this.grade = grade;
     }
