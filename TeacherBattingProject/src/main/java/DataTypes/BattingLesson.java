@@ -13,28 +13,28 @@ import java.util.ArrayList;
  */
 public class BattingLesson
 {
-    private Teacher teacherOnDuty;
+    private String teacherName;
     private Lesson battingClass;
     private LocalDate date;
 
-    public BattingLesson(Teacher teacherOnDuty, Lesson battingClass, LocalDate date)
+    public BattingLesson(String teacherOnDuty, Lesson battingClass, LocalDate date)
     {
-        this.teacherOnDuty = teacherOnDuty;
+        this.teacherName = teacherOnDuty;
         this.battingClass = battingClass;
         this.date = date;
     }
 
-    public Teacher getTeacherOnDuty()
+    public String getTeacherOnDuty()
     {
-        return teacherOnDuty;
+        return teacherName;
     }
 
-    public void setTeacherOnDuty(Teacher teacherOnDuty)
+    public void setTeacherOnDuty(String teacherOnDuty)
     {
-        this.teacherOnDuty = teacherOnDuty;
+        this.teacherName = teacherOnDuty;
     }
 
-    public Lesson getBattingClass()
+    public Lesson getLesson()
     {
         return battingClass;
     }
@@ -52,7 +52,7 @@ public class BattingLesson
     @Override
     public String toString()
     {
-        return "BattingLesson{" + "teacherOnDuty=" + teacherOnDuty + ", battingClass=" + battingClass + ",date=" + date + '}';
+        return "BattingLesson{" + "teacherOnDuty=" + teacherName + ", battingClass=" + battingClass + ",date=" + date + '}';
     }
 
     public void setDate(LocalDate date)

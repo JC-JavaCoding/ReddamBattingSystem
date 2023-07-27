@@ -60,7 +60,7 @@ public class Teacher
         return extraMuralsStr;
     }
 
-    public ArrayList<Lesson> getClassesTaughtAsArrayList()
+    public ArrayList<Lesson> getLessonsArrayList()
     {
         return classesTaught;
     }

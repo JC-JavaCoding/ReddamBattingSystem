@@ -4,16 +4,12 @@
  */
 package Managers;
 
-import DataTypes.BattingLesson;
 import DataTypes.ExtraMural;
 import DataTypes.Lesson;
 import DataTypes.Teacher;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Scanner;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 

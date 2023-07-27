@@ -26,6 +26,16 @@ public class Lesson
         return lessonID;
     }
 
+    public int getSlotNr()
+    {
+        return slotNr;
+    }
+
+    public void setSlotNr(int slotNr)
+    {
+        this.slotNr = slotNr;
+    }
+
     @Override
     public String toString()
     {
