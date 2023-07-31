@@ -29,7 +29,7 @@ public class TextBaseUI
         
         for (int i = 0; i < 10; i++)
         {
-            teachers.add(new Teacher("Bob"+ i, "R"+ i, extraMurals, battings, classes, new TimeTable()));
+            //teachers.add(new Teacher("Bob"+ i, "R"+ i, extraMurals, battings, classes, new TimeTable()));
         }
         for (Teacher t : teachers)
         {
@@ -41,16 +41,16 @@ public class TextBaseUI
     {
         for (int i = 0; i < 5; i++)
         {
-            extraMurals.add(new ExtraMural("ExtraMural"+ i, (int)(Math.random() * 9 + 1)));
-            battings.add(new BattingLesson(null, 
-                    new DataTypes.Lesson("Bobb"+i,
-                            "Subject" +i,
-                            "Grade"+ i), 
-                    getRandomLessons(), 
-                    LocalDate.now()));
-            classes.add(new DataTypes.Lesson("Bob"+i,
-                            "Subject" +i,
-                            "Grade"+ i));
+//            extraMurals.add(new ExtraMural("ExtraMural"+ i, (int)(Math.random() * 9 + 1)));
+//            battings.add(new BattingLesson(null, 
+//                    new DataTypes.Lesson("Bobb"+i,
+//                            "Subject" +i,
+//                            "Grade"+ i), 
+//                    getRandomLessons(), 
+//                    LocalDate.now()));
+//            classes.add(new DataTypes.Lesson("Bob"+i,
+//                            "Subject" +i,
+//                            "Grade"+ i));
         }
     }
 

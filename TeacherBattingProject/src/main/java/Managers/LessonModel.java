@@ -107,11 +107,11 @@ public class LessonModel implements TableModel
                 }
 
                 //update the database
-                DatabaseManager.instance.update("Update tblLessons" //(`LessonID`, `TeacherID`, `SubjectID`, `Grade`)
+                DatabaseManager.instance.update("Update tblLessons " //(`LessonID`, `TeacherID`, `SubjectID`, `Grade`)
                         + "Set `LessonID` = "+ updatedLesson.getLessonID()
-                        + "AND `SubjectID` = (Select `SubjectID` from tblSubjects WHERE `Subject` =  "+ updatedLesson.getSubject() +")"
-                        + "AND `Grade = "+ updatedLesson.getGrade()
-                        + "WHERE `LessonID` = "+ originalLessonID);
+                        + " AND `SubjectID` = (Select `SubjectID` from tblSubjects WHERE `Subject` =  "+ updatedLesson.getSubject() +")"
+                        + " AND `Grade = "+ updatedLesson.getGrade()
+                        + " WHERE `LessonID` = "+ originalLessonID);
             }
         }catch(SQLException ex)
         {

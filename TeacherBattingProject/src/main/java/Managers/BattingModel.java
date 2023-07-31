@@ -26,11 +26,11 @@ public class BattingModel implements TableModel
     public BattingModel() throws SQLException
     {
         //Populate the arraylist from the database
-         ResultSet rs = DatabaseManager.instance.query("Select `FullName`, `LessonID`, `Subject`, `Grade`, `SlotID`, `Date` from tblBattingLessons, tblTeachers, tblLessons, tblSubjects"
-                 + "Where tblBattingLessons.LessonID = tblLessons.LessonID"
-                        + "AND tblBattingLessons.ReplacementTeacherID = tblTeachers.TeacherID"
-                        + "AND tblTeachers.TeacherID = tblLessons.TeacherID"
-                        + "AND tblBattingLessons.SubjectID = tblSubjects.SubjectID");//need to select multiple tables to get all relevant information for teacher  
+         ResultSet rs = DatabaseManager.instance.query("Select `FullName`, tblLessons.`LessonID`, `Subject`, `Grade`, `SlotID`, `Date` from tblBattingLessons, tblTeachers, tblLessons, tblSubjects "
+                 + "Where tblBattingLessons.LessonID = tblLessons.LessonID "
+                        + "AND tblBattingLessons.ReplacementTeacherID = tblTeachers.TeacherID "
+                        + "AND tblTeachers.TeacherID = tblLessons.TeacherID "
+                        + "AND tblLessons.SubjectID = tblSubjects.SubjectID");//need to select multiple tables to get all relevant information for teacher  
         
         while (rs.next())
         {
@@ -67,7 +67,7 @@ public class BattingModel implements TableModel
         switch (columnIndex)
         {
             case 0:
-                return "TeacherName";
+                return "Teacher Name";
             case 1:
                 return "LessonID";
             case 2: 
@@ -75,7 +75,7 @@ public class BattingModel implements TableModel
             case 3: 
                 return "Grade";
             case 4: 
-                return "Lesson";
+                return "Lesson Number";
             case 5:
                 return "Date";
         }
@@ -90,7 +90,7 @@ public class BattingModel implements TableModel
             case 0:
                 return String.class;
             case 1:
-                return int.class;
+                return String.class;
             case 2: 
                 return String.class;
             case 3: 
@@ -119,22 +119,43 @@ public class BattingModel implements TableModel
             case 0:
                 return bl.getTeacherOnDuty();
             case 1:
-                return bl.getLesson();
+                return bl.getLesson().getLessonID();
             case 2: 
-                return bl.get;
+                return bl.getLesson().getSubject();
             case 3: 
-                return int.class;
+                return bl.getLesson().getGrade();
             case 4: 
-                return int.class;
+                int dow = bl.getDate().getDayOfWeek().getValue();
+                int slot = (dow - 1) * (14) + bl.getLesson().getSlotNr();
+                return slot;
             case 5:
-                return LocalDate.class;
+                return bl.getDate();
         }
+        return null;
     }
 
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex)
     {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        BattingLesson bl = (BattingLesson) getValueAt(rowIndex, columnIndex);
+        
+        switch (columnIndex)
+        {
+            case 0:
+                bl.setTeacherOnDuty((String) aValue);
+            case 1:
+                bl.getLesson().setLessonID((String) aValue);
+            case 2: 
+                bl.getLesson().setSubject((String) aValue);
+            case 3: 
+                bl.getLesson().setGrade( Integer.parseInt( (String) aValue ) );
+            case 4: 
+                int dow = bl.getDate().getDayOfWeek().getValue();
+                int slot = (dow - 1) * (14) + bl.getLesson().getSlotNr();
+                bl.getLesson().setSlotNr(slot);
+            case 5:
+                bl.setDate(LocalDate.parse((String) aValue, DateTimeFormatter.ofPattern("yy/MM/dd")));
+        }
     }
 
     @Override

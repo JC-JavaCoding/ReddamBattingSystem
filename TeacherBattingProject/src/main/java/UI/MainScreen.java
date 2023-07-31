@@ -4,9 +4,16 @@
  */
 package UI;
 
+import Managers.BattingModel;
+import Managers.DatabaseManager;
+import Managers.LessonModel;
+import Managers.TeacherModel;
 import com.formdev.flatlaf.ui.FlatButtonBorder;
 import com.formdev.flatlaf.ui.FlatLineBorder;
 import java.awt.Color;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComponent;
 
 /**
@@ -22,6 +29,15 @@ public class MainScreen extends javax.swing.JFrame
      */
     public MainScreen()
     {
+        try
+        {
+            DatabaseManager.init();
+            battingModel = new BattingModel();
+            teacherModel = new TeacherModel();
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }
         initComponents();
     }
 
@@ -552,26 +568,7 @@ public class MainScreen extends javax.swing.JFrame
         jTree1.setBackground(new java.awt.Color(255, 255, 255));
         jTree1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jTree1.setForeground(new java.awt.Color(0, 0, 51));
-        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("TeacherName");
-        javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("ClassesTaught");
-        javax.swing.tree.DefaultMutableTreeNode treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("12D");
-        treeNode2.add(treeNode3);
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("11E");
-        treeNode2.add(treeNode3);
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("15E");
-        treeNode2.add(treeNode3);
-        treeNode1.add(treeNode2);
-        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("ExtraMurals");
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("basketball");
-        treeNode2.add(treeNode3);
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("soccer");
-        treeNode2.add(treeNode3);
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("football");
-        treeNode2.add(treeNode3);
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("hockey");
-        treeNode2.add(treeNode3);
-        treeNode1.add(treeNode2);
-        jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jTree1.setModel(teacherModel);
         jScrollPane1.setViewportView(jTree1);
 
         tblViewTimeTable.setBackground(new java.awt.Color(255, 255, 255));
@@ -661,11 +658,13 @@ public class MainScreen extends javax.swing.JFrame
         );
 
         teachersList.setBackground(new java.awt.Color(255, 255, 255));
-        teachersList.setModel(new javax.swing.AbstractListModel<String>()
+        teachersList.setModel(teacherModel);
+        teachersList.addMouseListener(new java.awt.event.MouseAdapter()
         {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                teachersListMouseClicked(evt);
+            }
         });
         jScrollPane4.setViewportView(teachersList);
 
@@ -723,9 +722,7 @@ public class MainScreen extends javax.swing.JFrame
         teacherViewPanelLayout.setHorizontalGroup(
             teacherViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(teacherHeaderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, teacherViewPanelLayout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(teacherBodyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(teacherBodyPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         teacherViewPanelLayout.setVerticalGroup(
             teacherViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1016,6 +1013,13 @@ public class MainScreen extends javax.swing.JFrame
 //        }
     }//GEN-LAST:event_tblViewTimeTableMouseClicked
 
+    private void teachersListMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_teachersListMouseClicked
+    {//GEN-HEADEREND:event_teachersListMouseClicked
+        // TODO add your handling code here:
+        teacherModel.setSelectedTeacherIndex(teachersList.getSelectedIndex());
+        populateTeacherTree();
+    }//GEN-LAST:event_teachersListMouseClicked
+
     private void lightenBackColour(JComponent c)
     {
         c.setBackground(lightBlue);
@@ -1064,7 +1068,10 @@ public class MainScreen extends javax.swing.JFrame
             }
         });
     }
-
+    
+    private LessonModel lessonModel;
+    private BattingModel battingModel;
+    private TeacherModel teacherModel;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel absenteesViewPanel;
     private javax.swing.JPanel battingBodyPanel1;
@@ -1114,4 +1121,9 @@ public class MainScreen extends javax.swing.JFrame
     private javax.swing.JPanel teacherViewPanel;
     private javax.swing.JList<String> teachersList;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTeacherTree()
+    {
+        
+    }
 }

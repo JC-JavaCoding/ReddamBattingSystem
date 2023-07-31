@@ -14,14 +14,20 @@ public class Teacher
 {
     private String fullName;
     private ArrayList <ExtraMural> extraMurals;
-    private ArrayList <Lesson> classesTaught;
+    private ArrayList <Lesson> lessons;
+    private ArrayList <String> classesTaught;
     private TimeTable tt;
 
-    public Teacher(String fullName, ArrayList<ExtraMural> extraMurals, ArrayList<Lesson> classesTaught)
+    public Teacher(String fullName, ArrayList<ExtraMural> extraMurals, ArrayList<Lesson> lessons)
     {
         this.fullName = fullName;
         this.extraMurals = extraMurals;
-        this.classesTaught = classesTaught;
+        this.lessons = lessons;
+        
+        for (Lesson lesson : lessons)
+        {
+            if (! classesTaught.contains( lesson.getLessonID() ) ) classesTaught.add(lesson.getLessonID());
+        }
     }
 
     @Override
@@ -31,7 +37,7 @@ public class Teacher
     }
     public boolean addClass(Lesson e)
     {
-        return classesTaught.add(e);
+        return lessons.add(e);
     }
 
 
@@ -62,12 +68,12 @@ public class Teacher
 
     public ArrayList<Lesson> getLessonsArrayList()
     {
-        return classesTaught;
+        return lessons;
     }
     private String getClassesAsString()
     {
         String classesTaughtStr = "";
-        for (DataTypes.Lesson currClass : classesTaught)
+        for (DataTypes.Lesson currClass : lessons)
         {
             classesTaughtStr += currClass.toString() + ",\t";
         }
@@ -84,6 +90,9 @@ public class Teacher
     {
         return extraMurals.add(e);
     }
-    
-    
+
+    public ArrayList<String> getClassesTaught()
+    {
+        return classesTaught;
+    } 
 }
