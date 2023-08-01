@@ -84,10 +84,11 @@ public class MainScreen extends javax.swing.JFrame
         emailContactLabel = new javax.swing.JLabel();
         phoneNumberContactLabel = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        addTeachersThroughCSVButton = new javax.swing.JButton();
         bodyPanel = new javax.swing.JPanel();
         teacherBulkInfoPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTree1 = new javax.swing.JTree();
+        teacherTree = new javax.swing.JTree();
         jScrollPane30 = new javax.swing.JScrollPane();
         tblViewTimeTable = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -341,7 +342,7 @@ public class MainScreen extends javax.swing.JFrame
             .addGroup(battingTopMainPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(sendTableButton)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         absenteesViewPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -516,7 +517,7 @@ public class MainScreen extends javax.swing.JFrame
             .addGroup(teacherHeaderPanelLayout.createSequentialGroup()
                 .addComponent(showSidePanelButton1)
                 .addGap(272, 272, 272)
-                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
+                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(290, 290, 290))
         );
         teacherHeaderPanelLayout.setVerticalGroup(
@@ -538,6 +539,8 @@ public class MainScreen extends javax.swing.JFrame
 
         jLabel10.setText("BattingLevel: 12.45");
 
+        addTeachersThroughCSVButton.setText("Insert teachers through csv");
+
         javax.swing.GroupLayout contactDetailsPanelLayout = new javax.swing.GroupLayout(contactDetailsPanel);
         contactDetailsPanel.setLayout(contactDetailsPanelLayout);
         contactDetailsPanelLayout.setHorizontalGroup(
@@ -548,7 +551,9 @@ public class MainScreen extends javax.swing.JFrame
                 .addComponent(phoneNumberContactLabel)
                 .addGap(75, 75, 75)
                 .addComponent(jLabel10)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(117, 117, 117)
+                .addComponent(addTeachersThroughCSVButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         contactDetailsPanelLayout.setVerticalGroup(
             contactDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -559,17 +564,20 @@ public class MainScreen extends javax.swing.JFrame
                     .addComponent(phoneNumberContactLabel)
                     .addComponent(jLabel10))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(contactDetailsPanelLayout.createSequentialGroup()
+                .addComponent(addTeachersThroughCSVButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(6, 6, 6))
         );
 
         bodyPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         teacherBulkInfoPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTree1.setBackground(new java.awt.Color(255, 255, 255));
-        jTree1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jTree1.setForeground(new java.awt.Color(0, 0, 51));
-        jTree1.setModel(teacherModel);
-        jScrollPane1.setViewportView(jTree1);
+        teacherTree.setBackground(new java.awt.Color(255, 255, 255));
+        teacherTree.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        teacherTree.setForeground(new java.awt.Color(0, 0, 51));
+        teacherTree.setModel(teacherModel);
+        jScrollPane1.setViewportView(teacherTree);
 
         tblViewTimeTable.setBackground(new java.awt.Color(255, 255, 255));
         tblViewTimeTable.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -637,7 +645,7 @@ public class MainScreen extends javax.swing.JFrame
             .addGroup(teacherBulkInfoPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(701, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(teacherBulkInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(teacherBulkInfoPanelLayout.createSequentialGroup()
                     .addContainerGap()
@@ -777,7 +785,7 @@ public class MainScreen extends javax.swing.JFrame
                 .addContainerGap()
                 .addComponent(showSidePanelButton2)
                 .addGap(259, 259, 259)
-                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
                 .addGap(297, 297, 297))
         );
         statisticsHeaderPanelLayout.setVerticalGroup(
@@ -1074,6 +1082,7 @@ public class MainScreen extends javax.swing.JFrame
     private TeacherModel teacherModel;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel absenteesViewPanel;
+    private javax.swing.JButton addTeachersThroughCSVButton;
     private javax.swing.JPanel battingBodyPanel1;
     private javax.swing.JPanel battingButtonPane;
     private javax.swing.JPanel battingHeaderPanel;
@@ -1101,7 +1110,6 @@ public class MainScreen extends javax.swing.JFrame
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane30;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTree jTree1;
     private javax.swing.JPanel mainViewPanel;
     private javax.swing.JPanel menuPanel;
     private javax.swing.JLabel phoneNumberContactLabel;
@@ -1118,6 +1126,7 @@ public class MainScreen extends javax.swing.JFrame
     private javax.swing.JPanel teacherBulkInfoPanel;
     private javax.swing.JPanel teacherButtonPane1;
     private javax.swing.JPanel teacherHeaderPanel;
+    private javax.swing.JTree teacherTree;
     private javax.swing.JPanel teacherViewPanel;
     private javax.swing.JList<String> teachersList;
     // End of variables declaration//GEN-END:variables

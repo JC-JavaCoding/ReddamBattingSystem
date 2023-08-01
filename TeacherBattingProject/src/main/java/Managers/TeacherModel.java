@@ -28,7 +28,7 @@ public class TeacherModel implements ListModel, TreeModel
 {
     private ArrayList<Teacher> teachers = new ArrayList<>();
     private int selectedTeacherIndex, treeSelectionInt;
-
+    
     public void setSelectedTeacherIndex(int selectedTeacherIndex)
     {
         this.selectedTeacherIndex = selectedTeacherIndex;
@@ -207,7 +207,8 @@ public class TeacherModel implements ListModel, TreeModel
             @Override
             public void intervalAdded(ListDataEvent e)
             {
-                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+               // String s = "Insert into tblTeachers(`Fullname`, `hasRegisterClass`) "
+               //        + "Values(\""+ e. +"\")";
             }
 
             @Override
