@@ -24,7 +24,7 @@ import javax.swing.tree.TreePath;
  *
  * @author janch
  */
-public class TeacherModel implements ListModel, TreeModel
+public class TeacherModel implements TreeModel
 {
     private ArrayList<Teacher> teachers = new ArrayList<>();
     private int selectedTeacherIndex, treeSelectionInt;
@@ -186,50 +186,5 @@ public class TeacherModel implements ListModel, TreeModel
     {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-    @Override
-    public int getSize()
-    {
-        return teachers.size();
-    }
-
-   @Override
-    public Object getElementAt(int index)
-    {
-        return teachers.get(index).getFullName();
-    }
-
-    @Override
-    public void addListDataListener(ListDataListener l)
-    {
-        new ListDataListener()
-        {
-            @Override
-            public void intervalAdded(ListDataEvent e)
-            {
-               // String s = "Insert into tblTeachers(`Fullname`, `hasRegisterClass`) "
-               //        + "Values(\""+ e. +"\")";
-            }
-
-            @Override
-            public void intervalRemoved(ListDataEvent e)
-            {
-                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-            }
-
-            @Override
-            public void contentsChanged(ListDataEvent e)
-            {
-                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-            }
-        };
-    }
-
-    @Override
-    public void removeListDataListener(ListDataListener l)
-    {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
     
 }

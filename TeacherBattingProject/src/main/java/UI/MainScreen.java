@@ -14,6 +14,7 @@ import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import javax.swing.JComponent;
 
 /**
@@ -666,7 +667,8 @@ public class MainScreen extends javax.swing.JFrame
         );
 
         teachersList.setBackground(new java.awt.Color(255, 255, 255));
-        teachersList.setModel(teacherModel);
+        teachersList.setModel(new DefaultListModel<String>());
+        teachersList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         teachersList.addMouseListener(new java.awt.event.MouseAdapter()
         {
             public void mouseClicked(java.awt.event.MouseEvent evt)
@@ -1025,7 +1027,8 @@ public class MainScreen extends javax.swing.JFrame
     {//GEN-HEADEREND:event_teachersListMouseClicked
         // TODO add your handling code here:
         teacherModel.setSelectedTeacherIndex(teachersList.getSelectedIndex());
-        populateTeacherTree();
+        teacherTree.setModel(teacherModel);
+        //populateTeacherTree();
     }//GEN-LAST:event_teachersListMouseClicked
 
     private void lightenBackColour(JComponent c)
