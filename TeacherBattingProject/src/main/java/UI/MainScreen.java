@@ -4,18 +4,29 @@
  */
 package UI;
 
+import DataTypes.ExtraMural;
+import DataTypes.MultiLineTableCellRenderer;
+import DataTypes.Teacher;
 import Managers.BattingModel;
 import Managers.DatabaseManager;
+import Managers.ExtramuralModel;
 import Managers.LessonModel;
 import Managers.TeacherModel;
-import com.formdev.flatlaf.ui.FlatButtonBorder;
 import com.formdev.flatlaf.ui.FlatLineBorder;
 import java.awt.Color;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
 
 /**
  *
@@ -35,11 +46,24 @@ public class MainScreen extends javax.swing.JFrame
             DatabaseManager.init();
             battingModel = new BattingModel();
             teacherModel = new TeacherModel();
+            extramuralModel = new ExtramuralModel();
         } catch (SQLException ex)
         {
             Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
         }
         initComponents();
+        
+        try
+        {
+            teachersList.setModel(teacherModel.getListModel());
+            extramuralsJList1.setModel(extramuralModel.getListModel());
+        }
+        catch (SQLException ex)
+        {
+            System.out.println("SQL Exception on startup");
+        }
+        extramuralAddPane.setVisible(false);
+        teacherEditPane.setVisible(true);
     }
 
     /**
@@ -54,6 +78,9 @@ public class MainScreen extends javax.swing.JFrame
 
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jTextField5 = new javax.swing.JTextField();
+        jToggleButton3 = new javax.swing.JToggleButton();
+        jButton5 = new javax.swing.JButton();
         menuPanel = new javax.swing.JPanel();
         battingButtonPane = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -62,6 +89,8 @@ public class MainScreen extends javax.swing.JFrame
         teacherButtonPane1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         hideSidePanelButton = new javax.swing.JButton();
+        settingsPaneButton = new javax.swing.JPanel();
+        settingsButtonPaneLabel = new javax.swing.JLabel();
         mainViewPanel = new javax.swing.JPanel();
         battingViewPanel = new javax.swing.JPanel();
         battingBodyPanel1 = new javax.swing.JPanel();
@@ -83,7 +112,6 @@ public class MainScreen extends javax.swing.JFrame
         jLabel8 = new javax.swing.JLabel();
         contactDetailsPanel = new javax.swing.JPanel();
         emailContactLabel = new javax.swing.JLabel();
-        phoneNumberContactLabel = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         addTeachersThroughCSVButton = new javax.swing.JButton();
         bodyPanel = new javax.swing.JPanel();
@@ -92,18 +120,65 @@ public class MainScreen extends javax.swing.JFrame
         teacherTree = new javax.swing.JTree();
         jScrollPane30 = new javax.swing.JScrollPane();
         tblViewTimeTable = new javax.swing.JTable();
+        insertPanes_HolderPane = new javax.swing.JPanel();
+        extramuralAddPane = new javax.swing.JPanel();
+        addExtramuralLabel = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        extramuralsJList = new javax.swing.JList<>();
+        addExtraMuralToTeacherButton = new javax.swing.JButton();
+        cancelAddEMToTeacherButton = new javax.swing.JButton();
+        editExtramuralPortalButton = new javax.swing.JButton();
+        teacherEditPane = new javax.swing.JPanel();
+        editTeacherHeaderLabel = new javax.swing.JLabel();
+        saveTeacherDetailsButton = new javax.swing.JButton();
+        cancelTeacherEditsButton = new javax.swing.JButton();
+        hasRegClassCheckbox = new javax.swing.JCheckBox();
+        editTeacherPaneNameLabel = new javax.swing.JLabel();
+        teacherNameTextField = new javax.swing.JTextField();
+        deleteEMfromTeacherButton = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         teachersList = new javax.swing.JList<>();
+        addTeachersButton = new javax.swing.JButton();
+        deleteTeacherButton = new javax.swing.JButton();
+        addTeacherWarningLabel = new javax.swing.JLabel();
+        searchTeachersField = new javax.swing.JTextField();
         statisticsViewPanel = new javax.swing.JPanel();
         statisticsHeaderPanel = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         showSidePanelButton2 = new javax.swing.JButton();
         statisticsBodyPanel = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
+        settingsViewPanel = new javax.swing.JPanel();
+        settingsHeaderPanel = new javax.swing.JPanel();
+        settingsMainScreenLabel = new javax.swing.JLabel();
+        showSidePanelButton3 = new javax.swing.JButton();
+        settingsMainBodyScrollPane = new javax.swing.JScrollPane();
+        settingsMainBodyPanel = new javax.swing.JPanel();
+        extramuralsEditPane = new javax.swing.JPanel();
+        extramuralSettingsListLabel = new javax.swing.JLabel();
+        fieldsDescriptionLabel = new javax.swing.JLabel();
+        extramuralAdditionScreenNameLabel1 = new javax.swing.JLabel();
+        hoursPerWeekExtramuralsAdditionScreenLabel1 = new javax.swing.JLabel();
+        extramuralNameInTextField1 = new javax.swing.JTextField();
+        extramuralsHoursPerWeekEditSpinner1 = new javax.swing.JSpinner();
+        dowExtramuralAdditionScreenJLabel1 = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        extramuralsJList1 = new javax.swing.JList<>();
+        deleteExtramuralButton = new javax.swing.JButton();
+        saveExtramuralButton = new javax.swing.JButton();
+        extramuralDayOfWeekComboBox = new javax.swing.JComboBox<>();
+        addExtramuralToggleButton = new javax.swing.JToggleButton();
+        jPanel3 = new javax.swing.JPanel();
 
         jMenuItem1.setText("jMenuItem1");
 
         jMenuItem2.setText("jMenuItem2");
+
+        jTextField5.setText("jTextField5");
+
+        jToggleButton3.setText("jToggleButton3");
+
+        jButton5.setText("jButton5");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -129,7 +204,7 @@ public class MainScreen extends javax.swing.JFrame
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Batting");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
@@ -137,14 +212,11 @@ public class MainScreen extends javax.swing.JFrame
         battingButtonPane.setLayout(battingButtonPaneLayout);
         battingButtonPaneLayout.setHorizontalGroup(
             battingButtonPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, battingButtonPaneLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(36, 36, 36))
+            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         battingButtonPaneLayout.setVerticalGroup(
             battingButtonPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         statisticsButtonPane.setBackground(new java.awt.Color(0, 0, 51));
@@ -173,14 +245,13 @@ public class MainScreen extends javax.swing.JFrame
         statisticsButtonPane.setLayout(statisticsButtonPaneLayout);
         statisticsButtonPaneLayout.setHorizontalGroup(
             statisticsButtonPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(statisticsButtonPaneLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
         );
         statisticsButtonPaneLayout.setVerticalGroup(
             statisticsButtonPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(statisticsButtonPaneLayout.createSequentialGroup()
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         teacherButtonPane1.setBackground(new java.awt.Color(0, 0, 51));
@@ -202,20 +273,18 @@ public class MainScreen extends javax.swing.JFrame
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Teacher");
 
         javax.swing.GroupLayout teacherButtonPane1Layout = new javax.swing.GroupLayout(teacherButtonPane1);
         teacherButtonPane1.setLayout(teacherButtonPane1Layout);
         teacherButtonPane1Layout.setHorizontalGroup(
             teacherButtonPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, teacherButtonPane1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(37, 37, 37))
+            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         teacherButtonPane1Layout.setVerticalGroup(
             teacherButtonPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         hideSidePanelButton.setBackground(menuPanel.getBackground());
@@ -243,6 +312,41 @@ public class MainScreen extends javax.swing.JFrame
             }
         });
 
+        settingsPaneButton.setBackground(new java.awt.Color(0, 0, 51));
+        settingsPaneButton.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                settingsPaneButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt)
+            {
+                settingsPaneButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt)
+            {
+                settingsPaneButtonMouseExited(evt);
+            }
+        });
+
+        settingsButtonPaneLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        settingsButtonPaneLabel.setForeground(new java.awt.Color(204, 204, 204));
+        settingsButtonPaneLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        settingsButtonPaneLabel.setText("Settings");
+
+        javax.swing.GroupLayout settingsPaneButtonLayout = new javax.swing.GroupLayout(settingsPaneButton);
+        settingsPaneButton.setLayout(settingsPaneButtonLayout);
+        settingsPaneButtonLayout.setHorizontalGroup(
+            settingsPaneButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(settingsButtonPaneLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        settingsPaneButtonLayout.setVerticalGroup(
+            settingsPaneButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(settingsPaneButtonLayout.createSequentialGroup()
+                .addComponent(settingsButtonPaneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
         menuPanel.setLayout(menuPanelLayout);
         menuPanelLayout.setHorizontalGroup(
@@ -254,6 +358,7 @@ public class MainScreen extends javax.swing.JFrame
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(hideSidePanelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addComponent(settingsPaneButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         menuPanelLayout.setVerticalGroup(
             menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -262,10 +367,12 @@ public class MainScreen extends javax.swing.JFrame
                 .addComponent(hideSidePanelButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(battingButtonPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(teacherButtonPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(statisticsButtonPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(settingsPaneButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -306,9 +413,11 @@ public class MainScreen extends javax.swing.JFrame
             }
         });
         battingTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        battingTable.setCellSelectionEnabled(true);
         battingTable.setGridColor(new java.awt.Color(204, 204, 204));
         battingTable.setRowHeight(60);
         battingTable.setShowGrid(true);
+        battingTable.setDefaultRenderer(String.class, new MultiLineTableCellRenderer());
         jScrollPane2.setViewportView(battingTable);
 
         battingTopMainPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -343,7 +452,7 @@ public class MainScreen extends javax.swing.JFrame
             .addGroup(battingTopMainPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(sendTableButton)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
 
         absenteesViewPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -372,7 +481,7 @@ public class MainScreen extends javax.swing.JFrame
             .addGroup(absenteesViewPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1)
-                .addContainerGap(206, Short.MAX_VALUE))
+                .addContainerGap(235, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout battingBodyPanel1Layout = new javax.swing.GroupLayout(battingBodyPanel1);
@@ -404,7 +513,7 @@ public class MainScreen extends javax.swing.JFrame
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(absenteesViewPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(29, 29, 29)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9)
                 .addContainerGap())
@@ -420,7 +529,7 @@ public class MainScreen extends javax.swing.JFrame
         showSidePanelButton.setBackground(menuPanel.getBackground());
         showSidePanelButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         showSidePanelButton.setForeground(new java.awt.Color(166, 142, 60));
-        showSidePanelButton.setText(">>");
+        showSidePanelButton.setText("=");
         showSidePanelButton.setBorder(null);
         showSidePanelButton.setVisible(false);
         showSidePanelButton.addMouseListener(new java.awt.event.MouseAdapter()
@@ -489,7 +598,7 @@ public class MainScreen extends javax.swing.JFrame
         showSidePanelButton1.setBackground(menuPanel.getBackground());
         showSidePanelButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         showSidePanelButton1.setForeground(new java.awt.Color(166, 142, 60));
-        showSidePanelButton1.setText(">>");
+        showSidePanelButton1.setText("=");
         showSidePanelButton1.setBorder(null);
         showSidePanelButton1.setVisible(false);
         showSidePanelButton1.addMouseListener(new java.awt.event.MouseAdapter()
@@ -536,24 +645,27 @@ public class MainScreen extends javax.swing.JFrame
 
         emailContactLabel.setText("email@example.com");
 
-        phoneNumberContactLabel.setText("060 000 0000");
-
         jLabel10.setText("BattingLevel: 12.45");
 
-        addTeachersThroughCSVButton.setText("Insert teachers through csv");
+        addTeachersThroughCSVButton.setText("Insert teachers lessons through csv");
+        addTeachersThroughCSVButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                addTeachersThroughCSVButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout contactDetailsPanelLayout = new javax.swing.GroupLayout(contactDetailsPanel);
         contactDetailsPanel.setLayout(contactDetailsPanelLayout);
         contactDetailsPanelLayout.setHorizontalGroup(
             contactDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(contactDetailsPanelLayout.createSequentialGroup()
-                .addComponent(emailContactLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
-                .addComponent(phoneNumberContactLabel)
-                .addGap(75, 75, 75)
+                .addComponent(emailContactLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(70, 70, 70)
                 .addComponent(jLabel10)
                 .addGap(117, 117, 117)
-                .addComponent(addTeachersThroughCSVButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(addTeachersThroughCSVButton, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
                 .addContainerGap())
         );
         contactDetailsPanelLayout.setVerticalGroup(
@@ -562,11 +674,10 @@ public class MainScreen extends javax.swing.JFrame
                 .addContainerGap()
                 .addGroup(contactDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(emailContactLabel)
-                    .addComponent(phoneNumberContactLabel)
                     .addComponent(jLabel10))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(contactDetailsPanelLayout.createSequentialGroup()
-                .addComponent(addTeachersThroughCSVButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(addTeachersThroughCSVButton, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
                 .addGap(6, 6, 6))
         );
 
@@ -577,7 +688,15 @@ public class MainScreen extends javax.swing.JFrame
         teacherTree.setBackground(new java.awt.Color(255, 255, 255));
         teacherTree.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         teacherTree.setForeground(new java.awt.Color(0, 0, 51));
-        teacherTree.setModel(teacherModel);
+        teacherTree.setModel(new DefaultTreeModel(new DefaultMutableTreeNode("Teacher"))
+        );
+        teacherTree.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                teacherTreeMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(teacherTree);
 
         tblViewTimeTable.setBackground(new java.awt.Color(255, 255, 255));
@@ -639,14 +758,176 @@ public class MainScreen extends javax.swing.JFrame
         });
         jScrollPane30.setViewportView(tblViewTimeTable);
 
+        insertPanes_HolderPane.setBackground(new java.awt.Color(255, 255, 255));
+        insertPanes_HolderPane.setLayout(new java.awt.CardLayout());
+
+        extramuralAddPane.setBackground(new java.awt.Color(255, 255, 255));
+        extramuralAddPane.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 204), 1, true));
+
+        addExtramuralLabel.setText("Add Extramural to teacher:");
+
+        extramuralsJList.setBackground(new java.awt.Color(0, 0, 51));
+        extramuralsJList.setModel(extramuralModel.getListModel());
+        extramuralsJList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane3.setViewportView(extramuralsJList);
+
+        addExtraMuralToTeacherButton.setText("Add To Teacher");
+        addExtraMuralToTeacherButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                addExtraMuralToTeacherButtonActionPerformed(evt);
+            }
+        });
+
+        cancelAddEMToTeacherButton.setText("Cancel");
+        cancelAddEMToTeacherButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                cancelAddEMToTeacherButtonActionPerformed(evt);
+            }
+        });
+
+        editExtramuralPortalButton.setText("Edit Extramural");
+        editExtramuralPortalButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                editExtramuralPortalButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout extramuralAddPaneLayout = new javax.swing.GroupLayout(extramuralAddPane);
+        extramuralAddPane.setLayout(extramuralAddPaneLayout);
+        extramuralAddPaneLayout.setHorizontalGroup(
+            extramuralAddPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(extramuralAddPaneLayout.createSequentialGroup()
+                .addGroup(extramuralAddPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(extramuralAddPaneLayout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(addExtramuralLabel))
+                    .addGroup(extramuralAddPaneLayout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(extramuralAddPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(extramuralAddPaneLayout.createSequentialGroup()
+                                .addComponent(addExtraMuralToTeacherButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(editExtramuralPortalButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(cancelAddEMToTeacherButton)))))
+                .addContainerGap(278, Short.MAX_VALUE))
+        );
+        extramuralAddPaneLayout.setVerticalGroup(
+            extramuralAddPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(extramuralAddPaneLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(addExtramuralLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(extramuralAddPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addExtraMuralToTeacherButton)
+                    .addComponent(cancelAddEMToTeacherButton)
+                    .addComponent(editExtramuralPortalButton))
+                .addContainerGap(82, Short.MAX_VALUE))
+        );
+
+        insertPanes_HolderPane.add(extramuralAddPane, "card2");
+
+        teacherEditPane.setBackground(new java.awt.Color(255, 255, 255));
+        teacherEditPane.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 102, 204), 1, true));
+        teacherEditPane.setMaximumSize(new java.awt.Dimension(32767, 120));
+        teacherEditPane.setPreferredSize(new java.awt.Dimension(629, 100));
+
+        editTeacherHeaderLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        editTeacherHeaderLabel.setText("Edit Teacher:");
+
+        saveTeacherDetailsButton.setText("Save");
+        saveTeacherDetailsButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                saveTeacherDetailsButtonActionPerformed(evt);
+            }
+        });
+
+        cancelTeacherEditsButton.setText("Cancel");
+        cancelTeacherEditsButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                cancelTeacherEditsButtonActionPerformed(evt);
+            }
+        });
+
+        hasRegClassCheckbox.setText("Has Register Class");
+
+        editTeacherPaneNameLabel.setText("Teacher Fullname:");
+
+        javax.swing.GroupLayout teacherEditPaneLayout = new javax.swing.GroupLayout(teacherEditPane);
+        teacherEditPane.setLayout(teacherEditPaneLayout);
+        teacherEditPaneLayout.setHorizontalGroup(
+            teacherEditPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(teacherEditPaneLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(teacherEditPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(teacherEditPaneLayout.createSequentialGroup()
+                        .addGroup(teacherEditPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(editTeacherHeaderLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cancelTeacherEditsButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(teacherEditPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(saveTeacherDetailsButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(hasRegClassCheckbox, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(teacherEditPaneLayout.createSequentialGroup()
+                        .addComponent(editTeacherPaneNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
+                        .addComponent(teacherNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        teacherEditPaneLayout.setVerticalGroup(
+            teacherEditPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(teacherEditPaneLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(teacherEditPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(editTeacherHeaderLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(hasRegClassCheckbox))
+                .addGap(54, 54, 54)
+                .addGroup(teacherEditPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(editTeacherPaneNameLabel)
+                    .addComponent(teacherNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(100, 100, 100)
+                .addGroup(teacherEditPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(saveTeacherDetailsButton)
+                    .addComponent(cancelTeacherEditsButton))
+                .addGap(14, 14, 14))
+        );
+
+        insertPanes_HolderPane.add(teacherEditPane, "card3");
+
+        deleteEMfromTeacherButton.setText("Delete Extramural From Teacher");
+        deleteEMfromTeacherButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                deleteEMfromTeacherButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout teacherBulkInfoPanelLayout = new javax.swing.GroupLayout(teacherBulkInfoPanel);
         teacherBulkInfoPanel.setLayout(teacherBulkInfoPanelLayout);
         teacherBulkInfoPanelLayout.setHorizontalGroup(
             teacherBulkInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(teacherBulkInfoPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(teacherBulkInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1)
+                    .addComponent(deleteEMfromTeacherButton, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(insertPanes_HolderPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
             .addGroup(teacherBulkInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(teacherBulkInfoPanelLayout.createSequentialGroup()
                     .addContainerGap()
@@ -655,15 +936,20 @@ public class MainScreen extends javax.swing.JFrame
         );
         teacherBulkInfoPanelLayout.setVerticalGroup(
             teacherBulkInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, teacherBulkInfoPanelLayout.createSequentialGroup()
+            .addGroup(teacherBulkInfoPanelLayout.createSequentialGroup()
                 .addGap(13, 13, 13)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(teacherBulkInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(insertPanes_HolderPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(teacherBulkInfoPanelLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(deleteEMfromTeacherButton)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(teacherBulkInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(teacherBulkInfoPanelLayout.createSequentialGroup()
                     .addGap(270, 270, 270)
-                    .addComponent(jScrollPane30, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane30, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
 
         teachersList.setBackground(new java.awt.Color(255, 255, 255));
@@ -678,52 +964,91 @@ public class MainScreen extends javax.swing.JFrame
         });
         jScrollPane4.setViewportView(teachersList);
 
+        addTeachersButton.setText("Add Teachers");
+        addTeachersButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                addTeachersButtonActionPerformed(evt);
+            }
+        });
+
+        deleteTeacherButton.setText("Delete Teacher");
+
         javax.swing.GroupLayout bodyPanelLayout = new javax.swing.GroupLayout(bodyPanel);
         bodyPanel.setLayout(bodyPanelLayout);
         bodyPanelLayout.setHorizontalGroup(
             bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bodyPanelLayout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(addTeachersButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(deleteTeacherButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(bodyPanelLayout.createSequentialGroup()
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(teacherBulkInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         bodyPanelLayout.setVerticalGroup(
             bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(bodyPanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bodyPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(teacherBulkInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(bodyPanelLayout.createSequentialGroup()
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 28, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(addTeachersButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(deleteTeacherButton))
         );
+
+        searchTeachersField.setBackground(new java.awt.Color(255, 255, 255));
+        searchTeachersField.setText("search teachers...");
+        searchTeachersField.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                searchTeachersFieldActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout teacherBodyPanelLayout = new javax.swing.GroupLayout(teacherBodyPanel);
         teacherBodyPanel.setLayout(teacherBodyPanelLayout);
         teacherBodyPanelLayout.setHorizontalGroup(
             teacherBodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(teacherBodyPanelLayout.createSequentialGroup()
-                .addGap(354, 354, 354)
-                .addComponent(contactDetailsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, teacherBodyPanelLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addGap(31, 31, 31)
+                .addComponent(searchTeachersField, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(122, 122, 122)
                 .addGroup(teacherBodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, teacherBodyPanelLayout.createSequentialGroup()
-                        .addComponent(bodyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(contactDetailsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(teacherBodyPanelLayout.createSequentialGroup()
+                        .addComponent(addTeacherWarningLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, teacherBodyPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(bodyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, teacherBodyPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel8))
         );
         teacherBodyPanelLayout.setVerticalGroup(
             teacherBodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, teacherBodyPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(contactDetailsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(7, 7, 7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(addTeacherWarningLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(searchTeachersField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(bodyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -757,7 +1082,7 @@ public class MainScreen extends javax.swing.JFrame
         showSidePanelButton2.setBackground(menuPanel.getBackground());
         showSidePanelButton2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         showSidePanelButton2.setForeground(new java.awt.Color(166, 142, 60));
-        showSidePanelButton2.setText(">>");
+        showSidePanelButton2.setText("=");
         showSidePanelButton2.setBorder(null);
         showSidePanelButton2.setVisible(false);
         showSidePanelButton2.addMouseListener(new java.awt.event.MouseAdapter()
@@ -787,7 +1112,7 @@ public class MainScreen extends javax.swing.JFrame
                 .addContainerGap()
                 .addComponent(showSidePanelButton2)
                 .addGap(259, 259, 259)
-                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
                 .addGap(297, 297, 297))
         );
         statisticsHeaderPanelLayout.setVerticalGroup(
@@ -833,6 +1158,223 @@ public class MainScreen extends javax.swing.JFrame
         );
 
         mainViewPanel.add(statisticsViewPanel, "card4");
+
+        settingsHeaderPanel.setBackground(new java.awt.Color(0, 0, 51));
+
+        settingsMainScreenLabel.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        settingsMainScreenLabel.setForeground(new java.awt.Color(204, 204, 204));
+        settingsMainScreenLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        settingsMainScreenLabel.setText("Settings");
+
+        showSidePanelButton3.setBackground(menuPanel.getBackground());
+        showSidePanelButton3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        showSidePanelButton3.setForeground(new java.awt.Color(166, 142, 60));
+        showSidePanelButton3.setText("=");
+        showSidePanelButton3.setBorder(null);
+        showSidePanelButton1.setVisible(false);
+        showSidePanelButton3.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseEntered(java.awt.event.MouseEvent evt)
+            {
+                showSidePanelButton3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt)
+            {
+                showSidePanelButton3MouseExited(evt);
+            }
+        });
+        showSidePanelButton3.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                showSidePanelButton3ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout settingsHeaderPanelLayout = new javax.swing.GroupLayout(settingsHeaderPanel);
+        settingsHeaderPanel.setLayout(settingsHeaderPanelLayout);
+        settingsHeaderPanelLayout.setHorizontalGroup(
+            settingsHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(settingsHeaderPanelLayout.createSequentialGroup()
+                .addComponent(showSidePanelButton3)
+                .addGap(272, 272, 272)
+                .addComponent(settingsMainScreenLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
+                .addGap(290, 290, 290))
+        );
+        settingsHeaderPanelLayout.setVerticalGroup(
+            settingsHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(settingsHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(settingsMainScreenLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
+                .addComponent(showSidePanelButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        extramuralSettingsListLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        extramuralSettingsListLabel.setText("Extramurals");
+
+        fieldsDescriptionLabel.setText("Edit Extramural");
+
+        extramuralAdditionScreenNameLabel1.setText("Name:");
+
+        hoursPerWeekExtramuralsAdditionScreenLabel1.setText("Hour(s) per session:");
+
+        extramuralsHoursPerWeekEditSpinner1.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, 10.0d, 0.0d));
+
+        dowExtramuralAdditionScreenJLabel1.setText("Day of the week:");
+
+        extramuralsJList1.setModel(extramuralModel.getListModel());
+        extramuralsJList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        extramuralsJList1.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                extramuralsJList1MouseClicked(evt);
+            }
+        });
+        jScrollPane6.setViewportView(extramuralsJList1);
+
+        deleteExtramuralButton.setText("Delete");
+        deleteExtramuralButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                deleteExtramuralButtonActionPerformed(evt);
+            }
+        });
+
+        saveExtramuralButton.setText("Save");
+        saveExtramuralButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                saveExtramuralButtonActionPerformed(evt);
+            }
+        });
+
+        extramuralDayOfWeekComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday" }));
+
+        addExtramuralToggleButton.setText("Add");
+        addExtramuralToggleButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                addExtramuralToggleButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout extramuralsEditPaneLayout = new javax.swing.GroupLayout(extramuralsEditPane);
+        extramuralsEditPane.setLayout(extramuralsEditPaneLayout);
+        extramuralsEditPaneLayout.setHorizontalGroup(
+            extramuralsEditPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(extramuralsEditPaneLayout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addGroup(extramuralsEditPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(extramuralsEditPaneLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(saveExtramuralButton)
+                        .addGap(29, 29, 29))
+                    .addGroup(extramuralsEditPaneLayout.createSequentialGroup()
+                        .addGroup(extramuralsEditPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(extramuralsEditPaneLayout.createSequentialGroup()
+                                .addComponent(addExtramuralToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(deleteExtramuralButton))
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE))
+                        .addGap(182, 182, 182)
+                        .addGroup(extramuralsEditPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(fieldsDescriptionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(extramuralsEditPaneLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(extramuralsEditPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(extramuralAdditionScreenNameLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(dowExtramuralAdditionScreenJLabel1)
+                                    .addComponent(hoursPerWeekExtramuralsAdditionScreenLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(166, 166, 166)
+                        .addGroup(extramuralsEditPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(extramuralNameInTextField1)
+                            .addComponent(extramuralsHoursPerWeekEditSpinner1, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
+                            .addComponent(extramuralDayOfWeekComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(42, 42, 42))
+                    .addGroup(extramuralsEditPaneLayout.createSequentialGroup()
+                        .addComponent(extramuralSettingsListLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+        extramuralsEditPaneLayout.setVerticalGroup(
+            extramuralsEditPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(extramuralsEditPaneLayout.createSequentialGroup()
+                .addGroup(extramuralsEditPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(extramuralsEditPaneLayout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addComponent(fieldsDescriptionLabel)
+                        .addGap(11, 11, 11)
+                        .addGroup(extramuralsEditPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(extramuralAdditionScreenNameLabel1)
+                            .addComponent(extramuralNameInTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(34, 34, 34)
+                        .addGroup(extramuralsEditPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(hoursPerWeekExtramuralsAdditionScreenLabel1)
+                            .addComponent(extramuralsHoursPerWeekEditSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(31, 31, 31)
+                        .addGroup(extramuralsEditPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(dowExtramuralAdditionScreenJLabel1)
+                            .addComponent(extramuralDayOfWeekComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(extramuralsEditPaneLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(extramuralSettingsListLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)))
+                .addGap(40, 40, 40)
+                .addGroup(extramuralsEditPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(deleteExtramuralButton)
+                    .addComponent(saveExtramuralButton)
+                    .addComponent(addExtramuralToggleButton))
+                .addGap(65, 65, 65))
+        );
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 391, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout settingsMainBodyPanelLayout = new javax.swing.GroupLayout(settingsMainBodyPanel);
+        settingsMainBodyPanel.setLayout(settingsMainBodyPanelLayout);
+        settingsMainBodyPanelLayout.setHorizontalGroup(
+            settingsMainBodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(extramuralsEditPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        settingsMainBodyPanelLayout.setVerticalGroup(
+            settingsMainBodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(settingsMainBodyPanelLayout.createSequentialGroup()
+                .addComponent(extramuralsEditPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(126, 126, 126))
+        );
+
+        settingsMainBodyScrollPane.setViewportView(settingsMainBodyPanel);
+
+        javax.swing.GroupLayout settingsViewPanelLayout = new javax.swing.GroupLayout(settingsViewPanel);
+        settingsViewPanel.setLayout(settingsViewPanelLayout);
+        settingsViewPanelLayout.setHorizontalGroup(
+            settingsViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(settingsHeaderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(settingsMainBodyScrollPane)
+        );
+        settingsViewPanelLayout.setVerticalGroup(
+            settingsViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(settingsViewPanelLayout.createSequentialGroup()
+                .addComponent(settingsHeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(settingsMainBodyScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 834, Short.MAX_VALUE))
+        );
+
+        mainViewPanel.add(settingsViewPanel, "card5");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -895,6 +1437,7 @@ public class MainScreen extends javax.swing.JFrame
         battingViewPanel.setVisible(true);
         teacherViewPanel.setVisible(false);
         statisticsViewPanel.setVisible(false);
+        settingsViewPanel.setVisible(false);
     }//GEN-LAST:event_battingButtonPaneMouseClicked
 
     private void teacherButtonPane1MouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_teacherButtonPane1MouseClicked
@@ -903,6 +1446,7 @@ public class MainScreen extends javax.swing.JFrame
         battingViewPanel.setVisible(false);
         teacherViewPanel.setVisible(true);
         statisticsViewPanel.setVisible(false);
+        settingsViewPanel.setVisible(false);
     }//GEN-LAST:event_teacherButtonPane1MouseClicked
 
     private void statisticsButtonPaneMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_statisticsButtonPaneMouseClicked
@@ -911,6 +1455,7 @@ public class MainScreen extends javax.swing.JFrame
         battingViewPanel.setVisible(false);
         teacherViewPanel.setVisible(false);
         statisticsViewPanel.setVisible(true);
+        settingsViewPanel.setVisible(false);
     }//GEN-LAST:event_statisticsButtonPaneMouseClicked
 
     private void hideSidePanelButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_hideSidePanelButtonActionPerformed
@@ -922,25 +1467,6 @@ public class MainScreen extends javax.swing.JFrame
         else if (teacherViewPanel.isVisible()) showSidePanelButton1.setVisible(true);
         else showSidePanelButton2.setVisible(true);
     }//GEN-LAST:event_hideSidePanelButtonActionPerformed
-
-    private void showSidePanelButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_showSidePanelButtonActionPerformed
-    {//GEN-HEADEREND:event_showSidePanelButtonActionPerformed
-        // TODO add your handling code here:
-        menuPanel.setVisible(true);
-        showSidePanelButton.setVisible(false);
-    }//GEN-LAST:event_showSidePanelButtonActionPerformed
-
-    private void showSidePanelButtonMouseEntered(java.awt.event.MouseEvent evt)//GEN-FIRST:event_showSidePanelButtonMouseEntered
-    {//GEN-HEADEREND:event_showSidePanelButtonMouseEntered
-        // TODO add your handling code here:
-        lightenBackColour(showSidePanelButton);
-    }//GEN-LAST:event_showSidePanelButtonMouseEntered
-
-    private void showSidePanelButtonMouseExited(java.awt.event.MouseEvent evt)//GEN-FIRST:event_showSidePanelButtonMouseExited
-    {//GEN-HEADEREND:event_showSidePanelButtonMouseExited
-        // TODO add your handling code here:
-        resetBackColour(showSidePanelButton);
-    }//GEN-LAST:event_showSidePanelButtonMouseExited
 
     private void hideSidePanelButtonMouseEntered(java.awt.event.MouseEvent evt)//GEN-FIRST:event_hideSidePanelButtonMouseEntered
     {//GEN-HEADEREND:event_hideSidePanelButtonMouseEntered
@@ -1005,31 +1531,308 @@ public class MainScreen extends javax.swing.JFrame
     private void tblViewTimeTableMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_tblViewTimeTableMouseClicked
     {//GEN-HEADEREND:event_tblViewTimeTableMouseClicked
         // TODO add your handling code here:
-//        if (tblViewTimeTable.isEnabled())
-//        {
-//            int row = tblViewTimeTable.getSelectedRow(), col = tblViewTimeTable.getSelectedColumn();
-//
-//            Cell selectedC = new Cell(row, col - 1);
-//
-//            changeTeacher_tableSelection[row][col - 1] = !changeTeacher_tableSelection[row][col - 1];
-//            if (tblViewTimeTable.getValueAt(row, col) == null)
-//            {
-//                change_selectedCells.add(selectedC);
-//                tblViewTimeTable.setValueAt("X", row, col);
-//            } else
-//            {
-//                tblViewTimeTable.setValueAt("", row, col);
-//            }
-//        }
+
     }//GEN-LAST:event_tblViewTimeTableMouseClicked
 
     private void teachersListMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_teachersListMouseClicked
     {//GEN-HEADEREND:event_teachersListMouseClicked
-        // TODO add your handling code here:
-        teacherModel.setSelectedTeacherIndex(teachersList.getSelectedIndex());
-        teacherTree.setModel(teacherModel);
-        //populateTeacherTree();
+            // TODO add your handling code here:
+            
+        teacherTree.setModel(teacherModel.getTreeModel(teachersList.getSelectedValue()));
+
+        String teacherName = teachersList.getSelectedValue();
+        String email = teacherName.stripLeading() + '.' + teacherName.substring(teacherName.indexOf(" ")) + "@reddam.house";
+        emailContactLabel.setText(email);
+            
+        try
+        {
+            lessonModel = new LessonModel(teacherModel.getTeacher(teacherName));
+            tblViewTimeTable.setModel(lessonModel);
+            //populateTeacherTree();
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_teachersListMouseClicked
+
+    private void addTeachersThroughCSVButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_addTeachersThroughCSVButtonActionPerformed
+    {//GEN-HEADEREND:event_addTeachersThroughCSVButtonActionPerformed
+        // TODO add your handling code here:
+        JFileChooser filePane = new JFileChooser();
+        int returnVal = filePane.showOpenDialog(this);
+        File selectedFile = null;
+        
+        if (returnVal == JFileChooser.APPROVE_OPTION)
+        {
+            selectedFile = filePane.getSelectedFile();
+            addTeacherWarningLabel.setText("");
+        }
+        else addTeacherWarningLabel.setText("No file selected");
+        
+        try
+        {
+            teacherModel.addTeachers(selectedFile);
+            teachersList.setModel(teacherModel.getListModel());
+        } catch (SQLException | FileNotFoundException ex)
+        {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_addTeachersThroughCSVButtonActionPerformed
+
+    private void searchTeachersFieldActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_searchTeachersFieldActionPerformed
+    {//GEN-HEADEREND:event_searchTeachersFieldActionPerformed
+        // TODO add your handling code here:
+        teacherModel.getTeachersContaining(searchTeachersField.getText());
+        DefaultListModel <String> dlm = new DefaultListModel<>();
+        
+        for (String str : teacherModel.getTeachersContaining(searchTeachersField.getText()))
+        {
+            dlm.addElement(str);
+        }
+        
+        teachersList.setModel(dlm);
+    }//GEN-LAST:event_searchTeachersFieldActionPerformed
+
+    private void showSidePanelButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_showSidePanelButtonActionPerformed
+    {//GEN-HEADEREND:event_showSidePanelButtonActionPerformed
+        // TODO add your handling code here:
+        menuPanel.setVisible(true);
+        showSidePanelButton.setVisible(false);
+    }//GEN-LAST:event_showSidePanelButtonActionPerformed
+
+    private void showSidePanelButtonMouseExited(java.awt.event.MouseEvent evt)//GEN-FIRST:event_showSidePanelButtonMouseExited
+    {//GEN-HEADEREND:event_showSidePanelButtonMouseExited
+        // TODO add your handling code here:
+        resetBackColour(showSidePanelButton);
+    }//GEN-LAST:event_showSidePanelButtonMouseExited
+
+    private void showSidePanelButtonMouseEntered(java.awt.event.MouseEvent evt)//GEN-FIRST:event_showSidePanelButtonMouseEntered
+    {//GEN-HEADEREND:event_showSidePanelButtonMouseEntered
+        // TODO add your handling code here:
+        lightenBackColour(showSidePanelButton);
+    }//GEN-LAST:event_showSidePanelButtonMouseEntered
+
+    private void showSidePanelButton3MouseEntered(java.awt.event.MouseEvent evt)//GEN-FIRST:event_showSidePanelButton3MouseEntered
+    {//GEN-HEADEREND:event_showSidePanelButton3MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_showSidePanelButton3MouseEntered
+
+    private void showSidePanelButton3MouseExited(java.awt.event.MouseEvent evt)//GEN-FIRST:event_showSidePanelButton3MouseExited
+    {//GEN-HEADEREND:event_showSidePanelButton3MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_showSidePanelButton3MouseExited
+
+    private void showSidePanelButton3ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_showSidePanelButton3ActionPerformed
+    {//GEN-HEADEREND:event_showSidePanelButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_showSidePanelButton3ActionPerformed
+
+    private void settingsPaneButtonMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_settingsPaneButtonMouseClicked
+    {//GEN-HEADEREND:event_settingsPaneButtonMouseClicked
+        // TODO add your handling code here:
+        battingViewPanel.setVisible(false);
+        teacherViewPanel.setVisible(false);
+        statisticsViewPanel.setVisible(false);
+        settingsViewPanel.setVisible(true);
+    }//GEN-LAST:event_settingsPaneButtonMouseClicked
+
+    private void settingsPaneButtonMouseEntered(java.awt.event.MouseEvent evt)//GEN-FIRST:event_settingsPaneButtonMouseEntered
+    {//GEN-HEADEREND:event_settingsPaneButtonMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_settingsPaneButtonMouseEntered
+
+    private void settingsPaneButtonMouseExited(java.awt.event.MouseEvent evt)//GEN-FIRST:event_settingsPaneButtonMouseExited
+    {//GEN-HEADEREND:event_settingsPaneButtonMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_settingsPaneButtonMouseExited
+
+    private void saveExtramuralButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_saveExtramuralButtonActionPerformed
+    {//GEN-HEADEREND:event_saveExtramuralButtonActionPerformed
+        // TODO add your handling code here:
+        try 
+        {
+            if (addExtramuralToggleButton.isSelected()) addExtramural();
+            else
+            {
+                String emName = extramuralNameInTextField1.getText();
+                int dowInt = extramuralDayOfWeekComboBox.getSelectedIndex() + 1;
+                double hoursPW =  Double.parseDouble("" + extramuralsHoursPerWeekEditSpinner1.getValue());
+
+                extramuralModel.updateExtramural(
+                        extramuralModel.getExtramural(
+                                extramuralsJList1.getSelectedValue()), 
+                        new ExtraMural(
+                                emName, 
+                                hoursPW, 
+                                dowInt
+                        )
+                );
+                
+                extramuralsJList1.setModel(extramuralModel.getListModel());
+            }
+        }
+        catch (SQLException ex)
+        {
+            JOptionPane.showMessageDialog(this, ex.toString(), "ERROR: " +ex.getErrorCode(), JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_saveExtramuralButtonActionPerformed
+
+    private void extramuralsJList1MouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_extramuralsJList1MouseClicked
+    {//GEN-HEADEREND:event_extramuralsJList1MouseClicked
+        // TODO add your handling code here:
+        ExtraMural em = extramuralModel.getExtramural(extramuralsJList1.getSelectedValue());//get by toString);
+        if (addExtramuralToggleButton.isSelected()) addExtramuralToggleButton.doClick();
+
+        extramuralNameInTextField1.setText(em.getExtraMuralName());
+        extramuralsHoursPerWeekEditSpinner1.setValue(em.getDuration());
+        extramuralDayOfWeekComboBox.setSelectedIndex(em.getWeekday() - 1);
+    }//GEN-LAST:event_extramuralsJList1MouseClicked
+ 
+    private void addExtramuralToggleButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_addExtramuralToggleButtonActionPerformed
+    {//GEN-HEADEREND:event_addExtramuralToggleButtonActionPerformed
+        // TODO add your handling code here:
+        fieldsDescriptionLabel.setText("Please fill in the fields below.");
+        clearExtramuralSettingsFields();
+    }//GEN-LAST:event_addExtramuralToggleButtonActionPerformed
+
+    private void deleteExtramuralButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_deleteExtramuralButtonActionPerformed
+    {//GEN-HEADEREND:event_deleteExtramuralButtonActionPerformed
+        // TODO add your handling code here:
+        String  selectedEM = extramuralsJList1.getSelectedValue();
+        int confirmedInt = JOptionPane.showConfirmDialog(this, "Are you certain you want to DELETE the Extramural \""+ selectedEM +"\" forever?");
+            
+        if (confirmedInt == 0)
+        {
+            try {
+                extramuralModel.deleteExtramural(extramuralModel.getExtramural(selectedEM));
+                
+                JOptionPane.showMessageDialog(this, "\""+ selectedEM +"\" removed from database.", "\bDELETION\b", JOptionPane.INFORMATION_MESSAGE);
+                
+                extramuralsJList1.setModel(extramuralModel.getListModel());
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, ex.toString(), "ERROR: " +ex.getErrorCode(), JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_deleteExtramuralButtonActionPerformed
+
+    private void addExtraMuralToTeacherButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_addExtraMuralToTeacherButtonActionPerformed
+    {//GEN-HEADEREND:event_addExtraMuralToTeacherButtonActionPerformed
+        // TODO add your handling code here:
+        if (extramuralsJList.isSelectionEmpty())
+        {
+            JOptionPane.showMessageDialog(this, "Please select an extramural activity to add to the teacher.", "ERROR: ", JOptionPane.ERROR_MESSAGE);
+        }
+        else 
+        {
+            try
+            {
+                ExtraMural em = extramuralModel.getExtramural(extramuralsJList.getSelectedValue());
+                Teacher teacher = teacherModel.getTeacher(teachersList.getSelectedValue());
+                int confirmedInt = JOptionPane.showConfirmDialog(this, "Are you sure you want to add \""+ em.toString()+"\" to Teacher \""+ teacher.getFullName() +"`s\" list of extramurals?");
+               
+                if (confirmedInt == 0) teacherModel.addExtramural(teacher, em);
+                
+                JOptionPane.showMessageDialog(this, "", "Added" + em.toString()+"\" to Teacher \""+ teacher.getFullName() +"`s\" list of extramurals", JOptionPane.INFORMATION_MESSAGE);
+                
+                teacherTree.setModel(teacherModel.getTreeModel(teachersList.getSelectedValue()));
+            } catch (SQLException ex)
+            {
+                JOptionPane.showMessageDialog(this, ex.toString(), "ERROR: " +ex.getErrorCode(), JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_addExtraMuralToTeacherButtonActionPerformed
+
+    private void teacherTreeMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_teacherTreeMouseClicked
+    {//GEN-HEADEREND:event_teacherTreeMouseClicked
+        // TODO add your handling code here:
+        if (teacherTree.isExpanded(1)) 
+        {
+            extramuralAddPane.setVisible(true);
+        }
+    }//GEN-LAST:event_teacherTreeMouseClicked
+
+    private void editExtramuralPortalButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_editExtramuralPortalButtonActionPerformed
+    {//GEN-HEADEREND:event_editExtramuralPortalButtonActionPerformed
+        // TODO add your handling code here:
+        battingViewPanel.setVisible(false);
+        teacherViewPanel.setVisible(false);
+        statisticsViewPanel.setVisible(false);
+        settingsViewPanel.setVisible(true);        
+    }//GEN-LAST:event_editExtramuralPortalButtonActionPerformed
+
+    private void cancelAddEMToTeacherButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cancelAddEMToTeacherButtonActionPerformed
+    {//GEN-HEADEREND:event_cancelAddEMToTeacherButtonActionPerformed
+        // TODO add your handling code here:
+        extramuralAddPane.setVisible(false);
+        teacherEditPane.setVisible(true);
+    }//GEN-LAST:event_cancelAddEMToTeacherButtonActionPerformed
+
+    private void deleteEMfromTeacherButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_deleteEMfromTeacherButtonActionPerformed
+    {//GEN-HEADEREND:event_deleteEMfromTeacherButtonActionPerformed
+        // TODO add your handling code here:
+        try
+        {
+             DefaultMutableTreeNode node = (DefaultMutableTreeNode) teacherTree.getLastSelectedPathComponent();
+            teacherModel.removeExtramural(
+                    teacherModel.getTeacher(teachersList.getSelectedValue()) , 
+                    extramuralModel.getExtramural((String) node.getUserObject())
+            );
+        } catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_deleteEMfromTeacherButtonActionPerformed
+
+    private void cancelTeacherEditsButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cancelTeacherEditsButtonActionPerformed
+    {//GEN-HEADEREND:event_cancelTeacherEditsButtonActionPerformed
+        // TODO add your handling code here:
+        teacherNameTextField.setText(teachersList.getSelectedValue());
+        if (teacherModel.getTeacher(teachersList.getSelectedValue()).hasRegisterClass()) hasRegClassCheckbox.setSelected(true);
+        else hasRegClassCheckbox.setSelected(false);
+    }//GEN-LAST:event_cancelTeacherEditsButtonActionPerformed
+
+    private void saveTeacherDetailsButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_saveTeacherDetailsButtonActionPerformed
+    {//GEN-HEADEREND:event_saveTeacherDetailsButtonActionPerformed
+        // TODO add your handling code here:
+        Teacher baseTeacher = teacherModel.getTeacher(teachersList.getSelectedValue());
+        Teacher newTeacher = new Teacher(
+            teacherNameTextField.getText(),
+            baseTeacher.getExtraMuralsAsArrayList(),
+            baseTeacher.getLessonsArrayList(),
+            hasRegClassCheckbox.isSelected());
+
+        try
+        {
+            teacherModel.updateTeacher(baseTeacher, newTeacher);
+        } catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_saveTeacherDetailsButtonActionPerformed
+
+    private void addTeachersButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_addTeachersButtonActionPerformed
+    {//GEN-HEADEREND:event_addTeachersButtonActionPerformed
+        // TODO add your handling code here:
+                JFileChooser filePane = new JFileChooser();
+        int returnVal = filePane.showOpenDialog(this);
+        File selectedFile = null;
+        
+        if (returnVal == JFileChooser.APPROVE_OPTION)
+        {
+            selectedFile = filePane.getSelectedFile();
+            addTeacherWarningLabel.setText("");
+        }
+        else addTeacherWarningLabel.setText("No file selected");
+        
+        try
+        {
+            teacherModel.addTeachersNames(selectedFile);
+            teachersList.setModel(teacherModel.getListModel());
+        } catch (SQLException | FileNotFoundException ex)
+        {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_addTeachersButtonActionPerformed
 
     private void lightenBackColour(JComponent c)
     {
@@ -1080,11 +1883,17 @@ public class MainScreen extends javax.swing.JFrame
         });
     }
     
+    private ExtramuralModel extramuralModel;
     private LessonModel lessonModel;
     private BattingModel battingModel;
     private TeacherModel teacherModel;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel absenteesViewPanel;
+    private javax.swing.JButton addExtraMuralToTeacherButton;
+    private javax.swing.JLabel addExtramuralLabel;
+    private javax.swing.JToggleButton addExtramuralToggleButton;
+    private javax.swing.JLabel addTeacherWarningLabel;
+    private javax.swing.JButton addTeachersButton;
     private javax.swing.JButton addTeachersThroughCSVButton;
     private javax.swing.JPanel battingBodyPanel1;
     private javax.swing.JPanel battingButtonPane;
@@ -1093,10 +1902,33 @@ public class MainScreen extends javax.swing.JFrame
     private javax.swing.JPanel battingTopMainPanel;
     private javax.swing.JPanel battingViewPanel;
     private javax.swing.JPanel bodyPanel;
+    private javax.swing.JButton cancelAddEMToTeacherButton;
+    private javax.swing.JButton cancelTeacherEditsButton;
     private javax.swing.JPanel contactDetailsPanel;
+    private javax.swing.JButton deleteEMfromTeacherButton;
+    private javax.swing.JButton deleteExtramuralButton;
+    private javax.swing.JButton deleteTeacherButton;
+    private javax.swing.JLabel dowExtramuralAdditionScreenJLabel1;
+    private javax.swing.JButton editExtramuralPortalButton;
+    private javax.swing.JLabel editTeacherHeaderLabel;
+    private javax.swing.JLabel editTeacherPaneNameLabel;
     private javax.swing.JLabel emailContactLabel;
+    private javax.swing.JPanel extramuralAddPane;
+    private javax.swing.JLabel extramuralAdditionScreenNameLabel1;
+    private javax.swing.JComboBox<String> extramuralDayOfWeekComboBox;
+    private javax.swing.JTextField extramuralNameInTextField1;
+    private javax.swing.JLabel extramuralSettingsListLabel;
+    private javax.swing.JPanel extramuralsEditPane;
+    private javax.swing.JSpinner extramuralsHoursPerWeekEditSpinner1;
+    private javax.swing.JList<String> extramuralsJList;
+    private javax.swing.JList<String> extramuralsJList1;
+    private javax.swing.JLabel fieldsDescriptionLabel;
+    private javax.swing.JCheckBox hasRegClassCheckbox;
     private javax.swing.JButton hideSidePanelButton;
+    private javax.swing.JLabel hoursPerWeekExtramuralsAdditionScreenLabel1;
+    private javax.swing.JPanel insertPanes_HolderPane;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -1109,17 +1941,32 @@ public class MainScreen extends javax.swing.JFrame
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane30;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JTextField jTextField5;
+    private javax.swing.JToggleButton jToggleButton3;
     private javax.swing.JPanel mainViewPanel;
     private javax.swing.JPanel menuPanel;
-    private javax.swing.JLabel phoneNumberContactLabel;
+    private javax.swing.JButton saveExtramuralButton;
+    private javax.swing.JButton saveTeacherDetailsButton;
+    private javax.swing.JTextField searchTeachersField;
     private javax.swing.JButton sendTableButton;
+    private javax.swing.JLabel settingsButtonPaneLabel;
+    private javax.swing.JPanel settingsHeaderPanel;
+    private javax.swing.JPanel settingsMainBodyPanel;
+    private javax.swing.JScrollPane settingsMainBodyScrollPane;
+    private javax.swing.JLabel settingsMainScreenLabel;
+    private javax.swing.JPanel settingsPaneButton;
+    private javax.swing.JPanel settingsViewPanel;
     private javax.swing.JButton showSidePanelButton;
     private javax.swing.JButton showSidePanelButton1;
     private javax.swing.JButton showSidePanelButton2;
+    private javax.swing.JButton showSidePanelButton3;
     private javax.swing.JPanel statisticsBodyPanel;
     private javax.swing.JPanel statisticsButtonPane;
     private javax.swing.JPanel statisticsHeaderPanel;
@@ -1128,7 +1975,9 @@ public class MainScreen extends javax.swing.JFrame
     private javax.swing.JPanel teacherBodyPanel;
     private javax.swing.JPanel teacherBulkInfoPanel;
     private javax.swing.JPanel teacherButtonPane1;
+    private javax.swing.JPanel teacherEditPane;
     private javax.swing.JPanel teacherHeaderPanel;
+    private javax.swing.JTextField teacherNameTextField;
     private javax.swing.JTree teacherTree;
     private javax.swing.JPanel teacherViewPanel;
     private javax.swing.JList<String> teachersList;
@@ -1137,5 +1986,38 @@ public class MainScreen extends javax.swing.JFrame
     private void populateTeacherTree()
     {
         
+    }
+
+    private void clearExtramuralSettingsFields()
+    {
+        extramuralsJList1.clearSelection();
+        extramuralsHoursPerWeekEditSpinner1.setValue(0);
+        extramuralDayOfWeekComboBox.setSelectedIndex(0);
+        extramuralNameInTextField1.setText("");
+    }
+
+    private void addExtramural() throws SQLException
+    {
+        if (extramuralNameInTextField1.getText().isBlank()
+                || Double.parseDouble("" +extramuralsHoursPerWeekEditSpinner1.getValue()) ==0)
+        {
+            JOptionPane.showMessageDialog(this, "Please fill in all of the fields", "One/more of the fields hold no values", JOptionPane.ERROR_MESSAGE);
+        }
+        else 
+        {
+            String emName = extramuralNameInTextField1.getText();
+            int dowInt = extramuralDayOfWeekComboBox.getSelectedIndex() + 1;
+            double hoursPW =  Double.parseDouble("" + extramuralsHoursPerWeekEditSpinner1.getValue());
+            int confirmedInt = JOptionPane.showConfirmDialog(this, "Are you certain you want to create the Extramural \""+ emName +"\", Day of week: "+ dowInt +", For "+ extramuralsHoursPerWeekEditSpinner1.getValue() +"hrs");
+            
+            if (confirmedInt == 0)
+            {
+                extramuralModel.addExtramural(new ExtraMural(emName, hoursPW, dowInt));
+                
+                addExtramuralToggleButton.doClick();
+                
+                extramuralsJList1.setModel(extramuralModel.getListModel());
+            }
+        }
     }
 }

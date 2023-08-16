@@ -9,9 +9,6 @@ import DataTypes.Teacher;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
@@ -122,13 +119,13 @@ public class LessonModel implements TableModel
     @Override
     public void addTableModelListener(TableModelListener l)
     {
-        throw new UnsupportedOperationException("Not supported yet."); 
+        
     }
 
     @Override
     public void removeTableModelListener(TableModelListener l)
     {
-        throw new UnsupportedOperationException("Not supported yet."); 
+     
     }
 
     private void deleteValueAt(int rowIndex, int columnIndex) throws SQLException

@@ -4,8 +4,7 @@
  */
 package DataTypes;
 
-import java.time.DayOfWeek;
-import java.util.ArrayList;
+
 
 /**
  *
@@ -57,7 +56,7 @@ public class ExtraMural
     @Override
     public String toString()
     {
-        return "ExtraMural{" + "extraMuralName=" + extraMuralName + ", Duration: " + duration;
+        return extraMuralName + " | " + weekday +" | "+ duration;
     }
     
 }

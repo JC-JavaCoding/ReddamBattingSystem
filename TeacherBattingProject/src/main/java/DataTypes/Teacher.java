@@ -16,13 +16,14 @@ public class Teacher
     private ArrayList <ExtraMural> extraMurals;
     private ArrayList <Lesson> lessons;
     private ArrayList <String> classesTaught;
-    private TimeTable tt;
+    private boolean hasRegisterClass;
 
-    public Teacher(String fullName, ArrayList<ExtraMural> extraMurals, ArrayList<Lesson> lessons)
+    public Teacher(String fullName, ArrayList<ExtraMural> extraMurals, ArrayList<Lesson> lessons, boolean hasRegisterclass)
     {
         this.fullName = fullName;
         this.extraMurals = extraMurals;
         this.lessons = lessons;
+        this.hasRegisterClass = hasRegisterclass;
         
         for (Lesson lesson : lessons)
         {
@@ -33,7 +34,7 @@ public class Teacher
     @Override
     public String toString()
     {
-        return "Teacher{" + "fullName=" + fullName + "\nEXTRAMURALS\n" + getExtraMuralsAsString() + "\nBattings\n" + getClassesAsString() + "\n tt=" + tt + '}';
+        return "Teacher{" + "fullName=" + fullName + "\nEXTRAMURALS\n" + getExtraMuralsAsString() + "\nBattings\n" + getClassesAsString();
     }
     public boolean addClass(Lesson e)
     {
@@ -81,11 +82,6 @@ public class Teacher
         return classesTaughtStr;
     }
 
-    public TimeTable getTt()
-    {
-        return tt;
-    }
-
     public boolean addExtraMural(ExtraMural e)
     {
         return extraMurals.add(e);
@@ -95,4 +91,9 @@ public class Teacher
     {
         return classesTaught;
     } 
+
+    public boolean hasRegisterClass()
+    {
+        return hasRegisterClass;
+    }
 }

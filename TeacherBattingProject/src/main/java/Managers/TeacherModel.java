@@ -7,53 +7,87 @@ package Managers;
 import DataTypes.ExtraMural;
 import DataTypes.Lesson;
 import DataTypes.Teacher;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Scanner;
+import javax.swing.DefaultListModel;
 import javax.swing.ListModel;
-import javax.swing.event.ListDataEvent;
-import javax.swing.event.ListDataListener;
-import javax.swing.event.TableModelListener;
-import javax.swing.event.TreeModelEvent;
-import javax.swing.event.TreeModelListener;
-import javax.swing.table.TableModel;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
-import javax.swing.tree.TreePath;
 
 /**
  *
  * @author janch
  */
-public class TeacherModel implements TreeModel
+public class TeacherModel
 {
     private ArrayList<Teacher> teachers = new ArrayList<>();
-    private int selectedTeacherIndex, treeSelectionInt;
-    
-    public void setSelectedTeacherIndex(int selectedTeacherIndex)
-    {
-        this.selectedTeacherIndex = selectedTeacherIndex;
-    }
-
-    public void setTreeSelectionInt(int treeSelectionInt)
-    {
-        this.treeSelectionInt = treeSelectionInt;
-    }
     
     public TeacherModel() throws SQLException 
     {
-        selectedTeacherIndex = 0;
-        treeSelectionInt = 0;
         
         //insert all the teachers into an arrayList from the DB
-        ResultSet rs = DatabaseManager.instance.query("Select * From tblTeachers");//need to select multiple tables to get all relevant information for teacher  
+       populateTeachersAL();
+    }
+
+    public ArrayList<String> getTeachersContaining(String text)
+    {
+        //returns the full names of all of the teachers whose names contain the letters in the text.
+        ArrayList<String> outputAL = new ArrayList<>();
+        
+        for (Teacher t : teachers)
+        {
+            if (t.getFullName().contains(text)) 
+                outputAL.add(t.getFullName());
+        }
+        
+        return outputAL;
+    }
+
+
+    public ListModel<String> getListModel() throws SQLException
+    {
+        populateTeachersAL();
+        
+        DefaultListModel dlm = new DefaultListModel<String>();
+        for (Teacher t : teachers)
+        {
+            dlm.addElement(t.getFullName());
+        }
+        
+        return dlm;
+    }
+
+    public void addTeachersNames(File selectedFile) throws SQLException, FileNotFoundException
+    {
+        String insertQueryStr = "Insert into tblTeachers(`FullName`) Values ";
+        Scanner filesc = new Scanner(selectedFile);
+        while(filesc.hasNextLine())
+        {
+            insertQueryStr +="(\""+ filesc.nextLine() +"\")" + ((filesc.hasNextLine())? ",": "");
+        }
+        
+        System.out.println(insertQueryStr);
+        DatabaseManager.instance.update(insertQueryStr);
+        
+        populateTeachersAL();
+    }
+
+    private void populateTeachersAL() throws SQLException
+    {
+         ResultSet rs = DatabaseManager.instance.query("Select * From tblTeachers");//need to select multiple tables to get all relevant information for teacher  
         
         while (rs.next())
         {
             int curTeacherID = rs.getInt(1);
             String teacherName = rs.getString(2);
+            boolean hasRegisterClass = rs.getBoolean(3);
             ArrayList <ExtraMural> extramurals = new ArrayList<>();
             ArrayList <Lesson> lessons = new ArrayList<>();
-            
             
             //add the extramurals into an arraylist
             ResultSet extramuralRS = DatabaseManager.instance.query("Select `Name`, `Duration`, `DayOfWeek` from tblTeacherExtraMurals, tblExtramural WHERE tblTeacherExtraMurals.TeacherID = "+ curTeacherID+ " AND "
@@ -84,107 +118,120 @@ public class TeacherModel implements TreeModel
                     );
                 }
             }
+            Teacher temp = new Teacher(teacherName, extramurals, lessons, hasRegisterClass);
+            boolean exists = false;
+            for (Teacher t : teachers)
+            {
+                exists =  (t.getFullName().equals(temp.getFullName()));
+            }
+            if(!exists) teachers.add(temp);
+        }
+    }
+
+    public TreeModel getTreeModel(String teacherNameIn)
+    {
+        DefaultMutableTreeNode root  = new DefaultMutableTreeNode(teacherNameIn);
+        DefaultMutableTreeNode extramuralsNode;
+        DefaultMutableTreeNode classesTaught;
+        
+        Teacher matchingTeacher = null;
+        for (Teacher t : teachers)
+        {
+            if (t.getFullName().equals(teacherNameIn)) matchingTeacher = t;
+        }
+        
+        if(matchingTeacher != null) 
+        {
+            extramuralsNode = new DefaultMutableTreeNode("Extramurals");
             
-            teachers.add(new Teacher(teacherName, extramurals, lessons));
+            if(matchingTeacher.getExtraMuralsAsArrayList() != null)
+            {
+                for (ExtraMural em : matchingTeacher.getExtraMuralsAsArrayList())
+                {
+                    extramuralsNode.add(new DefaultMutableTreeNode(em.getExtraMuralName() + " - "+ em.getDuration() + " hrs"));
+                }
+            }
+            
+            classesTaught = new DefaultMutableTreeNode("Classes taught");
+            if(matchingTeacher.getClassesTaught() != null)
+            {
+                for (String str : matchingTeacher.getClassesTaught())
+                {
+                    extramuralsNode.add(new DefaultMutableTreeNode(str));
+                }
+            }
+            
+            root.add(extramuralsNode);
+            root.add(classesTaught);
+            
+            return new DefaultTreeModel(root);
         }
+        return new DefaultTreeModel(new DefaultMutableTreeNode("No teacher in database with name: "+ teacherNameIn));
     }
     
-// end of Table model implementation
-    @Override
-    public Object getRoot()
+    public Teacher getTeacher(String teacherNameIn)
     {
-        return teachers.get(selectedTeacherIndex).getFullName();
-    }
-
-    @Override
-    public Object getChild(Object parent, int index)
-    {
-        Teacher temp = teachers.get(selectedTeacherIndex);
-        return switch (treeSelectionInt)
+        for (Teacher t : teachers)
         {
-            case 0 -> temp.getExtraMuralsAsArrayList().size();
-            case 1 -> temp.getClassesTaught().size();
-            default -> -1;
-        };
-    }
-
-    @Override
-    public int getChildCount(Object parent)
-    {
-        Teacher temp = teachers.get(selectedTeacherIndex);
-        return switch (treeSelectionInt)
-        {
-            case 0 -> temp.getExtraMuralsAsArrayList().size();
-            case 1 -> temp.getClassesTaught().size();
-            default -> -1;
-        };
-    }
-
-    @Override
-    public boolean isLeaf(Object node)
-    {
-        return (node instanceof ExtraMural || node instanceof String);
-    }
-
-    @Override
-    public void valueForPathChanged(TreePath path, Object newValue)
-    {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public int getIndexOfChild(Object parent, Object child)
-    {
-        if (child instanceof ExtraMural) 
-        {
-            return teachers.get(
-                    teachers.indexOf(parent)
-            )
-                    .getExtraMuralsAsArrayList()
-                    .indexOf(child);
+            if (t.getFullName().equals(teacherNameIn)) return t;
         }
-        return teachers.get(
-                teachers.indexOf(parent)
-        )
-                .getClassesTaught()
-                .indexOf(child);
+        
+        return null;
     }
 
-    @Override
-    public void addTreeModelListener(TreeModelListener l)
+    public void addExtramural(Teacher teacherIn, ExtraMural extramuralIn) throws SQLException
     {
-        new TreeModelListener()
+        for (Teacher t: teachers)
         {
-            @Override
-            public void treeNodesChanged(TreeModelEvent e)
+            if (t.getFullName().equals(teacherIn.getFullName()))
             {
-                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                teacherIn.addExtraMural(extramuralIn);
+                t = teacherIn;
+                //update database, insert for the teacher id and em. id in teacherExtramurals table
+                DatabaseManager.instance.update("Insert into tblTeacherExtraMurals (`TeacherID`, `ExtraMuralID`) "
+                +"Select `TeacherID`, `ExtramuralID` from tblTeachers, tblExtramural"
+                        + " WHERE tblTeachers.FullName = \""+ t.getFullName() +"\""
+                        + " AND tblExtramural.Name = \""+ extramuralIn.getExtraMuralName() +"\" AND tblExtramural.DayOfWeek = \""+ extramuralIn.getWeekday() +"\"");
+                break;
             }
-
-            @Override
-            public void treeNodesInserted(TreeModelEvent e)
-            {
-                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-            }
-
-            @Override
-            public void treeNodesRemoved(TreeModelEvent e)
-            {
-                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-            }
-
-            @Override
-            public void treeStructureChanged(TreeModelEvent e)
-            {
-                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-            }
-        };
+        }
+        
     }
 
-    @Override
-    public void removeTreeModelListener(TreeModelListener l)
+    public void updateTeacher(Teacher originalTeacher, Teacher updatedTeacher) throws SQLException
     {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        DatabaseManager.instance.update("Update tblTeachers Set `FullName` = \""+ updatedTeacher.getFullName() +"\" AND `HasRegisterClass` = "+ updatedTeacher.hasRegisterClass() 
+        +" Where `FullName` = \""+ originalTeacher.getFullName() +"\"");
     }
-    
+
+    public void removeExtramural(Teacher teacher, ExtraMural extramural) throws SQLException
+    {
+        DatabaseManager.instance.update("Delete from tblTeacherExtramurals "
+                + "Where `TeacherID` = (Select `TeacherID` from tblTeachers WHERE FullName = \""+ teacher.getFullName() +"\")"
+                + " AND `ExtraMuralID` = (Select `ExtramuralID` from tblExtramural WHERE Name = \""+ extramural.getExtraMuralName() +"\"");
+    }
+
+    public void addTeachers(File selectedFile) throws SQLException, FileNotFoundException
+    {
+        String insertQueryStr = "Insert into tblLessons(`TeacherID`, `SlotID`, `SubjectID`, `Grade`, `ClassOfGrade`) Values ";
+        Scanner filesc = new Scanner(selectedFile);
+        while(filesc.hasNextLine())
+        {
+            Scanner linesc = new Scanner(filesc.nextLine()).useDelimiter(",");
+            insertQueryStr +="(\"";
+            int slotID = linesc.nextInt();
+            linesc.next();
+            int grade = linesc.nextInt();
+            String subjCode = linesc.next();
+            String teacherCode = linesc.next();
+            
+           // String teacherName = DatabaseManager.instance.query("Select `TeacherID` From tblTeachers WHERE `FullName` = \""+ getTeacherName() +"\"").getString(0);
+            insertQueryStr += filesc.nextLine() +"\")" + ((filesc.hasNextLine())? ",": "");
+        }
+        
+        System.out.println(insertQueryStr);
+        DatabaseManager.instance.update(insertQueryStr);
+        
+        populateTeachersAL();
+    }
 }
