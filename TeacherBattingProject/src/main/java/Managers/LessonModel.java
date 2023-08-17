@@ -6,9 +6,9 @@ package Managers;
 
 import DataTypes.Lesson;
 import DataTypes.Teacher;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Scanner;
 import javax.swing.JTextArea;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
@@ -63,11 +63,14 @@ public class LessonModel implements TableModel
         *   rowIndex*GetColCount -1 + colIndex = slotID
         *   
         */
+        String [] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+        
         int slot = rowIndex * (getColumnCount() -1) +columnIndex;
+        if (columnIndex == 0) return days[rowIndex];
         
         for (Lesson lesson : lessons)
         {
-            if (lesson.getSlotNr() == slot) return lesson;
+            if (lesson.getSlotNr() == slot) return lesson.toString();
         }
         
         return null;
@@ -105,9 +108,10 @@ public class LessonModel implements TableModel
 
                 //update the database
                 DatabaseManager.instance.update("Update tblLessons " //(`LessonID`, `TeacherID`, `SubjectID`, `Grade`)
-                        + "Set `LessonID` = "+ updatedLesson.getLessonID()
+                        + "Set `SlotID` = "+ updatedLesson.getSlotNr()
                         + " AND `SubjectID` = (Select `SubjectID` from tblSubjects WHERE `Subject` =  "+ updatedLesson.getSubject() +")"
                         + " AND `Grade = "+ updatedLesson.getGrade()
+                        + " AND `ClassOfGrade` = "+ updatedLesson.getClassOfGrade()
                         + " WHERE `LessonID` = "+ originalLessonID);
             }
         }catch(SQLException ex)

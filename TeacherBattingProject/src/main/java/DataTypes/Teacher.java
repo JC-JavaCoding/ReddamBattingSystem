@@ -24,10 +24,11 @@ public class Teacher
         this.extraMurals = extraMurals;
         this.lessons = lessons;
         this.hasRegisterClass = hasRegisterclass;
+        classesTaught = new ArrayList<String>();
         
         for (Lesson lesson : lessons)
         {
-            if (! classesTaught.contains( lesson.getLessonID() ) ) classesTaught.add(lesson.getLessonID());
+            if (classesTaught.isEmpty() || ! classesTaught.contains( lesson.getLessonID() ) ) classesTaught.add(lesson.toString());
         }
     }
 
@@ -41,6 +42,15 @@ public class Teacher
         return lessons.add(e);
     }
 
+    public boolean hasLessonAt(int inLessonSlot)
+    {
+        for (Lesson lesson : lessons)
+        {
+            if (lesson.getSlotNr() == inLessonSlot) return true;
+        }
+        
+        return false;
+    }
 
     public String getFullName()
     {

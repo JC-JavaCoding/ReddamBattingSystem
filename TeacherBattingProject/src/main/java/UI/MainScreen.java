@@ -452,7 +452,7 @@ public class MainScreen extends javax.swing.JFrame
             .addGroup(battingTopMainPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(sendTableButton)
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         absenteesViewPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -481,7 +481,7 @@ public class MainScreen extends javax.swing.JFrame
             .addGroup(absenteesViewPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1)
-                .addContainerGap(235, Short.MAX_VALUE))
+                .addContainerGap(196, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout battingBodyPanel1Layout = new javax.swing.GroupLayout(battingBodyPanel1);
@@ -513,7 +513,7 @@ public class MainScreen extends javax.swing.JFrame
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(absenteesViewPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(29, 29, 29)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9)
                 .addContainerGap())
@@ -665,7 +665,7 @@ public class MainScreen extends javax.swing.JFrame
                 .addGap(70, 70, 70)
                 .addComponent(jLabel10)
                 .addGap(117, 117, 117)
-                .addComponent(addTeachersThroughCSVButton, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+                .addComponent(addTeachersThroughCSVButton, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
                 .addContainerGap())
         );
         contactDetailsPanelLayout.setVerticalGroup(
@@ -677,7 +677,7 @@ public class MainScreen extends javax.swing.JFrame
                     .addComponent(jLabel10))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(contactDetailsPanelLayout.createSequentialGroup()
-                .addComponent(addTeachersThroughCSVButton, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                .addComponent(addTeachersThroughCSVButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(6, 6, 6))
         );
 
@@ -700,7 +700,7 @@ public class MainScreen extends javax.swing.JFrame
         jScrollPane1.setViewportView(teacherTree);
 
         tblViewTimeTable.setBackground(new java.awt.Color(255, 255, 255));
-        tblViewTimeTable.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        tblViewTimeTable.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         tblViewTimeTable.setForeground(new java.awt.Color(102, 102, 102));
         tblViewTimeTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][]
@@ -756,6 +756,7 @@ public class MainScreen extends javax.swing.JFrame
                 tblViewTimeTableMouseClicked(evt);
             }
         });
+        tblViewTimeTable.setDefaultRenderer(String.class, new MultiLineTableCellRenderer());
         jScrollPane30.setViewportView(tblViewTimeTable);
 
         insertPanes_HolderPane.setBackground(new java.awt.Color(255, 255, 255));
@@ -817,7 +818,7 @@ public class MainScreen extends javax.swing.JFrame
                                 .addComponent(editExtramuralPortalButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
                                 .addComponent(cancelAddEMToTeacherButton)))))
-                .addContainerGap(278, Short.MAX_VALUE))
+                .addContainerGap(321, Short.MAX_VALUE))
         );
         extramuralAddPaneLayout.setVerticalGroup(
             extramuralAddPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -831,7 +832,7 @@ public class MainScreen extends javax.swing.JFrame
                     .addComponent(addExtraMuralToTeacherButton)
                     .addComponent(cancelAddEMToTeacherButton)
                     .addComponent(editExtramuralPortalButton))
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         insertPanes_HolderPane.add(extramuralAddPane, "card2");
@@ -883,7 +884,7 @@ public class MainScreen extends javax.swing.JFrame
                             .addComponent(hasRegClassCheckbox, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(teacherEditPaneLayout.createSequentialGroup()
                         .addComponent(editTeacherPaneNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 175, Short.MAX_VALUE)
                         .addComponent(teacherNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -898,7 +899,7 @@ public class MainScreen extends javax.swing.JFrame
                 .addGroup(teacherEditPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(editTeacherPaneNameLabel)
                     .addComponent(teacherNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(100, 100, 100)
+                .addGap(89, 89, 89)
                 .addGroup(teacherEditPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(saveTeacherDetailsButton)
                     .addComponent(cancelTeacherEditsButton))
@@ -922,34 +923,29 @@ public class MainScreen extends javax.swing.JFrame
             teacherBulkInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(teacherBulkInfoPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(teacherBulkInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1)
-                    .addComponent(deleteEMfromTeacherButton, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(insertPanes_HolderPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(teacherBulkInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(teacherBulkInfoPanelLayout.createSequentialGroup()
+                        .addGroup(teacherBulkInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1)
+                            .addComponent(deleteEMfromTeacherButton, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(insertPanes_HolderPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane30, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
-            .addGroup(teacherBulkInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(teacherBulkInfoPanelLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane30)
-                    .addContainerGap()))
         );
         teacherBulkInfoPanelLayout.setVerticalGroup(
             teacherBulkInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(teacherBulkInfoPanelLayout.createSequentialGroup()
                 .addGap(13, 13, 13)
-                .addGroup(teacherBulkInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(insertPanes_HolderPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(teacherBulkInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(teacherBulkInfoPanelLayout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(deleteEMfromTeacherButton)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(teacherBulkInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(teacherBulkInfoPanelLayout.createSequentialGroup()
-                    .addGap(270, 270, 270)
-                    .addComponent(jScrollPane30, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
-                    .addContainerGap()))
+                        .addComponent(deleteEMfromTeacherButton))
+                    .addComponent(insertPanes_HolderPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane30, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         teachersList.setBackground(new java.awt.Color(255, 255, 255));
@@ -984,25 +980,22 @@ public class MainScreen extends javax.swing.JFrame
                 .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(addTeachersButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(deleteTeacherButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(bodyPanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(teacherBulkInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(teacherBulkInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         bodyPanelLayout.setVerticalGroup(
             bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bodyPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(teacherBulkInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
             .addGroup(bodyPanelLayout.createSequentialGroup()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(addTeachersButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(deleteTeacherButton))
+            .addGroup(bodyPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(teacherBulkInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         searchTeachersField.setBackground(new java.awt.Color(255, 255, 255));
@@ -1031,10 +1024,9 @@ public class MainScreen extends javax.swing.JFrame
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, teacherBodyPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(bodyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, teacherBodyPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel8))
         );
         teacherBodyPanelLayout.setVerticalGroup(
             teacherBodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1042,13 +1034,16 @@ public class MainScreen extends javax.swing.JFrame
                 .addContainerGap()
                 .addComponent(contactDetailsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(addTeacherWarningLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(searchTeachersField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(bodyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(teacherBodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(teacherBodyPanelLayout.createSequentialGroup()
+                        .addComponent(addTeacherWarningLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(searchTeachersField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(bodyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(teacherBodyPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -1063,9 +1058,9 @@ public class MainScreen extends javax.swing.JFrame
             teacherViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(teacherViewPanelLayout.createSequentialGroup()
                 .addComponent(teacherHeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(teacherBodyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(teacherBodyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         mainViewPanel.add(teacherViewPanel, "card3");
@@ -1112,7 +1107,7 @@ public class MainScreen extends javax.swing.JFrame
                 .addContainerGap()
                 .addComponent(showSidePanelButton2)
                 .addGap(259, 259, 259)
-                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 613, Short.MAX_VALUE)
                 .addGap(297, 297, 297))
         );
         statisticsHeaderPanelLayout.setVerticalGroup(
@@ -1198,7 +1193,7 @@ public class MainScreen extends javax.swing.JFrame
             .addGroup(settingsHeaderPanelLayout.createSequentialGroup()
                 .addComponent(showSidePanelButton3)
                 .addGap(272, 272, 272)
-                .addComponent(settingsMainScreenLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
+                .addComponent(settingsMainScreenLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 613, Short.MAX_VALUE)
                 .addGap(290, 290, 290))
         );
         settingsHeaderPanelLayout.setVerticalGroup(
@@ -1278,7 +1273,7 @@ public class MainScreen extends javax.swing.JFrame
                                 .addComponent(addExtramuralToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(deleteExtramuralButton))
-                            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE))
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE))
                         .addGap(182, 182, 182)
                         .addGroup(extramuralsEditPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(fieldsDescriptionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1371,7 +1366,7 @@ public class MainScreen extends javax.swing.JFrame
             .addGroup(settingsViewPanelLayout.createSequentialGroup()
                 .addComponent(settingsHeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(settingsMainBodyScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 834, Short.MAX_VALUE))
+                .addComponent(settingsMainBodyScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 718, Short.MAX_VALUE))
         );
 
         mainViewPanel.add(settingsViewPanel, "card5");
@@ -1539,7 +1534,6 @@ public class MainScreen extends javax.swing.JFrame
             // TODO add your handling code here:
             
         teacherTree.setModel(teacherModel.getTreeModel(teachersList.getSelectedValue()));
-
         String teacherName = teachersList.getSelectedValue();
         String email = teacherName.stripLeading() + '.' + teacherName.substring(teacherName.indexOf(" ")) + "@reddam.house";
         emailContactLabel.setText(email);
@@ -1547,7 +1541,7 @@ public class MainScreen extends javax.swing.JFrame
         try
         {
             lessonModel = new LessonModel(teacherModel.getTeacher(teacherName));
-            tblViewTimeTable.setModel(lessonModel);
+            tblViewTimeTable.setModel(new LessonModel(teacherModel.getTeacher(teachersList.getSelectedValue())));
             //populateTeacherTree();
         } catch (SQLException ex)
         {
@@ -1571,7 +1565,7 @@ public class MainScreen extends javax.swing.JFrame
         
         try
         {
-            teacherModel.addTeachers(selectedFile);
+            teacherModel.addLessonsFromCSV(selectedFile);
             teachersList.setModel(teacherModel.getListModel());
         } catch (SQLException | FileNotFoundException ex)
         {
@@ -1706,7 +1700,7 @@ public class MainScreen extends javax.swing.JFrame
             try {
                 extramuralModel.deleteExtramural(extramuralModel.getExtramural(selectedEM));
                 
-                JOptionPane.showMessageDialog(this, "\""+ selectedEM +"\" removed from database.", "\bDELETION\b", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "\""+ selectedEM +"\" removed from database.", "DELETION", JOptionPane.INFORMATION_MESSAGE);
                 
                 extramuralsJList1.setModel(extramuralModel.getListModel());
             } catch (SQLException ex) {

@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
@@ -22,11 +23,11 @@ import javax.swing.table.TableModel;
 public class BattingModel implements TableModel
 {
     private ArrayList<BattingLesson> battingLessons = new ArrayList<>();
-    
+    private ArrayList <Teacher> freeTeachers;
     public BattingModel() throws SQLException
     {
         //Populate the arraylist from the database
-         ResultSet rs = DatabaseManager.instance.query("Select `FullName`, tblLessons.`LessonID`, `Subject`, `Grade`, `SlotID`, `Date` from tblBattingLessons, tblTeachers, tblLessons, tblSubjects "
+         ResultSet rs = DatabaseManager.instance.query("Select `FullName`, tblLessons.`LessonID`, `Subject`, `Grade`, `SlotID`, `ClassOfGrade`, `Date` from tblBattingLessons, tblTeachers, tblLessons, tblSubjects "
                  + "Where tblBattingLessons.LessonID = tblLessons.LessonID "
                         + "AND tblBattingLessons.ReplacementTeacherID = tblTeachers.TeacherID "
                         + "AND tblTeachers.TeacherID = tblLessons.TeacherID "
@@ -41,9 +42,10 @@ public class BattingModel implements TableModel
                                     rs.getString(2), 
                                     rs.getString(3), 
                                     rs.getInt(4),
-                                    rs.getInt(5)
+                                    rs.getInt(5),
+                                    rs.getString(6)
                             ), 
-                            LocalDate.parse(rs.getString(6), DateTimeFormatter.ofPattern("yy-MM-dd"))
+                            LocalDate.parse(rs.getString(7), DateTimeFormatter.ofPattern("yy-MM-dd"))
                     )
             );
         }
@@ -161,13 +163,26 @@ public class BattingModel implements TableModel
     @Override
     public void addTableModelListener(TableModelListener l)
     {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
     }
 
     @Override
     public void removeTableModelListener(TableModelListener l)
     {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
     }
     
+    public DefaultTableModel getBattingTable(Teacher absentTeacher) throws SQLException
+    {
+        //for each lesson, find a replacement teacher
+        TeacherModel teacherModel = new TeacherModel();
+        
+        for(Lesson lesson : absentTeacher.getLessonsArrayList())
+        {
+            for (Teacher teacher : teacherModel.getTeachersFree(lesson))
+            {
+                
+            }
+        }
+    }
 }

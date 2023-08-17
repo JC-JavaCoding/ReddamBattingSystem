@@ -102,21 +102,22 @@ public class TeacherModel
                         )
                 );
                 
-                //add lessons to the arraylist
-                ResultSet lessonRS =  DatabaseManager.instance.query("Select `LessonID`, `Subject`, `Grade`, `SlotID` from tblLessons, tblSubjects"
-                                                                                                        + " WHERE tblLessons.SubjectID = tblSubjects.SubjectID"
-                                                                                                        + " AND TeacherID = "+ curTeacherID +";");
-                while (lessonRS.next())
-                {
-                    lessons.add(
-                            new Lesson(
-                                    lessonRS.getString(1), 
-                                    lessonRS.getString(2), 
-                                    lessonRS.getInt(3), 
-                                    lessonRS.getInt(4)
-                            )
-                    );
-                }
+            }
+            //add lessons to the arraylist
+            ResultSet lessonRS =  DatabaseManager.instance.query("Select `LessonID`, `Subject`, `Grade`, `SlotID`, `ClassOfGrade` from tblLessons, tblSubjects"
+                                                                                                    + " WHERE tblLessons.SubjectID = tblSubjects.SubjectID"
+                                                                                                    + " AND TeacherID = "+ curTeacherID +";");
+            while (lessonRS.next())
+            {
+                lessons.add(
+                        new Lesson(
+                                lessonRS.getString(1), 
+                                lessonRS.getString(2), 
+                                lessonRS.getInt(3), 
+                                lessonRS.getInt(4),
+                                lessonRS.getString(5)
+                        )
+                );
             }
             Teacher temp = new Teacher(teacherName, extramurals, lessons, hasRegisterClass);
             boolean exists = false;
@@ -157,7 +158,7 @@ public class TeacherModel
             {
                 for (String str : matchingTeacher.getClassesTaught())
                 {
-                    extramuralsNode.add(new DefaultMutableTreeNode(str));
+                    classesTaught.add(new DefaultMutableTreeNode(str));
                 }
             }
             
@@ -211,27 +212,56 @@ public class TeacherModel
                 + " AND `ExtraMuralID` = (Select `ExtramuralID` from tblExtramural WHERE Name = \""+ extramural.getExtraMuralName() +"\"");
     }
 
-    public void addTeachers(File selectedFile) throws SQLException, FileNotFoundException
+    public void addLessonsFromCSV(File csvFile) throws FileNotFoundException, SQLException
     {
-        String insertQueryStr = "Insert into tblLessons(`TeacherID`, `SlotID`, `SubjectID`, `Grade`, `ClassOfGrade`) Values ";
-        Scanner filesc = new Scanner(selectedFile);
+        String insertQueryStr = "Insert into tblLessons(`TeacherID`, `SubjectID`, `Grade`, `ClassOfGrade`, `SlotID`) Values ";
+        
+        //iterate through file rows
+        Scanner filesc = new Scanner(csvFile);
         while(filesc.hasNextLine())
         {
             Scanner linesc = new Scanner(filesc.nextLine()).useDelimiter(",");
-            insertQueryStr +="(\"";
-            int slotID = linesc.nextInt();
-            linesc.next();
-            int grade = linesc.nextInt();
-            String subjCode = linesc.next();
-            String teacherCode = linesc.next();
+            insertQueryStr +="(";
             
-           // String teacherName = DatabaseManager.instance.query("Select `TeacherID` From tblTeachers WHERE `FullName` = \""+ getTeacherName() +"\"").getString(0);
-            insertQueryStr += filesc.nextLine() +"\")" + ((filesc.hasNextLine())? ",": "");
+            //store line data
+            String teacherName = linesc.next();
+            String subjectName = linesc.next();
+            int grade = linesc.nextInt();
+            String setCode = linesc.next();
+            int slotID = linesc.nextInt();
+            
+            //transform line data
+            ResultSet tID_RS = ( DatabaseManager.instance.query("Select `TeacherID` From tblTeachers WHERE `FullName` = \""+ teacherName +"\"") );
+            tID_RS.next();
+            String teacherID = tID_RS.getString(1);
+            
+            ResultSet sID_RS = (DatabaseManager.instance.query("Select `SubjectID` From tblSubjects WHERE `Subject` = \""+ subjectName +"\"") );
+            sID_RS.next();
+            String subjectID = sID_RS.getString(1);
+            
+            //for class of grade: if the setcode's last character is an alphabetic letter, then the class is that letter. If it is a number, then it is ácombined class, defined by a 'c'
+            char classLetter = setCode.charAt( setCode.length() -1 );
+            char classOfGrade = ( Character.isAlphabetic( classLetter ) )? Character.toUpperCase(classLetter) : 'C'; 
+            
+            insertQueryStr += teacherID + ", \""+ subjectID +"\", "+ grade +", \'"+ classOfGrade +"\', "+ slotID + ((filesc.hasNextLine())? "),": ")");
         }
         
         System.out.println(insertQueryStr);
         DatabaseManager.instance.update(insertQueryStr);
         
+        teachers.clear();
         populateTeachersAL();
+    }
+
+    public ArrayList<Teacher> getTeachersFree(Lesson lesson)
+    {
+        ArrayList <Teacher> freeTeachers = new ArrayList<>();
+        for (Teacher teacher : teachers)
+        {
+            if (teacher.hasLessonAt(lesson.getSlotNr()))
+                freeTeachers.add(teacher);
+        }
+        
+        return freeTeachers;
     }
 }
