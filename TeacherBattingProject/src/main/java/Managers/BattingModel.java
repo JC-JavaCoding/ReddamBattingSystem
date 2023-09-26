@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -23,9 +24,11 @@ import javax.swing.table.TableModel;
 public class BattingModel implements TableModel
 {
     private ArrayList<BattingLesson> battingLessons = new ArrayList<>();
-    private ArrayList <Teacher> freeTeachers;
+    private ArrayList <Teacher> freeTeachers; //*******************************Necessary?****************************
+    private TeacherModel tm;
     public BattingModel() throws SQLException
     {
+        tm = new TeacherModel();
         //Populate the arraylist from the database
          ResultSet rs = DatabaseManager.instance.query("Select `FullName`, tblLessons.`LessonID`, `Subject`, `Grade`, `SlotID`, `ClassOfGrade`, `Date` from tblBattingLessons, tblTeachers, tblLessons, tblSubjects "
                  + "Where tblBattingLessons.LessonID = tblLessons.LessonID "
@@ -37,7 +40,7 @@ public class BattingModel implements TableModel
         {
             battingLessons.add(
                     new BattingLesson(
-                            rs.getString(1),
+                            tm.getTeacher(rs.getString(1)),
                             new Lesson(
                                     rs.getString(2), 
                                     rs.getString(3), 
@@ -144,7 +147,7 @@ public class BattingModel implements TableModel
         switch (columnIndex)
         {
             case 0:
-                bl.setTeacherOnDuty((String) aValue);
+                bl.setTeacherOnDuty((Teacher) aValue);
             case 1:
                 bl.getLesson().setLessonID((String) aValue);
             case 2: 
@@ -172,17 +175,28 @@ public class BattingModel implements TableModel
         
     }
     
-    public DefaultTableModel getBattingTable(Teacher absentTeacher) throws SQLException
+    public DefaultTableModel getBattingTable(Teacher absentTeacher) throws SQLException //**************************************
     {
+        DefaultTableModel tblModel = new DefaultTableModel();
+        
         //for each lesson, find a replacement teacher
         TeacherModel teacherModel = new TeacherModel();
-        
+
         for(Lesson lesson : absentTeacher.getLessonsArrayList())
         {
+            int lessonNr = lesson.getSlotNr()/14;
+            LocalDate dateNow = LocalDate.now();
+            int doy = dateNow.getDayOfYear();
+            int dow = dateNow.getDayOfWeek().getValue();
+            int week;
+            if (dow > 5) week = dow/7 + 1;
+            else week = dow/7;
+            BattingLesson bl = new BattingLesson(null, lesson,dateNow);
             for (Teacher teacher : teacherModel.getTeachersFree(lesson))
             {
                 
             }
         }
+        return tblModel;
     }
 }

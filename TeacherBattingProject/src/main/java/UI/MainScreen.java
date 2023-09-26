@@ -7,11 +7,7 @@ package UI;
 import DataTypes.ExtraMural;
 import DataTypes.MultiLineTableCellRenderer;
 import DataTypes.Teacher;
-import Managers.BattingModel;
-import Managers.DatabaseManager;
-import Managers.ExtramuralModel;
-import Managers.LessonModel;
-import Managers.TeacherModel;
+import Managers.*;
 import com.formdev.flatlaf.ui.FlatLineBorder;
 import java.awt.Color;
 import java.io.File;
@@ -20,7 +16,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -44,14 +42,17 @@ public class MainScreen extends javax.swing.JFrame
         try
         {
             DatabaseManager.init();
+            absentTeachers = new ArrayList<Teacher>();
             battingModel = new BattingModel();
             teacherModel = new TeacherModel();
             extramuralModel = new ExtramuralModel();
+            subjectModel = new SubjectModel();
         } catch (SQLException ex)
         {
             Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
         }
         initComponents();
+        
         
         try
         {
@@ -100,7 +101,8 @@ public class MainScreen extends javax.swing.JFrame
         battingTopMainPanel = new javax.swing.JPanel();
         sendTableButton = new javax.swing.JButton();
         absenteesViewPanel = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        absentTeacherComboBox1 = new javax.swing.JComboBox<>();
+        addAbsentTeacherComboBox_Button = new javax.swing.JButton();
         battingHeaderPanel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         showSidePanelButton = new javax.swing.JButton();
@@ -169,6 +171,16 @@ public class MainScreen extends javax.swing.JFrame
         extramuralDayOfWeekComboBox = new javax.swing.JComboBox<>();
         addExtramuralToggleButton = new javax.swing.JToggleButton();
         jPanel3 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        subjectsSettingsListLabel = new javax.swing.JLabel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        subjectsSettingsJList = new javax.swing.JList<>();
+        addSubjectToggleButton = new javax.swing.JToggleButton();
+        deleteSubjectButton = new javax.swing.JButton();
+        editSubjectsLabel = new javax.swing.JLabel();
+        subjectAdditionScreenNameLabel = new javax.swing.JLabel();
+        subjectNameInTextField = new javax.swing.JTextField();
+        saveSubjectButton = new javax.swing.JButton();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -245,13 +257,11 @@ public class MainScreen extends javax.swing.JFrame
         statisticsButtonPane.setLayout(statisticsButtonPaneLayout);
         statisticsButtonPaneLayout.setHorizontalGroup(
             statisticsButtonPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
         );
         statisticsButtonPaneLayout.setVerticalGroup(
             statisticsButtonPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(statisticsButtonPaneLayout.createSequentialGroup()
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         teacherButtonPane1.setBackground(new java.awt.Color(0, 0, 51));
@@ -369,7 +379,7 @@ public class MainScreen extends javax.swing.JFrame
                 .addComponent(battingButtonPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(teacherButtonPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(statisticsButtonPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(settingsPaneButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -386,25 +396,24 @@ public class MainScreen extends javax.swing.JFrame
 
         jScrollPane2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        battingTable.setBackground(new java.awt.Color(255, 255, 255));
         battingTable.setForeground(new java.awt.Color(51, 51, 51));
         battingTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][]
             {
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String []
             {
-                "Days", "L1", "L2", "L3", "L4", "L5", "Title 7", "L7", "L8", "L9", "L10", "L11", "L12", "L13", "L14"
+                "Days", "L1", "L2", "L3", "L4", "L5", "L7", "L8", "L9", "L10", "L11", "L12", "L13", "L14"
             }
         )
         {
             Class[] types = new Class []
             {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex)
@@ -413,7 +422,6 @@ public class MainScreen extends javax.swing.JFrame
             }
         });
         battingTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        battingTable.setCellSelectionEnabled(true);
         battingTable.setGridColor(new java.awt.Color(204, 204, 204));
         battingTable.setRowHeight(60);
         battingTable.setShowGrid(true);
@@ -443,7 +451,7 @@ public class MainScreen extends javax.swing.JFrame
         battingTopMainPanelLayout.setHorizontalGroup(
             battingTopMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, battingTopMainPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(144, Short.MAX_VALUE)
                 .addComponent(sendTableButton)
                 .addContainerGap())
         );
@@ -452,69 +460,60 @@ public class MainScreen extends javax.swing.JFrame
             .addGroup(battingTopMainPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(sendTableButton)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
 
         absenteesViewPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("search teacher");
-        jButton1.addActionListener(new java.awt.event.ActionListener()
+        absentTeacherComboBox1.setModel( teacherModel.getComboBoxModel()
+        );
+        absentTeachers.add(teacherModel.getTeacher((String) absentTeacherComboBox1.getSelectedItem()));
+        absenteesViewPanel.add(absentTeacherComboBox1);
+
+        addAbsentTeacherComboBox_Button.setText("+");
+        addAbsentTeacherComboBox_Button.addMouseListener(new java.awt.event.MouseAdapter()
         {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
+            public void mouseReleased(java.awt.event.MouseEvent evt)
             {
-                jButton1ActionPerformed(evt);
+                addAbsentTeacherComboBox_ButtonMouseReleased(evt);
             }
         });
-
-        javax.swing.GroupLayout absenteesViewPanelLayout = new javax.swing.GroupLayout(absenteesViewPanel);
-        absenteesViewPanel.setLayout(absenteesViewPanelLayout);
-        absenteesViewPanelLayout.setHorizontalGroup(
-            absenteesViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(absenteesViewPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        absenteesViewPanelLayout.setVerticalGroup(
-            absenteesViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(absenteesViewPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addContainerGap(196, Short.MAX_VALUE))
-        );
+        absenteesViewPanel.add(addAbsentTeacherComboBox_Button);
 
         javax.swing.GroupLayout battingBodyPanel1Layout = new javax.swing.GroupLayout(battingBodyPanel1);
         battingBodyPanel1.setLayout(battingBodyPanel1Layout);
         battingBodyPanel1Layout.setHorizontalGroup(
             battingBodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, battingBodyPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel9)
-                .addContainerGap())
             .addGroup(battingBodyPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
                 .addGroup(battingBodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, battingBodyPanel1Layout.createSequentialGroup()
-                        .addGap(951, 951, 951)
-                        .addComponent(battingTopMainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
+                        .addContainerGap(1117, Short.MAX_VALUE)
+                        .addComponent(jLabel9))
+                    .addGroup(battingBodyPanel1Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1078, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, battingBodyPanel1Layout.createSequentialGroup()
-                        .addGroup(battingBodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(absenteesViewPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2))
-                        .addGap(71, 71, 71))))
+                        .addGap(19, 19, 19)
+                        .addComponent(absenteesViewPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(330, 330, 330)
+                        .addComponent(battingTopMainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         battingBodyPanel1Layout.setVerticalGroup(
             battingBodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(battingBodyPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(battingTopMainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(absenteesViewPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(29, 29, 29)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(battingBodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(battingBodyPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(battingTopMainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(72, 72, 72))
+                    .addGroup(battingBodyPanel1Layout.createSequentialGroup()
+                        .addContainerGap(138, Short.MAX_VALUE)
+                        .addComponent(absenteesViewPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(106, 106, 106)
                 .addComponent(jLabel9)
                 .addContainerGap())
         );
@@ -665,7 +664,7 @@ public class MainScreen extends javax.swing.JFrame
                 .addGap(70, 70, 70)
                 .addComponent(jLabel10)
                 .addGap(117, 117, 117)
-                .addComponent(addTeachersThroughCSVButton, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
+                .addComponent(addTeachersThroughCSVButton, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
                 .addContainerGap())
         );
         contactDetailsPanelLayout.setVerticalGroup(
@@ -685,7 +684,6 @@ public class MainScreen extends javax.swing.JFrame
 
         teacherBulkInfoPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        teacherTree.setBackground(new java.awt.Color(255, 255, 255));
         teacherTree.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         teacherTree.setForeground(new java.awt.Color(0, 0, 51));
         teacherTree.setModel(new DefaultTreeModel(new DefaultMutableTreeNode("Teacher"))
@@ -699,7 +697,6 @@ public class MainScreen extends javax.swing.JFrame
         });
         jScrollPane1.setViewportView(teacherTree);
 
-        tblViewTimeTable.setBackground(new java.awt.Color(255, 255, 255));
         tblViewTimeTable.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         tblViewTimeTable.setForeground(new java.awt.Color(102, 102, 102));
         tblViewTimeTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -948,7 +945,6 @@ public class MainScreen extends javax.swing.JFrame
                 .addContainerGap())
         );
 
-        teachersList.setBackground(new java.awt.Color(255, 255, 255));
         teachersList.setModel(new DefaultListModel<String>());
         teachersList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         teachersList.addMouseListener(new java.awt.event.MouseAdapter()
@@ -980,7 +976,7 @@ public class MainScreen extends javax.swing.JFrame
                 .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(addTeachersButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(deleteTeacherButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(teacherBulkInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -998,13 +994,12 @@ public class MainScreen extends javax.swing.JFrame
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        searchTeachersField.setBackground(new java.awt.Color(255, 255, 255));
         searchTeachersField.setText("search teachers...");
-        searchTeachersField.addActionListener(new java.awt.event.ActionListener()
+        searchTeachersField.addKeyListener(new java.awt.event.KeyAdapter()
         {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
+            public void keyReleased(java.awt.event.KeyEvent evt)
             {
-                searchTeachersFieldActionPerformed(evt);
+                searchTeachersFieldKeyReleased(evt);
             }
         });
 
@@ -1107,7 +1102,7 @@ public class MainScreen extends javax.swing.JFrame
                 .addContainerGap()
                 .addComponent(showSidePanelButton2)
                 .addGap(259, 259, 259)
-                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 613, Short.MAX_VALUE)
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
                 .addGap(297, 297, 297))
         );
         statisticsHeaderPanelLayout.setVerticalGroup(
@@ -1193,7 +1188,7 @@ public class MainScreen extends javax.swing.JFrame
             .addGroup(settingsHeaderPanelLayout.createSequentialGroup()
                 .addComponent(showSidePanelButton3)
                 .addGap(272, 272, 272)
-                .addComponent(settingsMainScreenLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 613, Short.MAX_VALUE)
+                .addComponent(settingsMainScreenLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
                 .addGap(290, 290, 290))
         );
         settingsHeaderPanelLayout.setVerticalGroup(
@@ -1202,6 +1197,8 @@ public class MainScreen extends javax.swing.JFrame
                 .addComponent(settingsMainScreenLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
                 .addComponent(showSidePanelButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+
+        extramuralsEditPane.setBackground(new java.awt.Color(255, 255, 255));
 
         extramuralSettingsListLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         extramuralSettingsListLabel.setText("Extramurals");
@@ -1273,7 +1270,7 @@ public class MainScreen extends javax.swing.JFrame
                                 .addComponent(addExtramuralToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(deleteExtramuralButton))
-                            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE))
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE))
                         .addGap(182, 182, 182)
                         .addGroup(extramuralsEditPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(fieldsDescriptionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1322,18 +1319,131 @@ public class MainScreen extends javax.swing.JFrame
                     .addComponent(deleteExtramuralButton)
                     .addComponent(saveExtramuralButton)
                     .addComponent(addExtramuralToggleButton))
-                .addGap(65, 65, 65))
+                .addGap(14, 14, 14))
+        );
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        subjectsSettingsListLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        subjectsSettingsListLabel.setText("Subjects");
+
+        subjectsSettingsJList.setModel(subjectModel);
+        subjectsSettingsJList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        subjectsSettingsJList.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                subjectsSettingsJListMouseClicked(evt);
+            }
+        });
+        jScrollPane7.setViewportView(subjectsSettingsJList);
+
+        addSubjectToggleButton.setText("Add");
+        addSubjectToggleButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                addSubjectToggleButtonActionPerformed(evt);
+            }
+        });
+
+        deleteSubjectButton.setText("Delete");
+        deleteSubjectButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                deleteSubjectButtonActionPerformed(evt);
+            }
+        });
+
+        editSubjectsLabel.setText("Edit Subject");
+
+        subjectAdditionScreenNameLabel.setText("Name:");
+
+        saveSubjectButton.setText("Save");
+        saveSubjectButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                saveSubjectButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(387, 387, 387)
+                .addComponent(deleteSubjectButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(saveSubjectButton)
+                .addGap(30, 30, 30))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(40, 40, 40)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(subjectsSettingsListLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(854, 854, 854))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(addSubjectToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(182, 182, Short.MAX_VALUE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 271, Short.MAX_VALUE)))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(editSubjectsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(6, 6, 6)
+                                    .addComponent(subjectAdditionScreenNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(166, 166, 166)
+                            .addComponent(subjectNameInTextField)
+                            .addGap(41, 41, 41)))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(287, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(saveSubjectButton)
+                    .addComponent(deleteSubjectButton))
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(51, 51, 51)
+                            .addComponent(editSubjectsLabel)
+                            .addGap(11, 11, 11)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(subjectAdditionScreenNameLabel)
+                                .addComponent(subjectNameInTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(117, 117, 117))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(subjectsSettingsListLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)))
+                    .addGap(40, 40, 40)
+                    .addComponent(addSubjectToggleButton)
+                    .addContainerGap()))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 391, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(147, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout settingsMainBodyPanelLayout = new javax.swing.GroupLayout(settingsMainBodyPanel);
@@ -1359,14 +1469,14 @@ public class MainScreen extends javax.swing.JFrame
         settingsViewPanelLayout.setHorizontalGroup(
             settingsViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(settingsHeaderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(settingsMainBodyScrollPane)
+            .addComponent(settingsMainBodyScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1190, Short.MAX_VALUE)
         );
         settingsViewPanelLayout.setVerticalGroup(
             settingsViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(settingsViewPanelLayout.createSequentialGroup()
                 .addComponent(settingsHeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(settingsMainBodyScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 718, Short.MAX_VALUE))
+                .addComponent(settingsMainBodyScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 726, Short.MAX_VALUE))
         );
 
         mainViewPanel.add(settingsViewPanel, "card5");
@@ -1518,11 +1628,6 @@ public class MainScreen extends javax.swing.JFrame
         // TODO add your handling code here:
     }//GEN-LAST:event_sendTableButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
-    {//GEN-HEADEREND:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void tblViewTimeTableMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_tblViewTimeTableMouseClicked
     {//GEN-HEADEREND:event_tblViewTimeTableMouseClicked
         // TODO add your handling code here:
@@ -1573,20 +1678,6 @@ public class MainScreen extends javax.swing.JFrame
         }
     }//GEN-LAST:event_addTeachersThroughCSVButtonActionPerformed
 
-    private void searchTeachersFieldActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_searchTeachersFieldActionPerformed
-    {//GEN-HEADEREND:event_searchTeachersFieldActionPerformed
-        // TODO add your handling code here:
-        teacherModel.getTeachersContaining(searchTeachersField.getText());
-        DefaultListModel <String> dlm = new DefaultListModel<>();
-        
-        for (String str : teacherModel.getTeachersContaining(searchTeachersField.getText()))
-        {
-            dlm.addElement(str);
-        }
-        
-        teachersList.setModel(dlm);
-    }//GEN-LAST:event_searchTeachersFieldActionPerformed
-
     private void showSidePanelButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_showSidePanelButtonActionPerformed
     {//GEN-HEADEREND:event_showSidePanelButtonActionPerformed
         // TODO add your handling code here:
@@ -1619,6 +1710,8 @@ public class MainScreen extends javax.swing.JFrame
     private void showSidePanelButton3ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_showSidePanelButton3ActionPerformed
     {//GEN-HEADEREND:event_showSidePanelButton3ActionPerformed
         // TODO add your handling code here:
+        menuPanel.setVisible(true);
+        showSidePanelButton3.setVisible(false);
     }//GEN-LAST:event_showSidePanelButton3ActionPerformed
 
     private void settingsPaneButtonMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_settingsPaneButtonMouseClicked
@@ -1633,11 +1726,13 @@ public class MainScreen extends javax.swing.JFrame
     private void settingsPaneButtonMouseEntered(java.awt.event.MouseEvent evt)//GEN-FIRST:event_settingsPaneButtonMouseEntered
     {//GEN-HEADEREND:event_settingsPaneButtonMouseEntered
         // TODO add your handling code here:
+        lightenBackColour(settingsPaneButton);
     }//GEN-LAST:event_settingsPaneButtonMouseEntered
 
     private void settingsPaneButtonMouseExited(java.awt.event.MouseEvent evt)//GEN-FIRST:event_settingsPaneButtonMouseExited
     {//GEN-HEADEREND:event_settingsPaneButtonMouseExited
         // TODO add your handling code here:
+        resetBackColour(settingsPaneButton);
     }//GEN-LAST:event_settingsPaneButtonMouseExited
 
     private void saveExtramuralButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_saveExtramuralButtonActionPerformed
@@ -1828,6 +1923,115 @@ public class MainScreen extends javax.swing.JFrame
         }
     }//GEN-LAST:event_addTeachersButtonActionPerformed
 
+    private void subjectsSettingsJListMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_subjectsSettingsJListMouseClicked
+    {//GEN-HEADEREND:event_subjectsSettingsJListMouseClicked
+        // TODO add your handling code here:
+        String subject = subjectsSettingsJList.getSelectedValue();//get by toString);
+        if (addSubjectToggleButton.isSelected()) addSubjectToggleButton.doClick();
+
+        subjectNameInTextField.setText(subject);
+    }//GEN-LAST:event_subjectsSettingsJListMouseClicked
+
+    private void addSubjectToggleButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_addSubjectToggleButtonActionPerformed
+    {//GEN-HEADEREND:event_addSubjectToggleButtonActionPerformed
+        // TODO add your handling code here:
+        editSubjectsLabel.setText("Please fill in the field below.");
+        subjectNameInTextField.setText("");
+    }//GEN-LAST:event_addSubjectToggleButtonActionPerformed
+
+    private void deleteSubjectButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_deleteSubjectButtonActionPerformed
+    {//GEN-HEADEREND:event_deleteSubjectButtonActionPerformed
+        try
+        {
+            subjectModel.deleteSubject(subjectsSettingsJList.getSelectedValue());
+        } catch (SQLException ex)
+        {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "SQL ERROR: ", JOptionPane.ERROR_MESSAGE);
+        }
+                
+    }//GEN-LAST:event_deleteSubjectButtonActionPerformed
+
+    private void saveSubjectButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_saveSubjectButtonActionPerformed
+    {//GEN-HEADEREND:event_saveSubjectButtonActionPerformed
+        // TODO add your handling code here:
+        try 
+        {
+            if (addSubjectToggleButton.isSelected()) subjectModel.addSubject(subjectNameInTextField.getText());
+            else
+            {
+                subjectModel.updateSubject(subjectsSettingsJList.getSelectedIndex(), subjectNameInTextField.getText());
+                
+                extramuralsJList1.setModel(extramuralModel.getListModel());
+            }
+        }
+        catch (SQLException ex)
+        {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR: " +ex.getErrorCode(), JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_saveSubjectButtonActionPerformed
+
+    private void searchTeachersFieldKeyReleased(java.awt.event.KeyEvent evt)//GEN-FIRST:event_searchTeachersFieldKeyReleased
+    {//GEN-HEADEREND:event_searchTeachersFieldKeyReleased
+        // TODO add your handling code here:
+                ArrayList <String> teachersContainingText = teacherModel.getTeachersContaining(searchTeachersField.getText());
+        DefaultListModel <String> dlm = new DefaultListModel<>();
+        
+        for (String str : teachersContainingText)
+        {
+            dlm.addElement(str);
+        }
+        
+        teachersList.setModel(dlm);
+    }//GEN-LAST:event_searchTeachersFieldKeyReleased
+
+    private void addAbsentTeacherComboBox_ButtonMouseReleased(java.awt.event.MouseEvent evt)//GEN-FIRST:event_addAbsentTeacherComboBox_ButtonMouseReleased
+    {//GEN-HEADEREND:event_addAbsentTeacherComboBox_ButtonMouseReleased
+        switch(absentTeachers.size())
+        {
+            case 1: 
+                JComboBox<String> absentTeacherComboBox2 = new JComboBox<>();
+                DefaultComboBoxModel<String> dcbm1 = teacherModel.getComboBoxModel();
+                
+                for (Teacher t : absentTeachers)
+                {
+                    removePreviousAbsentTeacher(dcbm1, t.getFullName());
+                }    
+                
+                absentTeacherComboBox2.setModel( dcbm1);
+                absenteesViewPanel.add(absentTeacherComboBox2, 1);
+                
+                absentTeachers.add(teacherModel.getTeacher((String) absentTeacherComboBox2.getSelectedItem()));
+                break;
+            case 2:
+                JComboBox<String> absentTeacherComboBox3 = new JComboBox<>();
+                DefaultComboBoxModel<String> dcbm2 = teacherModel.getComboBoxModel();
+                
+                for (Teacher t : absentTeachers)
+                {
+                    removePreviousAbsentTeacher(dcbm2, t.getFullName());
+                }    
+                
+                absentTeacherComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+                absenteesViewPanel.add(absentTeacherComboBox3, 2);
+                
+                absentTeachers.add(teacherModel.getTeacher((String) absentTeacherComboBox3.getSelectedItem()));
+                break;
+            case 3:
+                JComboBox<String> absentTeacherComboBox4 = new JComboBox<>();
+                absentTeacherComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+                absenteesViewPanel.add(absentTeacherComboBox4,3);
+                
+                absentTeachers.add(teacherModel.getTeacher((String) absentTeacherComboBox4.getSelectedItem()));
+                break;
+            default: 
+                System.out.println("Max number reached");
+        }
+        
+        //necessary to update the panel
+        absenteesViewPanel.setVisible(false);
+        absenteesViewPanel.setVisible(true);
+    }//GEN-LAST:event_addAbsentTeacherComboBox_ButtonMouseReleased
+
     private void lightenBackColour(JComponent c)
     {
         c.setBackground(lightBlue);
@@ -1850,7 +2054,7 @@ public class MainScreen extends javax.swing.JFrame
         {
 //            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
 //            {
-                javax.swing.UIManager.setLookAndFeel("com.formdev.flatlaf.FlatDarkLaf");
+                javax.swing.UIManager.setLookAndFeel("com.formdev.flatlaf.FlatLightLaf");
 //            }
         } catch (ClassNotFoundException ex)
         {
@@ -1877,15 +2081,20 @@ public class MainScreen extends javax.swing.JFrame
         });
     }
     
+    private ArrayList<Teacher> absentTeachers;
+    private SubjectModel subjectModel;
     private ExtramuralModel extramuralModel;
     private LessonModel lessonModel;
     private BattingModel battingModel;
     private TeacherModel teacherModel;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> absentTeacherComboBox1;
     private javax.swing.JPanel absenteesViewPanel;
+    private javax.swing.JButton addAbsentTeacherComboBox_Button;
     private javax.swing.JButton addExtraMuralToTeacherButton;
     private javax.swing.JLabel addExtramuralLabel;
     private javax.swing.JToggleButton addExtramuralToggleButton;
+    private javax.swing.JToggleButton addSubjectToggleButton;
     private javax.swing.JLabel addTeacherWarningLabel;
     private javax.swing.JButton addTeachersButton;
     private javax.swing.JButton addTeachersThroughCSVButton;
@@ -1901,9 +2110,11 @@ public class MainScreen extends javax.swing.JFrame
     private javax.swing.JPanel contactDetailsPanel;
     private javax.swing.JButton deleteEMfromTeacherButton;
     private javax.swing.JButton deleteExtramuralButton;
+    private javax.swing.JButton deleteSubjectButton;
     private javax.swing.JButton deleteTeacherButton;
     private javax.swing.JLabel dowExtramuralAdditionScreenJLabel1;
     private javax.swing.JButton editExtramuralPortalButton;
+    private javax.swing.JLabel editSubjectsLabel;
     private javax.swing.JLabel editTeacherHeaderLabel;
     private javax.swing.JLabel editTeacherPaneNameLabel;
     private javax.swing.JLabel emailContactLabel;
@@ -1921,7 +2132,6 @@ public class MainScreen extends javax.swing.JFrame
     private javax.swing.JButton hideSidePanelButton;
     private javax.swing.JLabel hoursPerWeekExtramuralsAdditionScreenLabel1;
     private javax.swing.JPanel insertPanes_HolderPane;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1935,6 +2145,7 @@ public class MainScreen extends javax.swing.JFrame
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -1942,11 +2153,13 @@ public class MainScreen extends javax.swing.JFrame
     private javax.swing.JScrollPane jScrollPane30;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JToggleButton jToggleButton3;
     private javax.swing.JPanel mainViewPanel;
     private javax.swing.JPanel menuPanel;
     private javax.swing.JButton saveExtramuralButton;
+    private javax.swing.JButton saveSubjectButton;
     private javax.swing.JButton saveTeacherDetailsButton;
     private javax.swing.JTextField searchTeachersField;
     private javax.swing.JButton sendTableButton;
@@ -1965,6 +2178,10 @@ public class MainScreen extends javax.swing.JFrame
     private javax.swing.JPanel statisticsButtonPane;
     private javax.swing.JPanel statisticsHeaderPanel;
     private javax.swing.JPanel statisticsViewPanel;
+    private javax.swing.JLabel subjectAdditionScreenNameLabel;
+    private javax.swing.JTextField subjectNameInTextField;
+    private javax.swing.JList<String> subjectsSettingsJList;
+    private javax.swing.JLabel subjectsSettingsListLabel;
     private javax.swing.JTable tblViewTimeTable;
     private javax.swing.JPanel teacherBodyPanel;
     private javax.swing.JPanel teacherBulkInfoPanel;
@@ -1976,11 +2193,6 @@ public class MainScreen extends javax.swing.JFrame
     private javax.swing.JPanel teacherViewPanel;
     private javax.swing.JList<String> teachersList;
     // End of variables declaration//GEN-END:variables
-
-    private void populateTeacherTree()
-    {
-        
-    }
 
     private void clearExtramuralSettingsFields()
     {
@@ -2012,6 +2224,15 @@ public class MainScreen extends javax.swing.JFrame
                 
                 extramuralsJList1.setModel(extramuralModel.getListModel());
             }
+        }
+    }
+
+    private void removePreviousAbsentTeacher(DefaultComboBoxModel<String> dcbmIN, String selectedTeacherName)
+    {
+        for(int i = 0; i < dcbmIN.getSize(); i ++)
+        {
+            if(((String)dcbmIN.getElementAt(i)).equals(selectedTeacherName))
+                dcbmIN.removeElementAt(i);
         }
     }
 }

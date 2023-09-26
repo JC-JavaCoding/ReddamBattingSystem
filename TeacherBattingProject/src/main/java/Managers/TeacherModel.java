@@ -13,6 +13,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ListModel;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -29,8 +31,7 @@ public class TeacherModel
     
     public TeacherModel() throws SQLException 
     {
-        
-        //insert all the teachers into an arrayList from the DB
+       //insert all the teachers into an arrayList from the DB
        populateTeachersAL();
     }
 
@@ -79,7 +80,7 @@ public class TeacherModel
 
     private void populateTeachersAL() throws SQLException
     {
-         ResultSet rs = DatabaseManager.instance.query("Select * From tblTeachers");//need to select multiple tables to get all relevant information for teacher  
+        ResultSet rs = DatabaseManager.instance.query("Select * From tblTeachers");//need to select multiple tables to get all relevant information for teacher  
         
         while (rs.next())
         {
@@ -119,11 +120,12 @@ public class TeacherModel
                         )
                 );
             }
+            
             Teacher temp = new Teacher(teacherName, extramurals, lessons, hasRegisterClass);
             boolean exists = false;
             for (Teacher t : teachers)
             {
-                exists =  (t.getFullName().equals(temp.getFullName()));
+                exists = (t.getFullName().equals(temp.getFullName()));
             }
             if(!exists) teachers.add(temp);
         }
@@ -263,5 +265,17 @@ public class TeacherModel
         }
         
         return freeTeachers;
+    }
+
+    public DefaultComboBoxModel<String> getComboBoxModel()
+    {
+        DefaultComboBoxModel<String> cbModel = new DefaultComboBoxModel<String>();
+        
+        for (Teacher t : teachers)
+        {
+            cbModel.addElement(t.getFullName());
+        }
+        
+        return cbModel;
     }
 }

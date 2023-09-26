@@ -6,6 +6,7 @@ package DataTypes;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,25 +14,28 @@ import java.util.ArrayList;
  */
 public class BattingLesson
 {
-    private String teacherName;
+    private Teacher selectedTeacher;
     private Lesson battingClass;
     private LocalDate date;
+    private ArrayList<Teacher> availableTeachers;
 
-    public BattingLesson(String teacherOnDuty, Lesson battingClass, LocalDate date)
+    public BattingLesson(Teacher teacherOnDutyIN, Lesson battingClass, LocalDate date)
     {
-        this.teacherName = teacherOnDuty;
+        this.selectedTeacher = teacherOnDutyIN;
         this.battingClass = battingClass;
         this.date = date;
+        
+        availableTeachers = new ArrayList<>();
     }
 
-    public String getTeacherOnDuty()
+    public Teacher getTeacherOnDuty()
     {
-        return teacherName;
+        return selectedTeacher;
     }
 
-    public void setTeacherOnDuty(String teacherOnDuty)
+    public void setTeacherOnDuty(Teacher teacherOnDuty)
     {
-        this.teacherName = teacherOnDuty;
+        this.selectedTeacher = teacherOnDuty;
     }
 
     public Lesson getLesson()
@@ -52,7 +56,7 @@ public class BattingLesson
     @Override
     public String toString()
     {
-        return "BattingLesson{" + "teacherOnDuty=" + teacherName + ", battingClass=" + battingClass + ",date=" + date + '}';
+        return "BattingLesson{" + "teacherOnDuty=" + selectedTeacher + ", battingClass=" + battingClass + ",date=" + date + '}';
     }
 
     public void setDate(LocalDate date)
@@ -60,4 +64,22 @@ public class BattingLesson
         this.date = date;
     }
     
+    public void addAvailableTeacher(Teacher teacherIN)
+    {
+        availableTeachers.add(teacherIN);
+    }
+    
+    public void setSelectedTeacher(String teacherName)
+    {
+        boolean teacherFound = false;
+        for (Teacher teacher: availableTeachers)
+        {
+            if (teacher.getFullName().equals(teacherName)) 
+            {
+                selectedTeacher = teacher;
+                teacherFound = true;
+            }
+        }
+        if (!teacherFound) JOptionPane.showMessageDialog(null, "Teacher Not Found", "ERROR", JOptionPane.ERROR_MESSAGE);
+    }
 }
