@@ -56,7 +56,7 @@ public class BattingLesson
     @Override
     public String toString()
     {
-        return "BattingLesson{" + "teacherOnDuty=" + selectedTeacher + ", battingClass=" + battingClass + ",date=" + date + '}';
+        return selectedTeacher.getFullName() + "\n" + battingClass.toString() + ",date=" + date + '}';
     }
 
     public void setDate(LocalDate date)

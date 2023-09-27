@@ -13,6 +13,9 @@ import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,7 +24,10 @@ import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
@@ -42,9 +48,9 @@ public class MainScreen extends javax.swing.JFrame
         try
         {
             DatabaseManager.init();
-            absentTeachers = new ArrayList<Teacher>();
-            battingModel = new BattingModel();
-            teacherModel = new TeacherModel();
+            TeacherModel.init();
+            absentTeachers = new ArrayList<>();
+            absentTeacherComboboxes = new ArrayList<>();
             extramuralModel = new ExtramuralModel();
             subjectModel = new SubjectModel();
         } catch (SQLException ex)
@@ -56,7 +62,7 @@ public class MainScreen extends javax.swing.JFrame
         
         try
         {
-            teachersList.setModel(teacherModel.getListModel());
+            teachersList.setModel(TeacherModel.instance.getListModel());
             extramuralsJList1.setModel(extramuralModel.getListModel());
         }
         catch (SQLException ex)
@@ -100,9 +106,16 @@ public class MainScreen extends javax.swing.JFrame
         battingTable = new javax.swing.JTable();
         battingTopMainPanel = new javax.swing.JPanel();
         sendTableButton = new javax.swing.JButton();
-        absenteesViewPanel = new javax.swing.JPanel();
+        absenteesComboboxPanel = new javax.swing.JPanel();
         absentTeacherComboBox1 = new javax.swing.JComboBox<>();
         addAbsentTeacherComboBox_Button = new javax.swing.JButton();
+        createBattingScheduleButton = new javax.swing.JButton();
+        absenteesLessonRangePanel = new javax.swing.JPanel();
+        absentTeacher1Label = new javax.swing.JLabel();
+        teacher1FirstAbsentLesson_Spinner = new javax.swing.JSpinner();
+        teacher1EndAbsentLesson_Spinner = new javax.swing.JSpinner();
+        absentLessonsTitleLabel = new javax.swing.JLabel();
+        absentDayDatePicker = new org.jdesktop.swingx.JXDatePicker();
         battingHeaderPanel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         showSidePanelButton = new javax.swing.JButton();
@@ -451,7 +464,7 @@ public class MainScreen extends javax.swing.JFrame
         battingTopMainPanelLayout.setHorizontalGroup(
             battingTopMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, battingTopMainPanelLayout.createSequentialGroup()
-                .addContainerGap(144, Short.MAX_VALUE)
+                .addContainerGap(19, Short.MAX_VALUE)
                 .addComponent(sendTableButton)
                 .addContainerGap())
         );
@@ -460,15 +473,17 @@ public class MainScreen extends javax.swing.JFrame
             .addGroup(battingTopMainPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(sendTableButton)
-                .addContainerGap(121, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        absenteesViewPanel.setBackground(new java.awt.Color(255, 255, 255));
+        absenteesComboboxPanel.setBackground(new java.awt.Color(255, 255, 255));
+        absenteesComboboxPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        absentTeacherComboBox1.setModel( teacherModel.getComboBoxModel()
+        absentTeacherComboBox1.setModel( TeacherModel.instance.getComboBoxModel()
         );
-        absentTeachers.add(teacherModel.getTeacher((String) absentTeacherComboBox1.getSelectedItem()));
-        absenteesViewPanel.add(absentTeacherComboBox1);
+        absentTeachers.add(TeacherModel.instance.getTeacher((String) absentTeacherComboBox1.getSelectedItem()));
+        absenteesComboboxPanel.add(absentTeacherComboBox1);
+        absentTeacherComboboxes.add(absentTeacherComboBox1);
 
         addAbsentTeacherComboBox_Button.setText("+");
         addAbsentTeacherComboBox_Button.addMouseListener(new java.awt.event.MouseAdapter()
@@ -478,7 +493,29 @@ public class MainScreen extends javax.swing.JFrame
                 addAbsentTeacherComboBox_ButtonMouseReleased(evt);
             }
         });
-        absenteesViewPanel.add(addAbsentTeacherComboBox_Button);
+        absenteesComboboxPanel.add(addAbsentTeacherComboBox_Button);
+
+        createBattingScheduleButton.setText("Create Batting Schedule");
+        createBattingScheduleButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                createBattingScheduleButtonActionPerformed(evt);
+            }
+        });
+
+        absenteesLessonRangePanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        absentTeacher1Label.setText("Teacher 1:");
+        absenteesLessonRangePanel.add(absentTeacher1Label);
+
+        teacher1FirstAbsentLesson_Spinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, 14, 1));
+        absenteesLessonRangePanel.add(teacher1FirstAbsentLesson_Spinner);
+
+        teacher1EndAbsentLesson_Spinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, 14, 1));
+        absenteesLessonRangePanel.add(teacher1EndAbsentLesson_Spinner);
+
+        absentLessonsTitleLabel.setText("Absent from lesson number ... to lesson number ....");
 
         javax.swing.GroupLayout battingBodyPanel1Layout = new javax.swing.GroupLayout(battingBodyPanel1);
         battingBodyPanel1.setLayout(battingBodyPanel1Layout);
@@ -487,32 +524,47 @@ public class MainScreen extends javax.swing.JFrame
             .addGroup(battingBodyPanel1Layout.createSequentialGroup()
                 .addGroup(battingBodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, battingBodyPanel1Layout.createSequentialGroup()
-                        .addContainerGap(1117, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel9))
                     .addGroup(battingBodyPanel1Layout.createSequentialGroup()
                         .addGap(28, 28, 28)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1078, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(battingBodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane2)
+                            .addGroup(battingBodyPanel1Layout.createSequentialGroup()
+                                .addGroup(battingBodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(absenteesLessonRangePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 937, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(absentLessonsTitleLabel)
+                                    .addComponent(absenteesComboboxPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 937, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                                .addGroup(battingBodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(absentDayDatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(createBattingScheduleButton))))
+                        .addGap(23, 23, 23))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, battingBodyPanel1Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(absenteesViewPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(330, 330, 330)
-                        .addComponent(battingTopMainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(battingTopMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         battingBodyPanel1Layout.setVerticalGroup(
             battingBodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(battingBodyPanel1Layout.createSequentialGroup()
+                .addComponent(battingTopMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(battingBodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(battingBodyPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(battingTopMainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(72, 72, 72))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(absenteesComboboxPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9))
                     .addGroup(battingBodyPanel1Layout.createSequentialGroup()
-                        .addContainerGap(138, Short.MAX_VALUE)
-                        .addComponent(absenteesViewPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)))
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(53, 53, 53)
+                        .addComponent(absentDayDatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)))
+                .addComponent(absentLessonsTitleLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(battingBodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(absenteesLessonRangePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(createBattingScheduleButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
                 .addGap(106, 106, 106)
                 .addComponent(jLabel9)
                 .addContainerGap())
@@ -664,7 +716,7 @@ public class MainScreen extends javax.swing.JFrame
                 .addGap(70, 70, 70)
                 .addComponent(jLabel10)
                 .addGap(117, 117, 117)
-                .addComponent(addTeachersThroughCSVButton, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+                .addComponent(addTeachersThroughCSVButton, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
                 .addContainerGap())
         );
         contactDetailsPanelLayout.setVerticalGroup(
@@ -966,6 +1018,13 @@ public class MainScreen extends javax.swing.JFrame
         });
 
         deleteTeacherButton.setText("Delete Teacher");
+        deleteTeacherButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                deleteTeacherButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout bodyPanelLayout = new javax.swing.GroupLayout(bodyPanel);
         bodyPanel.setLayout(bodyPanelLayout);
@@ -976,7 +1035,7 @@ public class MainScreen extends javax.swing.JFrame
                 .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(addTeachersButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(deleteTeacherButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(teacherBulkInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -1102,7 +1161,7 @@ public class MainScreen extends javax.swing.JFrame
                 .addContainerGap()
                 .addComponent(showSidePanelButton2)
                 .addGap(259, 259, 259)
-                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 615, Short.MAX_VALUE)
                 .addGap(297, 297, 297))
         );
         statisticsHeaderPanelLayout.setVerticalGroup(
@@ -1188,7 +1247,7 @@ public class MainScreen extends javax.swing.JFrame
             .addGroup(settingsHeaderPanelLayout.createSequentialGroup()
                 .addComponent(showSidePanelButton3)
                 .addGap(272, 272, 272)
-                .addComponent(settingsMainScreenLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
+                .addComponent(settingsMainScreenLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 615, Short.MAX_VALUE)
                 .addGap(290, 290, 290))
         );
         settingsHeaderPanelLayout.setVerticalGroup(
@@ -1388,12 +1447,9 @@ public class MainScreen extends javax.swing.JFrame
                             .addGap(854, 854, 854))
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(addSubjectToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(182, 182, Short.MAX_VALUE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 271, Short.MAX_VALUE)))
+                                .addComponent(addSubjectToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(182, 271, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(editSubjectsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -1469,7 +1525,7 @@ public class MainScreen extends javax.swing.JFrame
         settingsViewPanelLayout.setHorizontalGroup(
             settingsViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(settingsHeaderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(settingsMainBodyScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1190, Short.MAX_VALUE)
+            .addComponent(settingsMainBodyScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1202, Short.MAX_VALUE)
         );
         settingsViewPanelLayout.setVerticalGroup(
             settingsViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1638,15 +1694,15 @@ public class MainScreen extends javax.swing.JFrame
     {//GEN-HEADEREND:event_teachersListMouseClicked
             // TODO add your handling code here:
             
-        teacherTree.setModel(teacherModel.getTreeModel(teachersList.getSelectedValue()));
+        teacherTree.setModel(TeacherModel.instance.getTreeModel(teachersList.getSelectedValue()));
         String teacherName = teachersList.getSelectedValue();
         String email = teacherName.stripLeading() + '.' + teacherName.substring(teacherName.indexOf(" ")) + "@reddam.house";
         emailContactLabel.setText(email);
             
         try
         {
-            lessonModel = new LessonModel(teacherModel.getTeacher(teacherName));
-            tblViewTimeTable.setModel(new LessonModel(teacherModel.getTeacher(teachersList.getSelectedValue())));
+            lessonModel = new LessonModel(TeacherModel.instance.getTeacher(teacherName));
+            tblViewTimeTable.setModel(new LessonModel(TeacherModel.instance.getTeacher(teachersList.getSelectedValue())));
             //populateTeacherTree();
         } catch (SQLException ex)
         {
@@ -1670,8 +1726,8 @@ public class MainScreen extends javax.swing.JFrame
         
         try
         {
-            teacherModel.addLessonsFromCSV(selectedFile);
-            teachersList.setModel(teacherModel.getListModel());
+            TeacherModel.instance.addLessonsFromCSV(selectedFile);
+            teachersList.setModel(TeacherModel.instance.getListModel());
         } catch (SQLException | FileNotFoundException ex)
         {
             ex.printStackTrace();
@@ -1816,14 +1872,14 @@ public class MainScreen extends javax.swing.JFrame
             try
             {
                 ExtraMural em = extramuralModel.getExtramural(extramuralsJList.getSelectedValue());
-                Teacher teacher = teacherModel.getTeacher(teachersList.getSelectedValue());
+                Teacher teacher = TeacherModel.instance.getTeacher(teachersList.getSelectedValue());
                 int confirmedInt = JOptionPane.showConfirmDialog(this, "Are you sure you want to add \""+ em.toString()+"\" to Teacher \""+ teacher.getFullName() +"`s\" list of extramurals?");
                
-                if (confirmedInt == 0) teacherModel.addExtramural(teacher, em);
+                if (confirmedInt == 0) TeacherModel.instance.addExtramural(teacher, em);
                 
                 JOptionPane.showMessageDialog(this, "", "Added" + em.toString()+"\" to Teacher \""+ teacher.getFullName() +"`s\" list of extramurals", JOptionPane.INFORMATION_MESSAGE);
                 
-                teacherTree.setModel(teacherModel.getTreeModel(teachersList.getSelectedValue()));
+                teacherTree.setModel(TeacherModel.instance.getTreeModel(teachersList.getSelectedValue()));
             } catch (SQLException ex)
             {
                 JOptionPane.showMessageDialog(this, ex.toString(), "ERROR: " +ex.getErrorCode(), JOptionPane.ERROR_MESSAGE);
@@ -1862,8 +1918,8 @@ public class MainScreen extends javax.swing.JFrame
         try
         {
              DefaultMutableTreeNode node = (DefaultMutableTreeNode) teacherTree.getLastSelectedPathComponent();
-            teacherModel.removeExtramural(
-                    teacherModel.getTeacher(teachersList.getSelectedValue()) , 
+            TeacherModel.instance.removeExtramural(
+                    TeacherModel.instance.getTeacher(teachersList.getSelectedValue()) , 
                     extramuralModel.getExtramural((String) node.getUserObject())
             );
         } catch (SQLException ex)
@@ -1876,23 +1932,23 @@ public class MainScreen extends javax.swing.JFrame
     {//GEN-HEADEREND:event_cancelTeacherEditsButtonActionPerformed
         // TODO add your handling code here:
         teacherNameTextField.setText(teachersList.getSelectedValue());
-        if (teacherModel.getTeacher(teachersList.getSelectedValue()).hasRegisterClass()) hasRegClassCheckbox.setSelected(true);
+        if (TeacherModel.instance.getTeacher(teachersList.getSelectedValue()).hasRegisterClass()) hasRegClassCheckbox.setSelected(true);
         else hasRegClassCheckbox.setSelected(false);
     }//GEN-LAST:event_cancelTeacherEditsButtonActionPerformed
 
     private void saveTeacherDetailsButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_saveTeacherDetailsButtonActionPerformed
     {//GEN-HEADEREND:event_saveTeacherDetailsButtonActionPerformed
         // TODO add your handling code here:
-        Teacher baseTeacher = teacherModel.getTeacher(teachersList.getSelectedValue());
-        Teacher newTeacher = new Teacher(
-            teacherNameTextField.getText(),
-            baseTeacher.getExtraMuralsAsArrayList(),
-            baseTeacher.getLessonsArrayList(),
-            hasRegClassCheckbox.isSelected());
+        Teacher baseTeacher = TeacherModel.instance.getTeacher(teachersList.getSelectedValue());
 
         try
         {
-            teacherModel.updateTeacher(baseTeacher, newTeacher);
+            Teacher newTeacher = new Teacher(
+                teacherNameTextField.getText(),
+                baseTeacher.getExtraMuralsAsArrayList(),
+                baseTeacher.getLessonsArrayList(),
+                hasRegClassCheckbox.isSelected());
+            TeacherModel.instance.updateTeacher(baseTeacher, newTeacher);
         } catch (SQLException ex)
         {
             ex.printStackTrace();
@@ -1915,8 +1971,8 @@ public class MainScreen extends javax.swing.JFrame
         
         try
         {
-            teacherModel.addTeachersNames(selectedFile);
-            teachersList.setModel(teacherModel.getListModel());
+            TeacherModel.instance.addTeachersNames(selectedFile);
+            teachersList.setModel(TeacherModel.instance.getListModel());
         } catch (SQLException | FileNotFoundException ex)
         {
             ex.printStackTrace();
@@ -1973,7 +2029,7 @@ public class MainScreen extends javax.swing.JFrame
     private void searchTeachersFieldKeyReleased(java.awt.event.KeyEvent evt)//GEN-FIRST:event_searchTeachersFieldKeyReleased
     {//GEN-HEADEREND:event_searchTeachersFieldKeyReleased
         // TODO add your handling code here:
-                ArrayList <String> teachersContainingText = teacherModel.getTeachersContaining(searchTeachersField.getText());
+                ArrayList <String> teachersContainingText = TeacherModel.instance.getTeachersContaining(searchTeachersField.getText());
         DefaultListModel <String> dlm = new DefaultListModel<>();
         
         for (String str : teachersContainingText)
@@ -1990,47 +2046,120 @@ public class MainScreen extends javax.swing.JFrame
         {
             case 1: 
                 JComboBox<String> absentTeacherComboBox2 = new JComboBox<>();
-                DefaultComboBoxModel<String> dcbm1 = teacherModel.getComboBoxModel();
+                DefaultComboBoxModel<String> dcbm2 = TeacherModel.instance.getComboBoxModel();
+                absentTeacherComboBox2.setModel( dcbm2);
+                absentTeacherComboboxes.add(absentTeacherComboBox2);
+                absenteesComboboxPanel.add(absentTeacherComboBox2, 1);
                 
-                for (Teacher t : absentTeachers)
-                {
-                    removePreviousAbsentTeacher(dcbm1, t.getFullName());
-                }    
+                teacher2FirstAbsentLesson_Spinner = new JSpinner(new SpinnerNumberModel(1, 1, 14, 1));
+                int t2StartRange = (int) teacher2FirstAbsentLesson_Spinner.getValue();
+                teacher2EndAbsentLesson_Spinner = new JSpinner(new SpinnerNumberModel(t2StartRange, t2StartRange, 14, 1));
                 
-                absentTeacherComboBox2.setModel( dcbm1);
-                absenteesViewPanel.add(absentTeacherComboBox2, 1);
+                JLabel absentTeacher2Label = new JLabel("Teacher 2:");
                 
-                absentTeachers.add(teacherModel.getTeacher((String) absentTeacherComboBox2.getSelectedItem()));
+                absenteesLessonRangePanel.add(absentTeacher2Label);
+                absenteesLessonRangePanel.add(teacher2FirstAbsentLesson_Spinner);
+                absenteesLessonRangePanel.add(teacher2EndAbsentLesson_Spinner);
+                
+                absentTeachers.add(TeacherModel.instance.getTeacher((String) absentTeacherComboBox2.getSelectedItem()));
+                removeRepeatedAbsentTeachers();
                 break;
             case 2:
                 JComboBox<String> absentTeacherComboBox3 = new JComboBox<>();
-                DefaultComboBoxModel<String> dcbm2 = teacherModel.getComboBoxModel();
+                DefaultComboBoxModel<String> dcbm3 = TeacherModel.instance.getComboBoxModel();
+                absentTeacherComboBox3.setModel(dcbm3);
+                absentTeacherComboboxes.add(absentTeacherComboBox3);
+                absentTeachers.add(TeacherModel.instance.getTeacher((String) absentTeacherComboBox3.getSelectedItem()));
                 
-                for (Teacher t : absentTeachers)
-                {
-                    removePreviousAbsentTeacher(dcbm2, t.getFullName());
-                }    
+                absenteesComboboxPanel.add(absentTeacherComboBox3, 2);
                 
-                absentTeacherComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-                absenteesViewPanel.add(absentTeacherComboBox3, 2);
+                teacher3FirstAbsentLesson_Spinner = new JSpinner(new SpinnerNumberModel(1, 1, 14, 1));
+                int t3StartRange = (int)teacher3FirstAbsentLesson_Spinner.getValue();
+                teacher3EndAbsentLesson_Spinner = new JSpinner(new SpinnerNumberModel(t3StartRange, t3StartRange, 14, 1));
                 
-                absentTeachers.add(teacherModel.getTeacher((String) absentTeacherComboBox3.getSelectedItem()));
+                JLabel absentTeacher3Label = new JLabel("Teacher 3:");
+                
+                absenteesLessonRangePanel.add(absentTeacher3Label);
+                absenteesLessonRangePanel.add(teacher3FirstAbsentLesson_Spinner);
+                absenteesLessonRangePanel.add(teacher3EndAbsentLesson_Spinner);
+                removeRepeatedAbsentTeachers();
                 break;
             case 3:
                 JComboBox<String> absentTeacherComboBox4 = new JComboBox<>();
-                absentTeacherComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-                absenteesViewPanel.add(absentTeacherComboBox4,3);
+                DefaultComboBoxModel<String> dcbm4 = TeacherModel.instance.getComboBoxModel();
+                absentTeacherComboBox4.setModel(dcbm4);
+                absentTeacherComboboxes.add(absentTeacherComboBox4);
+                absentTeachers.add(TeacherModel.instance.getTeacher((String) absentTeacherComboBox4.getSelectedItem()));
                 
-                absentTeachers.add(teacherModel.getTeacher((String) absentTeacherComboBox4.getSelectedItem()));
+                absenteesComboboxPanel.add(absentTeacherComboBox4, 3);
+                
+                teacher4FirstAbsentLesson_Spinner = new JSpinner(new SpinnerNumberModel(1, 1, 14, 1));
+                int t4StartRange = (int)teacher4FirstAbsentLesson_Spinner.getValue();
+                teacher4EndAbsentLesson_Spinner = new JSpinner(new SpinnerNumberModel(t4StartRange, t4StartRange, 14, 1));
+                
+                JLabel absentTeacher4Label = new JLabel("Teacher 4:");
+                
+                absenteesLessonRangePanel.add(absentTeacher4Label);
+                absenteesLessonRangePanel.add(teacher4FirstAbsentLesson_Spinner);
+                absenteesLessonRangePanel.add(teacher4EndAbsentLesson_Spinner);
+                removeRepeatedAbsentTeachers();
                 break;
             default: 
                 System.out.println("Max number reached");
         }
         
         //necessary to update the panel
-        absenteesViewPanel.setVisible(false);
-        absenteesViewPanel.setVisible(true);
+        absenteesComboboxPanel.setVisible(false);
+        absenteesComboboxPanel.setVisible(true);
     }//GEN-LAST:event_addAbsentTeacherComboBox_ButtonMouseReleased
+
+    private void createBattingScheduleButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_createBattingScheduleButtonActionPerformed
+    {//GEN-HEADEREND:event_createBattingScheduleButtonActionPerformed
+        int [][] teachersLessonsAbsent = new int[absentTeachers.size()][];
+        
+        for (int i = 0; i < absentTeachers.size(); i++)
+        {
+            absentTeachers.set(
+                    i,
+                    TeacherModel.instance.
+                            getTeacher(
+                                    (String)absentTeacherComboboxes.
+                                            get(i).
+                                            getSelectedItem()
+                            )
+            );
+        }
+        for (int j = 0; j < absentTeachers.size(); j++)
+        {
+            int rangeSize = getLessonRangeSize(j+1);
+            int [] intArr = new int[rangeSize];
+            for(int i = 0; i < rangeSize; i++)
+            {
+                intArr[i] = i+ getMinLessonForAbsentTeacher(j+1);
+            }
+            teachersLessonsAbsent[j] = intArr;
+        }
+        
+        try
+        {
+            battingTable.setModel(BattingModel.instance.getBattingTableModel(absentTeachers, teachersLessonsAbsent, absentDayDatePicker.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_createBattingScheduleButtonActionPerformed
+
+    private void deleteTeacherButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_deleteTeacherButtonActionPerformed
+    {//GEN-HEADEREND:event_deleteTeacherButtonActionPerformed
+        try
+        {
+            // TODO add your handling code here:
+            TeacherModel.instance.deleteTeacher(teachersList.getSelectedValue());
+        } catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_deleteTeacherButtonActionPerformed
 
     private void lightenBackColour(JComponent c)
     {
@@ -2081,15 +2210,19 @@ public class MainScreen extends javax.swing.JFrame
         });
     }
     
+    private JSpinner teacher2FirstAbsentLesson_Spinner,teacher2EndAbsentLesson_Spinner, teacher3FirstAbsentLesson_Spinner,teacher3EndAbsentLesson_Spinner,teacher4FirstAbsentLesson_Spinner,teacher4EndAbsentLesson_Spinner;
+    private ArrayList<JComboBox> absentTeacherComboboxes;
     private ArrayList<Teacher> absentTeachers;
     private SubjectModel subjectModel;
-    private ExtramuralModel extramuralModel;
+    private ExtramuralModel extramuralModel;    
     private LessonModel lessonModel;
-    private BattingModel battingModel;
-    private TeacherModel teacherModel;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private org.jdesktop.swingx.JXDatePicker absentDayDatePicker;
+    private javax.swing.JLabel absentLessonsTitleLabel;
+    private javax.swing.JLabel absentTeacher1Label;
     private javax.swing.JComboBox<String> absentTeacherComboBox1;
-    private javax.swing.JPanel absenteesViewPanel;
+    private javax.swing.JPanel absenteesComboboxPanel;
+    private javax.swing.JPanel absenteesLessonRangePanel;
     private javax.swing.JButton addAbsentTeacherComboBox_Button;
     private javax.swing.JButton addExtraMuralToTeacherButton;
     private javax.swing.JLabel addExtramuralLabel;
@@ -2108,6 +2241,7 @@ public class MainScreen extends javax.swing.JFrame
     private javax.swing.JButton cancelAddEMToTeacherButton;
     private javax.swing.JButton cancelTeacherEditsButton;
     private javax.swing.JPanel contactDetailsPanel;
+    private javax.swing.JButton createBattingScheduleButton;
     private javax.swing.JButton deleteEMfromTeacherButton;
     private javax.swing.JButton deleteExtramuralButton;
     private javax.swing.JButton deleteSubjectButton;
@@ -2183,6 +2317,8 @@ public class MainScreen extends javax.swing.JFrame
     private javax.swing.JList<String> subjectsSettingsJList;
     private javax.swing.JLabel subjectsSettingsListLabel;
     private javax.swing.JTable tblViewTimeTable;
+    private javax.swing.JSpinner teacher1EndAbsentLesson_Spinner;
+    private javax.swing.JSpinner teacher1FirstAbsentLesson_Spinner;
     private javax.swing.JPanel teacherBodyPanel;
     private javax.swing.JPanel teacherBulkInfoPanel;
     private javax.swing.JPanel teacherButtonPane1;
@@ -2227,12 +2363,69 @@ public class MainScreen extends javax.swing.JFrame
         }
     }
 
-    private void removePreviousAbsentTeacher(DefaultComboBoxModel<String> dcbmIN, String selectedTeacherName)
+    private void removeRepeatedAbsentTeachers()
     {
-        for(int i = 0; i < dcbmIN.getSize(); i ++)
+        
+        for(int i = absentTeacherComboboxes.size()-1; i > 0; i--)
         {
-            if(((String)dcbmIN.getElementAt(i)).equals(selectedTeacherName))
-                dcbmIN.removeElementAt(i);
+            JComboBox iCombo = absentTeacherComboboxes.get(i);
+            String selectedValue = (String)iCombo.getSelectedItem();
+            
+            for(int j = 0; j < absentTeacherComboboxes.size(); j++)
+            {
+                JComboBox jCombo = absentTeacherComboboxes.get(j);
+                if(i == j) break;
+                for(int k = 0; k < jCombo.getItemCount(); k++)
+                {
+                    if(selectedValue.equals(jCombo.getItemAt(k)))
+                        iCombo.removeItemAt(k);
+                }
+            }
         }
+    }
+
+    private int getLessonRangeSize(int nthTeacher)
+    {
+        int max = 0,  min = 0;
+        switch (nthTeacher)
+        {
+            case 1:
+                min = (int)teacher1FirstAbsentLesson_Spinner.getValue(); 
+                max = (int)teacher1EndAbsentLesson_Spinner.getValue();
+                break;
+            case 2:
+                min = (int)teacher2FirstAbsentLesson_Spinner.getValue(); 
+                max = (int)teacher2EndAbsentLesson_Spinner.getValue();
+                break;
+            case 3:
+                min = (int)teacher3FirstAbsentLesson_Spinner.getValue(); 
+                max = (int)teacher3EndAbsentLesson_Spinner.getValue();
+                break;
+            case 4:
+                min = (int)teacher4FirstAbsentLesson_Spinner.getValue(); 
+                max = (int)teacher4EndAbsentLesson_Spinner.getValue();
+                
+        }
+        return max-min+1;
+    }
+
+    private int getMinLessonForAbsentTeacher(int j)
+    {
+        int min = 0;
+        switch (j)
+        {
+            case 1:
+                min = (int)teacher1FirstAbsentLesson_Spinner.getValue(); 
+                break;
+            case 2:
+                min = (int)teacher2FirstAbsentLesson_Spinner.getValue(); 
+                break;
+            case 3:
+                min = (int)teacher3FirstAbsentLesson_Spinner.getValue(); 
+                break;
+            case 4:
+                min = (int)teacher4FirstAbsentLesson_Spinner.getValue(); 
+        }
+        return min;
     }
 }

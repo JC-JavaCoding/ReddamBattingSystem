@@ -72,5 +72,23 @@ public class Lesson
     {
         this.grade = grade;
     }
+
+    int getLessonNumber()
+    {
+        if (slotNr <= 56)
+        {
+            return (slotNr)%14;
+        }
+        return (slotNr-56)%12;
+    }
+    
+    int getDayOfWeek()
+    {
+        if (slotNr <= 56)
+        {
+            return (slotNr)/14;
+        }
+        return 5;
+    }
     
 }

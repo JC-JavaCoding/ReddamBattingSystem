@@ -27,14 +27,24 @@ import javax.swing.tree.TreeModel;
  */
 public class TeacherModel
 {
+    public static TeacherModel instance;
     private ArrayList<Teacher> teachers = new ArrayList<>();
     
-    public TeacherModel() throws SQLException 
+    private TeacherModel() throws SQLException 
     {
        //insert all the teachers into an arrayList from the DB
        populateTeachersAL();
     }
-
+    
+    public static void init() throws SQLException
+    {
+        if (instance == null)
+        {
+            instance = new TeacherModel();
+        }
+        
+    }
+    
     public ArrayList<String> getTeachersContaining(String text)
     {
         //returns the full names of all of the teachers whose names contain the letters in the text.
@@ -255,18 +265,6 @@ public class TeacherModel
         populateTeachersAL();
     }
 
-    public ArrayList<Teacher> getTeachersFree(Lesson lesson)
-    {
-        ArrayList <Teacher> freeTeachers = new ArrayList<>();
-        for (Teacher teacher : teachers)
-        {
-            if (teacher.hasLessonAt(lesson.getSlotNr()))
-                freeTeachers.add(teacher);
-        }
-        
-        return freeTeachers;
-    }
-
     public DefaultComboBoxModel<String> getComboBoxModel()
     {
         DefaultComboBoxModel<String> cbModel = new DefaultComboBoxModel<String>();
@@ -277,5 +275,15 @@ public class TeacherModel
         }
         
         return cbModel;
+    }
+
+    public ArrayList<Teacher> getTeachers()
+    {
+        return teachers;
+    }
+
+    public void deleteTeacher(String fullName) throws SQLException
+    {
+        DatabaseManager.instance.update("Delete from tblTeachers WHERE `FullName` = \""+ fullName +"\"");
     }
 }
