@@ -25,39 +25,13 @@ import javax.mail.internet.MimeMultipart;
  */
 public class Email_JavaMail
 {
-    private final static String passkey = "qgye ccrq vjks tbyy";
-    private static Session session;
+    private final static String PASSKEY = "qgye ccrq vjks tbyy";
+    private static Session SESSION;
     public static void main(String[] args)
     {
-        
-        System.out.println();
         // Recipient's emal ID needs to be mentioned
         String to = "janchristiaan.jacobs@reddam.house" ;
-        String from = "janchristiaan.jacobs@gmail.com" ;//securesally
-        
-//        // Get system properties
-//        Properties properties = System.getProperties();
-//        // Setup mail server
-//        String host = "smtp.gmail.com";
-//        properties.put( "mail.smtp.auth" ,"true");
-//        properties.put( "mail.smtp.starttls.enable" ,"true");
-//        properties.put( "mail.smtp.host" ,host);
-//        properties.put("mail.smtp.port" , "587");
-//        
-//        //sending from gmail:
-//        // Get the default Session object.
-//        session = Session.getInstance(properties, new javax.mail.Authenticator()
-//            {
-//                @Override
-//                protected javax.mail.PasswordAuthentication getPasswordAuthentication()
-//                {
-//                    return new javax.mail.PasswordAuthentication(from, passkey);
-//                }
-//            }
-//        );
-        
-        //mailMessage(to, from, "This is the Subject Line!", "This is actual message");
-        //(to, from, "This is the Subject Line!", "This is actual message", "C:/Users/janch/OneDrive/Pictures/Artworks & their annotations 1.png");
+        String from = "janchristiaan.jacobs@gmail.com" ;
     }
     
     public static void mailAttachment(String to, String from, String header, String text, String filepath)
@@ -74,17 +48,17 @@ public class Email_JavaMail
 
             //sending from gmail:
             // Get the default Session object.
-            session = Session.getInstance(properties, new javax.mail.Authenticator()
+            SESSION = Session.getInstance(properties, new javax.mail.Authenticator()
                 {
                     @Override
                     protected javax.mail.PasswordAuthentication getPasswordAuthentication()
                     {
-                        return new javax.mail.PasswordAuthentication(from, passkey);
+                        return new javax.mail.PasswordAuthentication(from, PASSKEY);
                     }
                 }
             );
             // Create a default MimeMessage object.
-            Message message = new MimeMessage(session);
+            Message message = new MimeMessage(SESSION);
 
             // Set From: header field of the header.
             message. setFrom(new InternetAddress(from));
@@ -123,33 +97,6 @@ public class Email_JavaMail
             {
                 ioe.printStackTrace();
             }
-        }
-        catch (MessagingException mex) 
-        {
-            throw new RuntimeException(mex);
-        }
-    }
-    
-    private static void mailMessage(String to, String from, String header, String text)
-    {
-        try 
-        {
-            // Create a default MimeMessage object.
-            Message message = new MimeMessage(session);
-
-            // Set From: header field of the header.
-            message. setFrom(new InternetAddress(from));
-            // Set To: header field of the header.
-            message.addRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
-            // Set Subject: header field
-            message.setSubject(header);
-            // Now set the actual message
-            message.setText(text);
-            
-            // Send message
-            Transport.send(message) ;
-            
-            System. out. println("Sent message successfully...." );
         }
         catch (MessagingException mex) 
         {

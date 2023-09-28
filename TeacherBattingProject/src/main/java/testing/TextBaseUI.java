@@ -2,10 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Managers;
+package testing;
 
 import DataTypes.BattingLesson;
-import DataTypes.TimeTable;
 import DataTypes.Teacher;
 import DataTypes.ExtraMural;
 import java.time.LocalDate;

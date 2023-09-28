@@ -366,10 +366,7 @@
                                       <Component id="jScrollPane2" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                  <Component id="battingTopMainPanel" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="battingTopMainPanel" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -526,9 +523,6 @@
                           <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                         </Property>
                       </Properties>
-                      <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_AddingCodePre" type="java.lang.String" value="battingTable.setDefaultRenderer(String.class, new MultiLineTableCellRenderer());  "/>
-                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -600,12 +594,12 @@
                     <Component class="javax.swing.JComboBox" name="absentTeacherComboBox1">
                       <Properties>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code=" TeacherModel.instance.getComboBoxModel()&#xa;    " type="code"/>
+                          <Connection code=" TeacherModel.INSTANCE.getComboBoxModel()&#xa;    " type="code"/>
                         </Property>
                       </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="absentTeacherComboboxes.add(absentTeacherComboBox1);"/>
-                        <AuxValue name="JavaCodeGenerator_AddingCodePre" type="java.lang.String" value="absentTeachers.add(TeacherModel.instance.getTeacher((String) absentTeacherComboBox1.getSelectedItem()));"/>
+                        <AuxValue name="JavaCodeGenerator_AddingCodePre" type="java.lang.String" value="absentTeachers.add(TeacherModel.INSTANCE.getTeacher((String) absentTeacherComboBox1.getSelectedItem()));"/>
                         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                       </AuxValues>
                     </Component>
@@ -1153,8 +1147,7 @@
                                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblViewTimeTableMouseClicked"/>
                               </Events>
                               <AuxValues>
-                                <AuxValue name="JavaCodeGenerator_AddingCodePre" type="java.lang.String" value="tblViewTimeTable.setDefaultRenderer(String.class, new MultiLineTableCellRenderer());  "/>
-                                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="// tblViewTimeTable.setRowHeight(tblViewTimeTable.getHeight() / 5 +1);&#xd;&#xa;//System.out.println(tblViewTimeTable.getModel().getHeight() + &quot;&quot;);&#xd;&#xa;"/>
+                                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="// tblViewTimeTable.setRowHeight(tblViewTimeTable.getHeight() / 5 +1);&#xa;//System.out.println(tblViewTimeTable.getModel().getHeight() + &quot;&quot;);"/>
                               </AuxValues>
                             </Component>
                           </SubComponents>
@@ -2017,15 +2010,9 @@
                                       <Group type="102" attributes="0">
                                           <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="subjectsSettingsListLabel" min="-2" pref="300" max="-2" attributes="0"/>
-                                              </Group>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="addSubjectToggleButton" min="-2" pref="76" max="-2" attributes="0"/>
-                                                      <Component id="jScrollPane7" min="-2" pref="425" max="-2" attributes="0"/>
-                                                  </Group>
-                                              </Group>
+                                              <Component id="subjectsSettingsListLabel" min="-2" pref="300" max="-2" attributes="0"/>
+                                              <Component id="addSubjectToggleButton" min="-2" pref="76" max="-2" attributes="0"/>
+                                              <Component id="jScrollPane7" min="-2" pref="425" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace pref="729" max="32767" attributes="0"/>
                                       </Group>

@@ -5,7 +5,6 @@
 package UI;
 
 import DataTypes.ExtraMural;
-import DataTypes.MultiLineTableCellRenderer;
 import DataTypes.Teacher;
 import Managers.*;
 import com.formdev.flatlaf.ui.FlatLineBorder;
@@ -18,7 +17,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -36,7 +34,6 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreePath;
 import Managers.Email_JavaMail;
 import com.itextpdf.text.Rectangle;
 
@@ -58,7 +55,7 @@ public class MainScreen extends javax.swing.JFrame
             DatabaseManager.init();
             TeacherModel.init();
             battingModel = new BattingModel();
-            TeacherModel.instance.setBattingsForAllTeachers();
+            TeacherModel.INSTANCE.setBattingsForAllTeachers();
             absentTeachers = new ArrayList<>();
             absentTeacherComboboxes = new ArrayList<>();
             extramuralModel = new ExtramuralModel();
@@ -72,7 +69,7 @@ public class MainScreen extends javax.swing.JFrame
         
         try
         {
-            teachersList.setModel(TeacherModel.instance.getListModel());
+            teachersList.setModel(TeacherModel.INSTANCE.getListModel());
             extramuralsJList1.setModel(extramuralModel.getListModel());
         }
         catch (SQLException ex)
@@ -452,7 +449,6 @@ public class MainScreen extends javax.swing.JFrame
         battingTable.setGridColor(new java.awt.Color(204, 204, 204));
         battingTable.setRowHeight(100);
         battingTable.setShowGrid(true);
-        battingTable.setDefaultRenderer(String.class, new MultiLineTableCellRenderer());
         jScrollPane2.setViewportView(battingTable);
 
         battingTopMainPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -493,9 +489,9 @@ public class MainScreen extends javax.swing.JFrame
         absenteesComboboxPanel.setBackground(new java.awt.Color(255, 255, 255));
         absenteesComboboxPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        absentTeacherComboBox1.setModel( TeacherModel.instance.getComboBoxModel()
+        absentTeacherComboBox1.setModel( TeacherModel.INSTANCE.getComboBoxModel()
         );
-        absentTeachers.add(TeacherModel.instance.getTeacher((String) absentTeacherComboBox1.getSelectedItem()));
+        absentTeachers.add(TeacherModel.INSTANCE.getTeacher((String) absentTeacherComboBox1.getSelectedItem()));
         absenteesComboboxPanel.add(absentTeacherComboBox1);
         absentTeacherComboboxes.add(absentTeacherComboBox1);
 
@@ -556,9 +552,7 @@ public class MainScreen extends javax.swing.JFrame
                                     .addComponent(createBattingScheduleButton))
                                 .addGap(23, 23, 23))
                             .addComponent(jScrollPane2)))
-                    .addGroup(battingBodyPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
-                        .addComponent(battingTopMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(battingTopMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         battingBodyPanel1Layout.setVerticalGroup(
@@ -833,7 +827,6 @@ public class MainScreen extends javax.swing.JFrame
                 tblViewTimeTableMouseClicked(evt);
             }
         });
-        tblViewTimeTable.setDefaultRenderer(String.class, new MultiLineTableCellRenderer());
         jScrollPane30.setViewportView(tblViewTimeTable);
 
         insertPanes_HolderPane.setBackground(new java.awt.Color(255, 255, 255));
@@ -1501,12 +1494,9 @@ public class MainScreen extends javax.swing.JFrame
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(40, 40, 40)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(subjectsSettingsListLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(addSubjectToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(subjectsSettingsListLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(addSubjectToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addContainerGap(729, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
@@ -1776,7 +1766,7 @@ public class MainScreen extends javax.swing.JFrame
                 }while(confirmationInt == 0);
             }
             
-            battingModel.addBattings(battingModel.getBattingLessons());
+            battingModel.addBattings(battingModel.getBATTING_LESSONS());
         }catch (DocumentException ex) 
         {
             ex.printStackTrace();
@@ -1801,15 +1791,15 @@ public class MainScreen extends javax.swing.JFrame
         extramuralAddPane.setVisible(false);
         teacherEditPane.setVisible(true);
         
-        teacherTree.setModel(TeacherModel.instance.getTreeModel(teachersList.getSelectedValue()));
+        teacherTree.setModel(TeacherModel.INSTANCE.getTreeModel(teachersList.getSelectedValue()));
         String teacherName = teachersList.getSelectedValue();
         String email = (teacherName.substring(0, teacherName.indexOf(" "))+ '.' + teacherName.substring(teacherName.indexOf(" ")+1).stripTrailing()).toLowerCase() + "@reddam.house";
         emailContactLabel.setText(email);
             
         try
         {
-            lessonModel = new LessonModel(TeacherModel.instance.getTeacher(teacherName));
-            tblViewTimeTable.setModel(new LessonModel(TeacherModel.instance.getTeacher(teachersList.getSelectedValue())));
+            lessonModel = new LessonModel(TeacherModel.INSTANCE.getTeacher(teacherName));
+            tblViewTimeTable.setModel(new LessonModel(TeacherModel.INSTANCE.getTeacher(teachersList.getSelectedValue())));
             //populateTeacherTree();
         } catch (SQLException ex)
         {
@@ -1833,8 +1823,8 @@ public class MainScreen extends javax.swing.JFrame
         
         try
         {
-            TeacherModel.instance.addLessonsFromCSV(selectedFile);
-            teachersList.setModel(TeacherModel.instance.getListModel());
+            TeacherModel.INSTANCE.addLessonsFromCSV(selectedFile);
+            teachersList.setModel(TeacherModel.INSTANCE.getListModel());
         } catch (SQLException | FileNotFoundException ex)
         {
             ex.printStackTrace();
@@ -1983,14 +1973,14 @@ public class MainScreen extends javax.swing.JFrame
             try
             {
                 ExtraMural em = extramuralModel.getExtramural(extramuralsJList.getSelectedValue());
-                Teacher teacher = TeacherModel.instance.getTeacher(teachersList.getSelectedValue());
+                Teacher teacher = TeacherModel.INSTANCE.getTeacher(teachersList.getSelectedValue());
                 int confirmedInt = JOptionPane.showConfirmDialog(this, "Are you sure you want to add \""+ em.toString()+"\" to Teacher \""+ teacher.getFullName() +"`s\" list of extramurals?");
                
-                if (confirmedInt == 0) TeacherModel.instance.addExtramural(teacher, em);
+                if (confirmedInt == 0) TeacherModel.INSTANCE.addExtramural(teacher, em);
                 
                 JOptionPane.showMessageDialog(this, "", "Added" + em.toString()+"\" to Teacher \""+ teacher.getFullName() +"`s\" list of extramurals", JOptionPane.INFORMATION_MESSAGE);
                 
-                teacherTree.setModel(TeacherModel.instance.getTreeModel(teachersList.getSelectedValue()));
+                teacherTree.setModel(TeacherModel.INSTANCE.getTreeModel(teachersList.getSelectedValue()));
             } catch (SQLException ex)
             {
                 JOptionPane.showMessageDialog(this, ex.toString(), "ERROR: " +ex.getErrorCode(), JOptionPane.ERROR_MESSAGE);
@@ -2027,8 +2017,8 @@ public class MainScreen extends javax.swing.JFrame
         try
         {
              DefaultMutableTreeNode node = (DefaultMutableTreeNode) teacherTree.getLastSelectedPathComponent();
-            TeacherModel.instance.removeExtramural(
-                    TeacherModel.instance.getTeacher(teachersList.getSelectedValue()) , 
+            TeacherModel.INSTANCE.removeExtramural(
+                    TeacherModel.INSTANCE.getTeacher(teachersList.getSelectedValue()) , 
                     extramuralModel.getExtramural((String) node.getUserObject())
             );
         } catch (SQLException ex)
@@ -2041,14 +2031,14 @@ public class MainScreen extends javax.swing.JFrame
     {//GEN-HEADEREND:event_cancelTeacherEditsButtonActionPerformed
         // TODO add your handling code here:
         teacherNameTextField.setText(teachersList.getSelectedValue());
-        if (TeacherModel.instance.getTeacher(teachersList.getSelectedValue()).hasRegisterClass()) hasRegClassCheckbox.setSelected(true);
+        if (TeacherModel.INSTANCE.getTeacher(teachersList.getSelectedValue()).hasRegisterClass()) hasRegClassCheckbox.setSelected(true);
         else hasRegClassCheckbox.setSelected(false);
     }//GEN-LAST:event_cancelTeacherEditsButtonActionPerformed
 
     private void saveTeacherDetailsButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_saveTeacherDetailsButtonActionPerformed
     {//GEN-HEADEREND:event_saveTeacherDetailsButtonActionPerformed
         // TODO add your handling code here:
-        Teacher baseTeacher = TeacherModel.instance.getTeacher(teachersList.getSelectedValue());
+        Teacher baseTeacher = TeacherModel.INSTANCE.getTeacher(teachersList.getSelectedValue());
 
         try
         {
@@ -2057,7 +2047,7 @@ public class MainScreen extends javax.swing.JFrame
                 baseTeacher.getExtraMuralsAsArrayList(),
                 baseTeacher.getLessonsArrayList(),
                 hasRegClassCheckbox.isSelected());
-            TeacherModel.instance.updateTeacher(baseTeacher, newTeacher);
+            TeacherModel.INSTANCE.updateTeacher(baseTeacher, newTeacher);
         } catch (SQLException ex)
         {
             ex.printStackTrace();
@@ -2080,8 +2070,8 @@ public class MainScreen extends javax.swing.JFrame
         
         try
         {
-            TeacherModel.instance.addTeachersNames(selectedFile);
-            teachersList.setModel(TeacherModel.instance.getListModel());
+            TeacherModel.INSTANCE.addTeachersNames(selectedFile);
+            teachersList.setModel(TeacherModel.INSTANCE.getListModel());
         } catch (SQLException | FileNotFoundException ex)
         {
             ex.printStackTrace();
@@ -2151,7 +2141,7 @@ public class MainScreen extends javax.swing.JFrame
     private void searchTeachersFieldKeyReleased(java.awt.event.KeyEvent evt)//GEN-FIRST:event_searchTeachersFieldKeyReleased
     {//GEN-HEADEREND:event_searchTeachersFieldKeyReleased
         // TODO add your handling code here:
-                ArrayList <String> teachersContainingText = TeacherModel.instance.getTeachersContaining(searchTeachersField.getText());
+                ArrayList <String> teachersContainingText = TeacherModel.INSTANCE.getTeachersContaining(searchTeachersField.getText());
         DefaultListModel <String> dlm = new DefaultListModel<>();
         
         for (String str : teachersContainingText)
@@ -2168,7 +2158,7 @@ public class MainScreen extends javax.swing.JFrame
         {
             case 1: 
                 JComboBox<String> absentTeacherComboBox2 = new JComboBox<>();
-                DefaultComboBoxModel<String> dcbm2 = TeacherModel.instance.getComboBoxModel();
+                DefaultComboBoxModel<String> dcbm2 = TeacherModel.INSTANCE.getComboBoxModel();
                 absentTeacherComboBox2.setModel( dcbm2);
                 absentTeacherComboboxes.add(absentTeacherComboBox2);
                 absenteesComboboxPanel.add(absentTeacherComboBox2, 1);
@@ -2183,15 +2173,15 @@ public class MainScreen extends javax.swing.JFrame
                 absenteesLessonRangePanel.add(teacher2FirstAbsentLesson_Spinner);
                 absenteesLessonRangePanel.add(teacher2EndAbsentLesson_Spinner);
                 
-                absentTeachers.add(TeacherModel.instance.getTeacher((String) absentTeacherComboBox2.getSelectedItem()));
+                absentTeachers.add(TeacherModel.INSTANCE.getTeacher((String) absentTeacherComboBox2.getSelectedItem()));
                 removeRepeatedAbsentTeachers();
                 break;
             case 2:
                 JComboBox<String> absentTeacherComboBox3 = new JComboBox<>();
-                DefaultComboBoxModel<String> dcbm3 = TeacherModel.instance.getComboBoxModel();
+                DefaultComboBoxModel<String> dcbm3 = TeacherModel.INSTANCE.getComboBoxModel();
                 absentTeacherComboBox3.setModel(dcbm3);
                 absentTeacherComboboxes.add(absentTeacherComboBox3);
-                absentTeachers.add(TeacherModel.instance.getTeacher((String) absentTeacherComboBox3.getSelectedItem()));
+                absentTeachers.add(TeacherModel.INSTANCE.getTeacher((String) absentTeacherComboBox3.getSelectedItem()));
                 
                 absenteesComboboxPanel.add(absentTeacherComboBox3, 2);
                 
@@ -2208,10 +2198,10 @@ public class MainScreen extends javax.swing.JFrame
                 break;
             case 3:
                 JComboBox<String> absentTeacherComboBox4 = new JComboBox<>();
-                DefaultComboBoxModel<String> dcbm4 = TeacherModel.instance.getComboBoxModel();
+                DefaultComboBoxModel<String> dcbm4 = TeacherModel.INSTANCE.getComboBoxModel();
                 absentTeacherComboBox4.setModel(dcbm4);
                 absentTeacherComboboxes.add(absentTeacherComboBox4);
-                absentTeachers.add(TeacherModel.instance.getTeacher((String) absentTeacherComboBox4.getSelectedItem()));
+                absentTeachers.add(TeacherModel.INSTANCE.getTeacher((String) absentTeacherComboBox4.getSelectedItem()));
                 
                 absenteesComboboxPanel.add(absentTeacherComboBox4, 3);
                 
@@ -2243,7 +2233,7 @@ public class MainScreen extends javax.swing.JFrame
         {
             absentTeachers.set(
                     i,
-                    TeacherModel.instance.
+                    TeacherModel.INSTANCE.
                             getTeacher(
                                     (String)absentTeacherComboboxes.
                                             get(i).
@@ -2276,7 +2266,7 @@ public class MainScreen extends javax.swing.JFrame
         try
         {
             // TODO add your handling code here:
-            TeacherModel.instance.deleteTeacher(teachersList.getSelectedValue());
+            TeacherModel.INSTANCE.deleteTeacher(teachersList.getSelectedValue());
         } catch (SQLException ex)
         {
             ex.printStackTrace();

@@ -27,7 +27,7 @@ import javax.swing.tree.TreeModel;
  */
 public class TeacherModel
 {
-    public static TeacherModel instance;
+    public static TeacherModel INSTANCE;
     private ArrayList<Teacher> teachers = new ArrayList<>();
     
     private TeacherModel() throws SQLException 
@@ -38,9 +38,9 @@ public class TeacherModel
     
     public static void init() throws SQLException
     {
-        if (instance == null)
+        if (INSTANCE == null)
         {
-            instance = new TeacherModel();
+            INSTANCE = new TeacherModel();
         }
         
     }
@@ -82,7 +82,7 @@ public class TeacherModel
         }
         
         System.out.println(insertQueryStr);
-        DatabaseManager.instance.update(insertQueryStr);
+        DatabaseManager.INSTANCE.update(insertQueryStr);
         
         populateTeachersAL();
     }
@@ -90,7 +90,7 @@ public class TeacherModel
     private void populateTeachersAL() throws SQLException
     {
         if (!teachers.isEmpty()) teachers.clear();
-        ResultSet rs = DatabaseManager.instance.query("Select * From tblTeachers");//need to select multiple tables to get all relevant information for teacher  
+        ResultSet rs = DatabaseManager.INSTANCE.query("Select * From tblTeachers");//need to select multiple tables to get all relevant information for teacher  
         
         while (rs.next())
         {
@@ -101,7 +101,7 @@ public class TeacherModel
             ArrayList <Lesson> lessons = new ArrayList<>();
             
             //add the extramurals into an arraylist
-            ResultSet extramuralRS = DatabaseManager.instance.query("Select `Name`, `Duration`, `DayOfWeek` from tblTeacherExtraMurals, tblExtramural WHERE tblTeacherExtraMurals.TeacherID = "+ curTeacherID+ " AND "
+            ResultSet extramuralRS = DatabaseManager.INSTANCE.query("Select `Name`, `Duration`, `DayOfWeek` from tblTeacherExtraMurals, tblExtramural WHERE tblTeacherExtraMurals.TeacherID = "+ curTeacherID+ " AND "
                     + "tblTeacherExtraMurals.ExtraMuralID = tblExtramural.ExtramuralID");
             while(extramuralRS.next())
             {
@@ -115,7 +115,7 @@ public class TeacherModel
                 
             }
             //add lessons to the arraylist
-            ResultSet lessonRS =  DatabaseManager.instance.query("Select `LessonID`, `Subject`, `Grade`, `SlotID`, `ClassOfGrade` from tblLessons, tblSubjects"
+            ResultSet lessonRS =  DatabaseManager.INSTANCE.query("Select `LessonID`, `Subject`, `Grade`, `SlotID`, `ClassOfGrade` from tblLessons, tblSubjects"
                                                                                                     + " WHERE tblLessons.SubjectID = tblSubjects.SubjectID"
                                                                                                     + " AND TeacherID = "+ curTeacherID +";");
             while (lessonRS.next())
@@ -212,7 +212,7 @@ public class TeacherModel
                 teacherIn.addExtraMural(extramuralIn);
                 t = teacherIn;
                 //update database, insert for the teacher id and em. id in teacherExtramurals table
-                DatabaseManager.instance.update("Insert into tblTeacherExtraMurals (`TeacherID`, `ExtraMuralID`) "
+                DatabaseManager.INSTANCE.update("Insert into tblTeacherExtraMurals (`TeacherID`, `ExtraMuralID`) "
                 +"Select `TeacherID`, `ExtramuralID` from tblTeachers, tblExtramural"
                         + " WHERE tblTeachers.FullName = \""+ t.getFullName() +"\""
                         + " AND tblExtramural.Name = \""+ extramuralIn.getExtraMuralName() +"\" AND tblExtramural.DayOfWeek = \""+ extramuralIn.getWeekday() +"\"");
@@ -224,13 +224,13 @@ public class TeacherModel
 
     public void updateTeacher(Teacher originalTeacher, Teacher updatedTeacher) throws SQLException
     {
-        DatabaseManager.instance.update("Update tblTeachers Set `FullName` = \""+ updatedTeacher.getFullName() +"\" AND `HasRegisterClass` = "+ updatedTeacher.hasRegisterClass() 
+        DatabaseManager.INSTANCE.update("Update tblTeachers Set `FullName` = \""+ updatedTeacher.getFullName() +"\" AND `HasRegisterClass` = "+ updatedTeacher.hasRegisterClass() 
         +" Where `FullName` = \""+ originalTeacher.getFullName() +"\"");
     }
 
     public void removeExtramural(Teacher teacher, ExtraMural extramural) throws SQLException
     {
-        DatabaseManager.instance.update("Delete from tblTeacherExtramurals "
+        DatabaseManager.INSTANCE.update("Delete from tblTeacherExtramurals "
                 + "Where `TeacherID` = (Select `TeacherID` from tblTeachers WHERE FullName = \""+ teacher.getFullName() +"\")"
                 + " AND `ExtraMuralID` = (Select `ExtramuralID` from tblExtramural WHERE Name = \""+ extramural.getExtraMuralName() +"\"");
     }
@@ -254,11 +254,11 @@ public class TeacherModel
             int slotID = linesc.nextInt();
             
             //transform line data
-            ResultSet tID_RS = ( DatabaseManager.instance.query("Select `TeacherID` From tblTeachers WHERE `FullName` = \""+ teacherName +"\"") );
+            ResultSet tID_RS = ( DatabaseManager.INSTANCE.query("Select `TeacherID` From tblTeachers WHERE `FullName` = \""+ teacherName +"\"") );
             tID_RS.next();
             String teacherID = tID_RS.getString(1);
             
-            ResultSet sID_RS = (DatabaseManager.instance.query("Select `SubjectID` From tblSubjects WHERE `Subject` = \""+ subjectName +"\"") );
+            ResultSet sID_RS = (DatabaseManager.INSTANCE.query("Select `SubjectID` From tblSubjects WHERE `Subject` = \""+ subjectName +"\"") );
             sID_RS.next();
             String subjectID = sID_RS.getString(1);
             
@@ -270,7 +270,7 @@ public class TeacherModel
         }
         
         System.out.println(insertQueryStr);
-        DatabaseManager.instance.update(insertQueryStr);
+        DatabaseManager.INSTANCE.update(insertQueryStr);
         
         teachers.clear();
         populateTeachersAL();
@@ -295,12 +295,12 @@ public class TeacherModel
 
     public void deleteTeacher(String fullName) throws SQLException
     {
-        ResultSet rs = DatabaseManager.instance.query("Select `TeacherID` From tblTeachers WHERE `FullName` = \""+ fullName +"\"");
+        ResultSet rs = DatabaseManager.INSTANCE.query("Select `TeacherID` From tblTeachers WHERE `FullName` = \""+ fullName +"\"");
         rs.next();
         int teacherID = rs.getInt(1);
-        DatabaseManager.instance.update("Delete from tblTeachers WHERE `FullName` = \""+ fullName +"\"");
-        DatabaseManager.instance.update("Delete from tblBattingLessons WHERE `ReplacementTeacherID` = "+ teacherID +"");
-        DatabaseManager.instance.update("Delete from tblTeacherExtramurals WHERE `TeacherID` = "+ teacherID +"");
-        DatabaseManager.instance.update("Delete from tblLessons WHERE `TeacherID` = "+ teacherID +"");
+        DatabaseManager.INSTANCE.update("Delete from tblTeachers WHERE `FullName` = \""+ fullName +"\"");
+        DatabaseManager.INSTANCE.update("Delete from tblBattingLessons WHERE `ReplacementTeacherID` = "+ teacherID +"");
+        DatabaseManager.INSTANCE.update("Delete from tblTeacherExtramurals WHERE `TeacherID` = "+ teacherID +"");
+        DatabaseManager.INSTANCE.update("Delete from tblLessons WHERE `TeacherID` = "+ teacherID +"");
     }
 }

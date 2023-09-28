@@ -16,12 +16,12 @@ import java.sql.SQLException;
  */
 public class DatabaseManager
 {
-    public static DatabaseManager instance;
+    public static DatabaseManager INSTANCE;
     
-    private static final String driver = "com.mysql.cj.jdbc.Driver";
-    private static final String url = "jdbc:mysql://102.130.115.69:3306/jcjDB";
-    private static final String user = "jcj";
-    private static final String pass = "Reddam2021";
+    private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
+    private static final String URL = "jdbc:mysql://102.130.115.69:3306/jcjDB";
+    private static final String USER = "jcj";
+    private static final String PASS = "Reddam2021";
     
     private PreparedStatement statement;
     private ResultSet resultSet;
@@ -31,7 +31,7 @@ public class DatabaseManager
     {
         try
         {
-            Class.forName(driver);
+            Class.forName(DRIVER);
             System.out.println("DB: Driver found");
         } catch (ClassNotFoundException e)
         {
@@ -40,7 +40,7 @@ public class DatabaseManager
 
         try
         {
-            conn = DriverManager.getConnection(url, user, pass);
+            conn = DriverManager.getConnection(URL, USER, PASS);
             System.out.println("DB: Database connected");
         } catch (Exception e)
         {
@@ -50,9 +50,9 @@ public class DatabaseManager
     
     public static void init()
     {
-        if (instance == null)
+        if (INSTANCE == null)
         {
-            instance = new DatabaseManager();
+            INSTANCE = new DatabaseManager();
         }
         
     }

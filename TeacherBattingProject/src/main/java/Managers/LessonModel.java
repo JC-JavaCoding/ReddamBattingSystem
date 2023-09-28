@@ -107,7 +107,7 @@ public class LessonModel implements TableModel
                 }
 
                 //update the database
-                DatabaseManager.instance.update("Update tblLessons " //(`LessonID`, `TeacherID`, `SubjectID`, `Grade`)
+                DatabaseManager.INSTANCE.update("Update tblLessons " //(`LessonID`, `TeacherID`, `SubjectID`, `Grade`)
                         + "Set `SlotID` = "+ updatedLesson.getSlotNr()
                         + " AND `SubjectID` = (Select `SubjectID` from tblSubjects WHERE `Subject` =  "+ updatedLesson.getSubject() +")"
                         + " AND `Grade = "+ updatedLesson.getGrade()
@@ -142,7 +142,7 @@ public class LessonModel implements TableModel
         {
             if (lesson.getSlotNr() == slot) 
             {
-                DatabaseManager.instance.update("Delete from tblLessons WHERE `LessonID` = "+ lesson.getLessonID());
+                DatabaseManager.INSTANCE.update("Delete from tblLessons WHERE `LessonID` = "+ lesson.getLessonID());
                 lessons.remove(lesson);
             }
         }

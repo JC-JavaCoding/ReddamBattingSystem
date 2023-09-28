@@ -23,26 +23,26 @@ import javax.swing.table.TableModel;
  */
 public class BattingModel implements TableModel
 {    
-    private static ArrayList<BattingLesson> battingLessons;
+    private static ArrayList<BattingLesson> BATTING_LESSONS;
     private ArrayList<BattingLesson> battingLessonsForSession;
     private ArrayList <Teacher> freeTeachers; 
 
     public  BattingModel() throws SQLException
     {
-        battingLessons = new ArrayList<>();
+        BATTING_LESSONS = new ArrayList<>();
         freeTeachers = new ArrayList<>();
         
         //Populate the arraylist from the database
-         ResultSet rs = DatabaseManager.instance.query("Select `FullName`, tblLessons.`LessonID`, `Subject`, `Grade`, `SlotID`, `ClassOfGrade`, `Date` from tblBattingLessons, tblTeachers, tblLessons, tblSubjects "
+         ResultSet rs = DatabaseManager.INSTANCE.query("Select `FullName`, tblLessons.`LessonID`, `Subject`, `Grade`, `SlotID`, `ClassOfGrade`, `Date` from tblBattingLessons, tblTeachers, tblLessons, tblSubjects "
                  + "Where tblBattingLessons.LessonID = tblLessons.LessonID "
                         + "AND tblBattingLessons.ReplacementTeacherID = tblTeachers.TeacherID "
                         + "AND tblLessons.SubjectID = tblSubjects.SubjectID");//need to select multiple tables to get all relevant information for teacher  
         
         while (rs.next())
         {
-            battingLessons.add(
+            BATTING_LESSONS.add(
                     new BattingLesson(
-                            TeacherModel.instance.getTeacher(rs.getString(1)),
+                            TeacherModel.INSTANCE.getTeacher(rs.getString(1)),
                             new Lesson(
                                     rs.getString(2), 
                                     rs.getString(3), 
@@ -59,7 +59,7 @@ public class BattingModel implements TableModel
     @Override
     public int getRowCount()
     {
-        return battingLessons.size();
+        return BATTING_LESSONS.size();
     }
 
     @Override
@@ -119,7 +119,7 @@ public class BattingModel implements TableModel
     @Override
     public Object getValueAt(int rowIndex, int columnIndex)
     {
-        BattingLesson bl = battingLessons.get(rowIndex);
+        BattingLesson bl = BATTING_LESSONS.get(rowIndex);
         
         switch (columnIndex)
         {
@@ -149,7 +149,7 @@ public class BattingModel implements TableModel
         switch (columnIndex)
         {
             case 0:
-                bl.setTeacherOnDuty(TeacherModel.instance.getTeacher((String) aValue));
+                bl.setTeacherOnDuty(TeacherModel.INSTANCE.getTeacher((String) aValue));
             case 1:
                 bl.getLesson().setLessonID((String) aValue);
             case 2: 
@@ -181,7 +181,7 @@ public class BattingModel implements TableModel
     {
         DefaultTableModel tblModel = new DefaultTableModel();
         battingLessonsForSession = new ArrayList<>();
-        for(Teacher presentT : TeacherModel.instance.getTeachers())
+        for(Teacher presentT : TeacherModel.INSTANCE.getTeachers())
         {
             boolean isAbsent = false;
             for (Teacher absentT: absentTeachers)
@@ -287,7 +287,7 @@ public class BattingModel implements TableModel
 
     public int getNumBattings(String fullName) throws SQLException
     {
-        ResultSet rs = DatabaseManager.instance.query("Select COUNT(*) from tblBattingLessons Where tblBattingLessons.ReplacementTeacherID = (SELECT TeacherID FROM tblTeachers WHERE FullName = \""+ fullName +"\")");
+        ResultSet rs = DatabaseManager.INSTANCE.query("Select COUNT(*) from tblBattingLessons Where tblBattingLessons.ReplacementTeacherID = (SELECT TeacherID FROM tblTeachers WHERE FullName = \""+ fullName +"\")");
         rs.next();
         return rs.getInt(1);
     }
@@ -298,16 +298,16 @@ public class BattingModel implements TableModel
         
         for(BattingLesson bl : battings)
         {
-            ResultSet rs = DatabaseManager.instance.query("Select TeacherID FROM tblTeachers WHERE `FullName` = \""+  bl.getTeacherOnDuty().getFullName() +"\"");
+            ResultSet rs = DatabaseManager.INSTANCE.query("Select TeacherID FROM tblTeachers WHERE `FullName` = \""+  bl.getTeacherOnDuty().getFullName() +"\"");
             rs.next();
             int rtID = rs.getInt(1);
             String lessonID = bl.getLesson().getLessonID();
             executableString += "(\"" + bl.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) +"\", "+ lessonID +", "+ rtID +", \""+ bl.toString() +"\")"+ (battings.indexOf(bl)+1 == battings.size()? "":", ");
         }
-        DatabaseManager.instance.update(executableString);
+        DatabaseManager.INSTANCE.update(executableString);
     }
 
-    public ArrayList<BattingLesson> getBattingLessons()
+    public ArrayList<BattingLesson> getBATTING_LESSONS()
     {
         return battingLessonsForSession;
     }

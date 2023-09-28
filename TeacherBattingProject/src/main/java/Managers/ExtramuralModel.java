@@ -21,7 +21,7 @@ public class ExtramuralModel
     
     public ExtramuralModel() throws SQLException
     {
-        ResultSet rs = DatabaseManager.instance.query("Select `Name`, `DayOfWeek`, `Duration` from tblExtramural");
+        ResultSet rs = DatabaseManager.INSTANCE.query("Select `Name`, `DayOfWeek`, `Duration` from tblExtramural");
         
         while (rs.next())
         {
@@ -53,13 +53,13 @@ public class ExtramuralModel
     
     public void addExtramural(ExtraMural em) throws SQLException
     {
-        DatabaseManager.instance.update("Insert into tblExtramural(`Name`, `DayOfWeek`, `Duration`) Values(\""+ em.getExtraMuralName() +"\", "+ em.getWeekday() +", "+ em.getDuration() +")");
+        DatabaseManager.INSTANCE.update("Insert into tblExtramural(`Name`, `DayOfWeek`, `Duration`) Values(\""+ em.getExtraMuralName() +"\", "+ em.getWeekday() +", "+ em.getDuration() +")");
         extramurals.add(em);
     }
     
     public void deleteExtramural(ExtraMural em) throws SQLException
     {
-        DatabaseManager.instance.update("Delete from tblExtramural where Name = \""+ em.getExtraMuralName() +"\" AND DayOfWeek = \""+ em.getWeekday() +"\"");
+        DatabaseManager.INSTANCE.update("Delete from tblExtramural where Name = \""+ em.getExtraMuralName() +"\" AND DayOfWeek = \""+ em.getWeekday() +"\"");
         
         
         for(int i = 0; i < extramurals.size(); i++)
@@ -71,7 +71,7 @@ public class ExtramuralModel
     
     public void updateExtramural(ExtraMural originalEm, ExtraMural newEm) throws SQLException
     {
-        DatabaseManager.instance.update("Update tblExtramural Set `Name` = "+ newEm.getExtraMuralName() +" AND `DayOfWeek` = "+ newEm.getWeekday() + " AND `Duration` = " + newEm.getDuration()
+        DatabaseManager.INSTANCE.update("Update tblExtramural Set `Name` = "+ newEm.getExtraMuralName() +" AND `DayOfWeek` = "+ newEm.getWeekday() + " AND `Duration` = " + newEm.getDuration()
                 + " where Name = \""+ originalEm.getExtraMuralName() +"\" AND DayOfWeek = \""+ originalEm.getWeekday() +"\"");
         
         for(int i = 0; i < extramurals.size(); i++)

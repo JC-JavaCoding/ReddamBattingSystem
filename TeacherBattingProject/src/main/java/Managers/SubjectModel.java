@@ -20,7 +20,7 @@ public class SubjectModel implements ListModel<String>
     public SubjectModel () throws SQLException
     {
         subjects = new ArrayList<>();
-        ResultSet subjectsRS = DatabaseManager.instance.query("SELECT `Subject` FROM tblSubjects;");
+        ResultSet subjectsRS = DatabaseManager.INSTANCE.query("SELECT `Subject` FROM tblSubjects;");
         
         while (subjectsRS.next())
         {
@@ -53,7 +53,7 @@ public class SubjectModel implements ListModel<String>
 
     public void deleteSubject(String subjectName) throws SQLException
     {   
-        DatabaseManager.instance.update("Delete from tblSubjects Where `Subject` = \""+ subjectName +"\"");
+        DatabaseManager.INSTANCE.update("Delete from tblSubjects Where `Subject` = \""+ subjectName +"\"");
         
         String subjToRemove = "";
         for (String s : subjects)
@@ -69,13 +69,13 @@ public class SubjectModel implements ListModel<String>
 
     public void addSubject(String subjectName) throws SQLException
     {
-        DatabaseManager.instance.update("Insert into tblSubjects(`Subject`) Values(\""+ subjectName +"\")");
+        DatabaseManager.INSTANCE.update("Insert into tblSubjects(`Subject`) Values(\""+ subjectName +"\")");
         subjects.add(subjectName);
     }
 
     public void updateSubject(int selectedIndex, String subjectName) throws SQLException
     {
-        DatabaseManager.instance.update("Update tblSubjects Set `Subject` = \""+ subjectName +"\" AND Where `Subject` = \""+ subjects.get(selectedIndex) +"\"");
+        DatabaseManager.INSTANCE.update("Update tblSubjects Set `Subject` = \""+ subjectName +"\" AND Where `Subject` = \""+ subjects.get(selectedIndex) +"\"");
     }
     
 }
