@@ -96,7 +96,7 @@ public class TeacherModel
         {
             int curTeacherID = rs.getInt(1);
             String teacherName = rs.getString(2);
-            boolean hasRegisterClass = rs.getBoolean(3);
+            boolean hasRegisterClass = false;
             ArrayList <ExtraMural> extramurals = new ArrayList<>();
             ArrayList <Lesson> lessons = new ArrayList<>();
             
@@ -132,6 +132,7 @@ public class TeacherModel
             }
             
             Teacher temp = new Teacher(teacherName, extramurals, lessons, hasRegisterClass);
+            if(temp.hasLessonAt(15)) temp.setHasRegisterClass(true);
             
             boolean exists = false;
             for (Teacher t : teachers)

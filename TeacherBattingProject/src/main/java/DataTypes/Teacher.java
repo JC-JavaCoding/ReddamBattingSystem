@@ -189,4 +189,9 @@ public class Teacher
         }
         return numFrees;
     }
+
+    public void setHasRegisterClass(boolean b)
+    {
+        hasRegisterClass = b;
+    }
 }
