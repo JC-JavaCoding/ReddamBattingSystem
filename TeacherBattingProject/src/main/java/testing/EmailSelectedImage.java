@@ -4,6 +4,7 @@
  */
 package testing;
 
+import Managers.Email_JavaMail;
 import java.io.File;
 import java.util.Scanner;
 import javax.swing.Icon;

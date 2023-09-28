@@ -62,7 +62,6 @@ public class TeacherModel
 
     public ListModel<String> getListModel() throws SQLException
     {
-        populateTeachersAL();
         
         DefaultListModel dlm = new DefaultListModel<String>();
         for (Teacher t : teachers)
@@ -90,6 +89,7 @@ public class TeacherModel
 
     private void populateTeachersAL() throws SQLException
     {
+        if (!teachers.isEmpty()) teachers.clear();
         ResultSet rs = DatabaseManager.instance.query("Select * From tblTeachers");//need to select multiple tables to get all relevant information for teacher  
         
         while (rs.next())
@@ -132,6 +132,7 @@ public class TeacherModel
             }
             
             Teacher temp = new Teacher(teacherName, extramurals, lessons, hasRegisterClass);
+            
             boolean exists = false;
             for (Teacher t : teachers)
             {
@@ -141,6 +142,15 @@ public class TeacherModel
         }
     }
 
+    public void setBattingsForAllTeachers() throws SQLException
+    {
+        BattingModel bm = new BattingModel();
+        for (Teacher temp : teachers)
+        {
+            temp.setNumBattings(bm.getNumBattings(temp.getFullName()));
+        }
+        
+    }
     public TreeModel getTreeModel(String teacherNameIn)
     {
         DefaultMutableTreeNode root  = new DefaultMutableTreeNode(teacherNameIn);
@@ -284,6 +294,12 @@ public class TeacherModel
 
     public void deleteTeacher(String fullName) throws SQLException
     {
+        ResultSet rs = DatabaseManager.instance.query("Select `TeacherID` From tblTeachers WHERE `FullName` = \""+ fullName +"\"");
+        rs.next();
+        int teacherID = rs.getInt(1);
         DatabaseManager.instance.update("Delete from tblTeachers WHERE `FullName` = \""+ fullName +"\"");
+        DatabaseManager.instance.update("Delete from tblBattingLessons WHERE `ReplacementTeacherID` = "+ teacherID +"");
+        DatabaseManager.instance.update("Delete from tblTeacherExtramurals WHERE `TeacherID` = "+ teacherID +"");
+        DatabaseManager.instance.update("Delete from tblLessons WHERE `TeacherID` = "+ teacherID +"");
     }
 }

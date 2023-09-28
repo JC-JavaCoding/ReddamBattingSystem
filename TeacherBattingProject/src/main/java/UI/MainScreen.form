@@ -342,16 +342,15 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="jScrollPane2" max="32767" attributes="0"/>
-                                      <Group type="102" alignment="1" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="absenteesLessonRangePanel" alignment="0" min="-2" pref="937" max="-2" attributes="0"/>
                                               <Component id="absentLessonsTitleLabel" min="-2" max="-2" attributes="0"/>
@@ -362,12 +361,13 @@
                                               <Component id="absentDayDatePicker" min="-2" max="-2" attributes="0"/>
                                               <Component id="createBattingScheduleButton" min="-2" max="-2" attributes="0"/>
                                           </Group>
+                                          <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                                       </Group>
+                                      <Component id="jScrollPane2" max="32767" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                   <Component id="battingTopMainPanel" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -378,30 +378,26 @@
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="battingTopMainPanel" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
                               <Group type="102" attributes="0">
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="absenteesComboboxPanel" min="-2" pref="55" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="battingTopMainPanel" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
                                   <Component id="absentDayDatePicker" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="29" max="32767" attributes="0"/>
                               </Group>
+                              <Component id="absenteesComboboxPanel" min="-2" pref="55" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="absentLessonsTitleLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="absenteesLessonRangePanel" max="32767" attributes="0"/>
-                              <Component id="createBattingScheduleButton" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="absenteesLessonRangePanel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="createBattingScheduleButton" alignment="0" min="-2" pref="36" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="jScrollPane2" pref="263" max="32767" attributes="0"/>
-                          <EmptySpace min="-2" pref="106" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -524,7 +520,7 @@
                         <Property name="gridColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="cc" green="cc" red="cc" type="rgb"/>
                         </Property>
-                        <Property name="rowHeight" type="int" value="60"/>
+                        <Property name="rowHeight" type="int" value="100"/>
                         <Property name="showGrid" type="boolean" value="true"/>
                         <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                           <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
@@ -664,6 +660,13 @@
                   </Properties>
                 </Component>
                 <Component class="org.jdesktop.swingx.JXDatePicker" name="absentDayDatePicker">
+                  <Properties>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="Date Absent"/>
+                      </Border>
+                    </Property>
+                  </Properties>
                 </Component>
               </SubComponents>
             </Container>
@@ -679,7 +682,9 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Component id="showSidePanelButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="268" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="refreshAppButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="174" max="-2" attributes="0"/>
                           <Component id="jLabel4" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="294" max="-2" attributes="0"/>
                       </Group>
@@ -690,6 +695,7 @@
                       <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                           <Component id="jLabel4" alignment="3" pref="66" max="32767" attributes="0"/>
                           <Component id="showSidePanelButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="refreshAppButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -731,6 +737,23 @@
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="showSidePanelButton.setVisible(false);"/>
                   </AuxValues>
+                </Component>
+                <Component class="javax.swing.JButton" name="refreshAppButton">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="battingHeaderPanel" name="background" type="property"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Refresh"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="null"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="refreshAppButtonActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -1227,6 +1250,9 @@
                                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                           <Color blue="33" green="0" red="0" type="rgb"/>
                                         </Property>
+                                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                                        </Property>
                                         <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                                           <Connection code="extramuralModel.getListModel()" type="code"/>
                                         </Property>
@@ -1462,6 +1488,11 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="statisticsHeaderPanel" alignment="0" max="32767" attributes="0"/>
                   <Component id="statisticsBodyPanel" alignment="0" max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -1470,6 +1501,9 @@
                       <Component id="statisticsHeaderPanel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       <Component id="statisticsBodyPanel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1553,32 +1587,59 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel11" min="-2" pref="286" max="-2" attributes="0"/>
+                              <Component id="jScrollPane5" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="0" pref="537" max="32767" attributes="0"/>
-                          <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                          <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Component id="jScrollPane5" pref="756" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JLabel" name="jLabel7">
+                <Container class="javax.swing.JScrollPane" name="jScrollPane5">
+                  <AuxValues>
+                    <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                  </AuxValues>
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                  <SubComponents>
+                    <Component class="javax.swing.JTable" name="statisticsBattingLessonsTable">
+                      <Properties>
+                        <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="battingModel" type="code"/>
+                        </Property>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Component class="javax.swing.JLabel" name="jLabel11">
                   <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="2" name="C:\Users\janch\OneDrive\Pictures\Reddam-house-logo.jpg.jpeg"/>
-                    </Property>
+                    <Property name="text" type="java.lang.String" value="Each batting lesson:"/>
                   </Properties>
                 </Component>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JLabel" name="jLabel7">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="C:\Users\janch\OneDrive\Pictures\Reddam-house-logo.jpg.jpeg"/>
+                </Property>
+              </Properties>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="settingsViewPanel">
@@ -1600,7 +1661,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="settingsHeaderPanel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                      <Component id="settingsMainBodyScrollPane" pref="726" max="32767" attributes="0"/>
+                      <Component id="settingsMainBodyScrollPane" pref="951" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1725,23 +1786,25 @@
                                               </Group>
                                               <Component id="jScrollPane6" pref="430" max="32767" attributes="0"/>
                                           </Group>
-                                          <EmptySpace min="-2" pref="182" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="fieldsDescriptionLabel" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
                                               <Group type="102" attributes="0">
-                                                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                                                  <EmptySpace min="-2" pref="188" max="-2" attributes="0"/>
                                                   <Group type="103" groupAlignment="0" attributes="0">
                                                       <Component id="extramuralAdditionScreenNameLabel1" alignment="0" min="-2" pref="93" max="-2" attributes="0"/>
                                                       <Component id="dowExtramuralAdditionScreenJLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                                                       <Component id="hoursPerWeekExtramuralsAdditionScreenLabel1" alignment="0" min="-2" pref="103" max="-2" attributes="0"/>
                                                   </Group>
+                                                  <EmptySpace min="-2" pref="166" max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                      <Component id="extramuralNameInTextField1" alignment="0" max="32767" attributes="0"/>
+                                                      <Component id="extramuralsHoursPerWeekEditSpinner1" alignment="0" pref="226" max="32767" attributes="0"/>
+                                                      <Component id="extramuralDayOfWeekComboBox" max="32767" attributes="0"/>
+                                                  </Group>
                                               </Group>
-                                          </Group>
-                                          <EmptySpace min="-2" pref="166" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="extramuralNameInTextField1" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="extramuralsHoursPerWeekEditSpinner1" alignment="0" pref="226" max="32767" attributes="0"/>
-                                              <Component id="extramuralDayOfWeekComboBox" max="32767" attributes="0"/>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <EmptySpace min="-2" pref="182" max="-2" attributes="0"/>
+                                                  <Component id="fieldsDescriptionLabel" min="-2" pref="295" max="-2" attributes="0"/>
+                                              </Group>
                                           </Group>
                                           <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                                       </Group>
@@ -1823,7 +1886,7 @@
                         <Component class="javax.swing.JSpinner" name="extramuralsHoursPerWeekEditSpinner1">
                           <Properties>
                             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                              <SpinnerModel initial="0.0" maximum="10.0" minimum="0.0" numberType="java.lang.Double" stepSize="0.0" type="number"/>
+                              <SpinnerModel initial="0.0" maximum="10.0" minimum="0.0" numberType="java.lang.Double" stepSize="0.5" type="number"/>
                             </Property>
                           </Properties>
                         </Component>
@@ -1929,9 +1992,26 @@
                                   <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace min="-2" pref="387" max="-2" attributes="0"/>
                                       <Component id="deleteSubjectButton" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
+                                      <EmptySpace pref="625" max="32767" attributes="0"/>
                                       <Component id="saveSubjectButton" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="subjectAdditionScreenNameLabel" min="-2" pref="93" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="323" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="subjectNameInTextField" min="-2" pref="246" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="editSubjectsLabel" min="-2" pref="201" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="214" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
                                   </Group>
                                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                                       <Group type="102" attributes="0">
@@ -1939,26 +2019,15 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" alignment="0" attributes="0">
                                                   <Component id="subjectsSettingsListLabel" min="-2" pref="300" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="854" max="-2" attributes="0"/>
                                               </Group>
                                               <Group type="102" alignment="0" attributes="0">
                                                   <Group type="103" groupAlignment="0" attributes="0">
                                                       <Component id="addSubjectToggleButton" min="-2" pref="76" max="-2" attributes="0"/>
                                                       <Component id="jScrollPane7" min="-2" pref="425" max="-2" attributes="0"/>
                                                   </Group>
-                                                  <EmptySpace min="182" pref="271" max="32767" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="editSubjectsLabel" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
-                                                      <Group type="102" alignment="0" attributes="0">
-                                                          <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                                                          <Component id="subjectAdditionScreenNameLabel" min="-2" pref="93" max="-2" attributes="0"/>
-                                                      </Group>
-                                                  </Group>
-                                                  <EmptySpace min="-2" pref="166" max="-2" attributes="0"/>
-                                                  <Component id="subjectNameInTextField" max="32767" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
+                                          <EmptySpace pref="729" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -1966,7 +2035,14 @@
                             <DimensionLayout dim="1">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace pref="287" max="32767" attributes="0"/>
+                                      <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
+                                      <Component id="editSubjectsLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="subjectAdditionScreenNameLabel" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                                          <Component id="subjectNameInTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace pref="171" max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="saveSubjectButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="deleteSubjectButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -1976,23 +2052,9 @@
                                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                                       <Group type="102" attributes="0">
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
-                                                  <Component id="editSubjectsLabel" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="3" attributes="0">
-                                                      <Component id="subjectAdditionScreenNameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="subjectNameInTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace min="117" pref="117" max="-2" attributes="0"/>
-                                              </Group>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="subjectsSettingsListLabel" min="-2" pref="31" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jScrollPane7" pref="204" max="32767" attributes="0"/>
-                                              </Group>
-                                          </Group>
+                                          <Component id="subjectsSettingsListLabel" min="-2" pref="31" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                                          <Component id="jScrollPane7" pref="204" max="32767" attributes="0"/>
                                           <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                                           <Component id="addSubjectToggleButton" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>

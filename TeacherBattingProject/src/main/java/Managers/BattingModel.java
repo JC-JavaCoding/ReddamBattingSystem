@@ -22,15 +22,13 @@ import javax.swing.table.TableModel;
  * @author janch
  */
 public class BattingModel implements TableModel
-{
-    public static BattingModel instance;
-    
-    private ArrayList<BattingLesson> battingLessons;
-    private ArrayList <Teacher> freeTeachers; //*******************************Necessary?****************************
+{    
+    private static ArrayList<BattingLesson> battingLessons;
+    private ArrayList<BattingLesson> battingLessonsForSession;
+    private ArrayList <Teacher> freeTeachers; 
 
-    private  BattingModel() throws SQLException
+    public  BattingModel() throws SQLException
     {
-        
         battingLessons = new ArrayList<>();
         freeTeachers = new ArrayList<>();
         
@@ -38,7 +36,6 @@ public class BattingModel implements TableModel
          ResultSet rs = DatabaseManager.instance.query("Select `FullName`, tblLessons.`LessonID`, `Subject`, `Grade`, `SlotID`, `ClassOfGrade`, `Date` from tblBattingLessons, tblTeachers, tblLessons, tblSubjects "
                  + "Where tblBattingLessons.LessonID = tblLessons.LessonID "
                         + "AND tblBattingLessons.ReplacementTeacherID = tblTeachers.TeacherID "
-                        + "AND tblTeachers.TeacherID = tblLessons.TeacherID "
                         + "AND tblLessons.SubjectID = tblSubjects.SubjectID");//need to select multiple tables to get all relevant information for teacher  
         
         while (rs.next())
@@ -53,19 +50,10 @@ public class BattingModel implements TableModel
                                     rs.getInt(5),
                                     rs.getString(6)
                             ), 
-                            LocalDate.parse(rs.getString(7), DateTimeFormatter.ofPattern("yy-MM-dd"))
+                            LocalDate.parse(rs.getString(7), DateTimeFormatter.ofPattern("dd-MM-yyyy"))
                     )
             );
         }
-    }
-    
-    public static void init() throws SQLException
-    {
-        if (instance == null)
-        {
-            instance = new BattingModel();
-        }
-        
     }
     
     @Override
@@ -136,7 +124,7 @@ public class BattingModel implements TableModel
         switch (columnIndex)
         {
             case 0:
-                return bl.getTeacherOnDuty();
+                return bl.getTeacherOnDuty().getFullName();
             case 1:
                 return bl.getLesson().getLessonID();
             case 2: 
@@ -161,7 +149,7 @@ public class BattingModel implements TableModel
         switch (columnIndex)
         {
             case 0:
-                bl.setTeacherOnDuty((Teacher) aValue);
+                bl.setTeacherOnDuty(TeacherModel.instance.getTeacher((String) aValue));
             case 1:
                 bl.getLesson().setLessonID((String) aValue);
             case 2: 
@@ -192,48 +180,69 @@ public class BattingModel implements TableModel
     public DefaultTableModel getBattingTableModel(ArrayList<Teacher> absentTeachers, int [][] lessonsAbsent, LocalDate dateAbsent) throws SQLException //**************************************
     {
         DefaultTableModel tblModel = new DefaultTableModel();
-        
+        battingLessonsForSession = new ArrayList<>();
         for(Teacher presentT : TeacherModel.instance.getTeachers())
         {
+            boolean isAbsent = false;
             for (Teacher absentT: absentTeachers)
             {
-                if ( !presentT.getFullName().equals(absentT.getFullName()) ) 
-                    freeTeachers.add(presentT);
+                if ( presentT.getFullName().equals(absentT.getFullName()) ) 
+                    isAbsent = true;
             }
+            if (!isAbsent) freeTeachers.add(presentT);
         }
 
         int dayOfWeek = dateAbsent.getDayOfWeek().getValue();
         
-        String[][] absentTeacherBattingArrList = new String[absentTeachers.size()][(dayOfWeek == 5? 13 : 15)];
+        String[][] absentTeacherBattingStringArr = new String[absentTeachers.size()][(dayOfWeek == 5? 13 : 15)];
+        ArrayList<BattingLesson[]> absentTeacherBattingArrList = new ArrayList<>();
         
+        ArrayList<Teacher> takenTeachers = new ArrayList<>();
         for (Teacher absentT : absentTeachers)
         {
-            ArrayList<String> teacherBattings = new ArrayList<>();
-            teacherBattings.add(absentT.getFullName());
-            
-            for (int lessonNumber : lessonsAbsent[absentTeachers.indexOf(absentT)])
+            BattingLesson [] battingsForTeacher = new BattingLesson[(dayOfWeek == 5? 12 : 14)];
+            int i = absentTeachers.indexOf(absentT);
+            absentTeacherBattingStringArr[i][0] = (absentT.getFullName());
+            // need to be able to go to each lesson, change the selected teacher, then make final string arr.
+            for (int lessonNumber : lessonsAbsent[i])
             {
-                ArrayList<Teacher> teachersForLesson = new ArrayList<>();
                 Lesson lesson = absentT.getLessonAt(dayOfWeek, lessonNumber);
                 if (lesson != null) 
                 {
-                    teachersForLesson = getAvailableTeachers(lesson, dayOfWeek);
-                    teacherBattings.add(
-                            new BattingLesson(
-                                    teachersForLesson.get(0), 
-                                    lesson, 
-                                    dateAbsent
-                            ).toString()
-                    );
+                    ArrayList<Teacher> teachersForLesson = getAvailableTeachers(lesson, dayOfWeek);
+                    Teacher tOnDuty = teachersForLesson.get(0);
+                    for(BattingLesson[] blArr : absentTeacherBattingArrList)
+                    {
+                        for(Teacher t : teachersForLesson)
+                        {
+                            if(blArr[lessonNumber-1] != null)
+                            {
+                                if(blArr[lessonNumber-1].getTeacherOnDuty() != t)
+                                {
+                                    tOnDuty = t;
+                                }
+                            }
+                        }
+                    }
+                    
+                    BattingLesson bl = new BattingLesson(
+                            tOnDuty, 
+                            lesson, 
+                            dateAbsent);
+                    bl.setAvailableTeachers(teachersForLesson);
+                    battingsForTeacher[lessonNumber-1] = bl;
+                    battingLessonsForSession.add(bl);
+                    absentTeacherBattingStringArr[i][lessonNumber] = bl.toString();
                 }
             }
+            absentTeacherBattingArrList.add(battingsForTeacher);
+            //iterate through to make sure there are no repeats in the array
             
-            absentTeacherBattingArrList[absentTeachers.indexOf(absentT)] = teacherBattings.toArray(new String[teacherBattings.size()]);
         }
-        String[] colsFriday = {"Teacher","L1","L2","L3","L4","L5","L6","L7","L8","L9","L10","L11"};
+        String[] colsFriday = {"Teacher","L1","L2","L3","L4","L5","L6","L7","L8","L9","L10","L11", "L12"};
         String[] colsNotFriday = {"Teacher","L1","L2","L3","L4","L5","L6","L7","L8","L9","L10","L11", "L12", "L13","L14"};
 
-        tblModel.setDataVector(absentTeacherBattingArrList, ((dayOfWeek == 5)? colsFriday : colsNotFriday));
+        tblModel.setDataVector(absentTeacherBattingStringArr, ((dayOfWeek == 5)? colsFriday : colsNotFriday));
 
         return tblModel;
     }
@@ -244,10 +253,11 @@ public class BattingModel implements TableModel
         {
             if (!teacher.hasLessonAt(lesson.getSlotNr()))
             {
-                if(availableTeachers.size() < 3) 
+                if(availableTeachers.size() < 4) 
                         availableTeachers.add(teacher);
                 else if (availableTeachers.get(0).getBattingWeight(dayOfWeek) > teacher.getBattingWeight(dayOfWeek))
                 {
+                    availableTeachers.set(3, availableTeachers.get(2));
                     availableTeachers.set(2, availableTeachers.get(1));
                     availableTeachers.set(1, availableTeachers.get(0));
                     availableTeachers.set(0, teacher);
@@ -255,9 +265,15 @@ public class BattingModel implements TableModel
                 else if (availableTeachers.get(1).getBattingWeight(dayOfWeek) > teacher.getBattingWeight(dayOfWeek))
                 {
                     availableTeachers.set(2, availableTeachers.get(1));
-                    availableTeachers.set(1, teacher);
+                    availableTeachers.set(1, availableTeachers.get(0));
+                    availableTeachers.set(0, teacher);
                 }
                 else if (availableTeachers.get(2).getBattingWeight(dayOfWeek) > teacher.getBattingWeight(dayOfWeek))
+                {
+                    availableTeachers.set(2, availableTeachers.get(1));
+                    availableTeachers.set(1, teacher);
+                }
+                else if (availableTeachers.get(3).getBattingWeight(dayOfWeek) > teacher.getBattingWeight(dayOfWeek))
                 {
                     availableTeachers.set(2, teacher);
                 }
@@ -268,32 +284,31 @@ public class BattingModel implements TableModel
         //sortAvailableTeachers(availableTeachers, dateAbsent.getDayOfWeek().getValue());
         return availableTeachers;
     }
-    private void sortAvailableTeachers(ArrayList<Teacher> availableTeachers, int dayOfWeek) throws SQLException
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            Teacher startT = availableTeachers.get(i);
-            Teacher smallestWTeacher = startT;
-            for (int j = i+1; j < availableTeachers.size(); j++)
-            {
-                Teacher iteratableTeacher = availableTeachers.get(j);
-                
-                if(startT.getBattingWeight(dayOfWeek) < iteratableTeacher.getBattingWeight(dayOfWeek))
-                {
-                    smallestWTeacher = iteratableTeacher;
-                }
-            }
-            int temp = availableTeachers.indexOf(smallestWTeacher);
-            availableTeachers.set(i, smallestWTeacher);
-            availableTeachers.set(temp, startT);
-            
-        }
-    }
 
     public int getNumBattings(String fullName) throws SQLException
     {
         ResultSet rs = DatabaseManager.instance.query("Select COUNT(*) from tblBattingLessons Where tblBattingLessons.ReplacementTeacherID = (SELECT TeacherID FROM tblTeachers WHERE FullName = \""+ fullName +"\")");
         rs.next();
         return rs.getInt(1);
+    }
+
+    public void addBattings(ArrayList<BattingLesson> battings) throws SQLException
+    {
+        String executableString = "Insert into tblBattingLessons(`Date`, `LessonID`, `ReplacementTeacherID`, `Description`) Values ";
+        
+        for(BattingLesson bl : battings)
+        {
+            ResultSet rs = DatabaseManager.instance.query("Select TeacherID FROM tblTeachers WHERE `FullName` = \""+  bl.getTeacherOnDuty().getFullName() +"\"");
+            rs.next();
+            int rtID = rs.getInt(1);
+            String lessonID = bl.getLesson().getLessonID();
+            executableString += "(\"" + bl.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) +"\", "+ lessonID +", "+ rtID +", \""+ bl.toString() +"\")"+ (battings.indexOf(bl)+1 == battings.size()? "":", ");
+        }
+        DatabaseManager.instance.update(executableString);
+    }
+
+    public ArrayList<BattingLesson> getBattingLessons()
+    {
+        return battingLessonsForSession;
     }
 }

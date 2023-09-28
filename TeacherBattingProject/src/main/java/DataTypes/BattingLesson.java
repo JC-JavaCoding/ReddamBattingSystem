@@ -56,7 +56,7 @@ public class BattingLesson
     @Override
     public String toString()
     {
-        return selectedTeacher.getFullName() + "\n" + battingClass.toString() + ",date=" + date + '}';
+        return selectedTeacher.getFullName() + " - " + battingClass.toString();
     }
 
     public void setDate(LocalDate date)
@@ -67,6 +67,11 @@ public class BattingLesson
     public void addAvailableTeacher(Teacher teacherIN)
     {
         availableTeachers.add(teacherIN);
+    }
+    
+    public void setAvailableTeachers(ArrayList<Teacher> avTeachers)
+    {
+        availableTeachers = avTeachers;
     }
     
     public void setSelectedTeacher(String teacherName)

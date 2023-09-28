@@ -29,11 +29,9 @@ public class Teacher
         this.hasRegisterClass = hasRegisterclass;
         classesTaught = new ArrayList<String>();
 
-        BattingModel.init();
-        numBattings = BattingModel.instance.getNumBattings(fullName);
         numFrees = 0;
         
-        for (Lesson lesson : lessons)//*********************************************************
+        for (Lesson lesson : lessons)
         {
             if(classesTaught.isEmpty()) classesTaught.add(lesson.toString());
             else 
@@ -63,6 +61,12 @@ public class Teacher
     {
         return lessons.add(e);
     }
+
+    public void setNumBattings(int numBattings)
+    {
+        this.numBattings = numBattings;
+    }
+    
 
     public double getBattingWeight(int dayofWeek) throws SQLException
     {

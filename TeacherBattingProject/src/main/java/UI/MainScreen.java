@@ -9,11 +9,17 @@ import DataTypes.MultiLineTableCellRenderer;
 import DataTypes.Teacher;
 import Managers.*;
 import com.formdev.flatlaf.ui.FlatLineBorder;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -31,6 +37,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
+import Managers.Email_JavaMail;
+import com.itextpdf.text.Rectangle;
 
 /**
  *
@@ -49,6 +57,8 @@ public class MainScreen extends javax.swing.JFrame
         {
             DatabaseManager.init();
             TeacherModel.init();
+            battingModel = new BattingModel();
+            TeacherModel.instance.setBattingsForAllTeachers();
             absentTeachers = new ArrayList<>();
             absentTeacherComboboxes = new ArrayList<>();
             extramuralModel = new ExtramuralModel();
@@ -119,6 +129,7 @@ public class MainScreen extends javax.swing.JFrame
         battingHeaderPanel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         showSidePanelButton = new javax.swing.JButton();
+        refreshAppButton = new javax.swing.JButton();
         teacherViewPanel = new javax.swing.JPanel();
         teacherHeaderPanel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -162,6 +173,9 @@ public class MainScreen extends javax.swing.JFrame
         jLabel6 = new javax.swing.JLabel();
         showSidePanelButton2 = new javax.swing.JButton();
         statisticsBodyPanel = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        statisticsBattingLessonsTable = new javax.swing.JTable();
+        jLabel11 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         settingsViewPanel = new javax.swing.JPanel();
         settingsHeaderPanel = new javax.swing.JPanel();
@@ -436,7 +450,7 @@ public class MainScreen extends javax.swing.JFrame
         });
         battingTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         battingTable.setGridColor(new java.awt.Color(204, 204, 204));
-        battingTable.setRowHeight(60);
+        battingTable.setRowHeight(100);
         battingTable.setShowGrid(true);
         battingTable.setDefaultRenderer(String.class, new MultiLineTableCellRenderer());
         jScrollPane2.setViewportView(battingTable);
@@ -517,19 +531,20 @@ public class MainScreen extends javax.swing.JFrame
 
         absentLessonsTitleLabel.setText("Absent from lesson number ... to lesson number ....");
 
+        absentDayDatePicker.setBorder(javax.swing.BorderFactory.createTitledBorder("Date Absent"));
+
         javax.swing.GroupLayout battingBodyPanel1Layout = new javax.swing.GroupLayout(battingBodyPanel1);
         battingBodyPanel1.setLayout(battingBodyPanel1Layout);
         battingBodyPanel1Layout.setHorizontalGroup(
             battingBodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(battingBodyPanel1Layout.createSequentialGroup()
-                .addGroup(battingBodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, battingBodyPanel1Layout.createSequentialGroup()
+                .addGroup(battingBodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(battingBodyPanel1Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel9))
-                    .addGroup(battingBodyPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, battingBodyPanel1Layout.createSequentialGroup()
                         .addGap(28, 28, 28)
-                        .addGroup(battingBodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane2)
+                        .addGroup(battingBodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(battingBodyPanel1Layout.createSequentialGroup()
                                 .addGroup(battingBodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(absenteesLessonRangePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 937, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -538,34 +553,32 @@ public class MainScreen extends javax.swing.JFrame
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                                 .addGroup(battingBodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(absentDayDatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(createBattingScheduleButton))))
-                        .addGap(23, 23, 23))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, battingBodyPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                                    .addComponent(createBattingScheduleButton))
+                                .addGap(23, 23, 23))
+                            .addComponent(jScrollPane2)))
+                    .addGroup(battingBodyPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, 0)
                         .addComponent(battingTopMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         battingBodyPanel1Layout.setVerticalGroup(
             battingBodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(battingBodyPanel1Layout.createSequentialGroup()
-                .addComponent(battingTopMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(battingBodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(battingBodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(battingBodyPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(absenteesComboboxPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9))
-                    .addGroup(battingBodyPanel1Layout.createSequentialGroup()
+                        .addComponent(battingTopMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(53, 53, 53)
-                        .addComponent(absentDayDatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)))
+                        .addComponent(absentDayDatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(absenteesComboboxPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(absentLessonsTitleLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(battingBodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(absenteesLessonRangePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(createBattingScheduleButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(30, 30, 30)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
-                .addGap(106, 106, 106)
+                .addGroup(battingBodyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(absenteesLessonRangePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(createBattingScheduleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel9)
                 .addContainerGap())
         );
@@ -602,13 +615,27 @@ public class MainScreen extends javax.swing.JFrame
             }
         });
 
+        refreshAppButton.setBackground(battingHeaderPanel.getBackground());
+        refreshAppButton.setForeground(new java.awt.Color(255, 255, 255));
+        refreshAppButton.setText("Refresh");
+        refreshAppButton.setBorder(null);
+        refreshAppButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                refreshAppButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout battingHeaderPanelLayout = new javax.swing.GroupLayout(battingHeaderPanel);
         battingHeaderPanel.setLayout(battingHeaderPanelLayout);
         battingHeaderPanelLayout.setHorizontalGroup(
             battingHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(battingHeaderPanelLayout.createSequentialGroup()
                 .addComponent(showSidePanelButton)
-                .addGap(268, 268, 268)
+                .addGap(18, 18, 18)
+                .addComponent(refreshAppButton)
+                .addGap(174, 174, 174)
                 .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(294, 294, 294))
         );
@@ -616,7 +643,8 @@ public class MainScreen extends javax.swing.JFrame
             battingHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(battingHeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
-                .addComponent(showSidePanelButton))
+                .addComponent(showSidePanelButton)
+                .addComponent(refreshAppButton))
         );
 
         javax.swing.GroupLayout battingViewPanelLayout = new javax.swing.GroupLayout(battingViewPanel);
@@ -817,6 +845,7 @@ public class MainScreen extends javax.swing.JFrame
         addExtramuralLabel.setText("Add Extramural to teacher:");
 
         extramuralsJList.setBackground(new java.awt.Color(0, 0, 51));
+        extramuralsJList.setForeground(new java.awt.Color(255, 255, 255));
         extramuralsJList.setModel(extramuralModel.getListModel());
         extramuralsJList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane3.setViewportView(extramuralsJList);
@@ -1173,23 +1202,33 @@ public class MainScreen extends javax.swing.JFrame
 
         statisticsBodyPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel7.setIcon(new javax.swing.ImageIcon("C:\\Users\\janch\\OneDrive\\Pictures\\Reddam-house-logo.jpg.jpeg")); // NOI18N
+        statisticsBattingLessonsTable.setModel(battingModel);
+        jScrollPane5.setViewportView(statisticsBattingLessonsTable);
+
+        jLabel11.setText("Each batting lesson:");
 
         javax.swing.GroupLayout statisticsBodyPanelLayout = new javax.swing.GroupLayout(statisticsBodyPanel);
         statisticsBodyPanel.setLayout(statisticsBodyPanelLayout);
         statisticsBodyPanelLayout.setHorizontalGroup(
             statisticsBodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statisticsBodyPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel7)
-                .addContainerGap())
+            .addGroup(statisticsBodyPanelLayout.createSequentialGroup()
+                .addGap(57, 57, 57)
+                .addGroup(statisticsBodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane5))
+                .addGap(86, 86, 86))
         );
         statisticsBodyPanelLayout.setVerticalGroup(
             statisticsBodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statisticsBodyPanelLayout.createSequentialGroup()
-                .addGap(0, 537, Short.MAX_VALUE)
-                .addComponent(jLabel7))
+            .addGroup(statisticsBodyPanelLayout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 756, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
+        jLabel7.setIcon(new javax.swing.ImageIcon("C:\\Users\\janch\\OneDrive\\Pictures\\Reddam-house-logo.jpg.jpeg")); // NOI18N
 
         javax.swing.GroupLayout statisticsViewPanelLayout = new javax.swing.GroupLayout(statisticsViewPanel);
         statisticsViewPanel.setLayout(statisticsViewPanelLayout);
@@ -1197,13 +1236,20 @@ public class MainScreen extends javax.swing.JFrame
             statisticsViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(statisticsHeaderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(statisticsBodyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statisticsViewPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addContainerGap())
         );
         statisticsViewPanelLayout.setVerticalGroup(
             statisticsViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(statisticsViewPanelLayout.createSequentialGroup()
                 .addComponent(statisticsHeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(statisticsBodyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(statisticsBodyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addContainerGap())
         );
 
         mainViewPanel.add(statisticsViewPanel, "card4");
@@ -1268,7 +1314,7 @@ public class MainScreen extends javax.swing.JFrame
 
         hoursPerWeekExtramuralsAdditionScreenLabel1.setText("Hour(s) per session:");
 
-        extramuralsHoursPerWeekEditSpinner1.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, 10.0d, 0.0d));
+        extramuralsHoursPerWeekEditSpinner1.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, 10.0d, 0.5d));
 
         dowExtramuralAdditionScreenJLabel1.setText("Day of the week:");
 
@@ -1330,20 +1376,21 @@ public class MainScreen extends javax.swing.JFrame
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(deleteExtramuralButton))
                             .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE))
-                        .addGap(182, 182, 182)
                         .addGroup(extramuralsEditPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(fieldsDescriptionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(extramuralsEditPaneLayout.createSequentialGroup()
-                                .addGap(6, 6, 6)
+                                .addGap(188, 188, 188)
                                 .addGroup(extramuralsEditPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(extramuralAdditionScreenNameLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(dowExtramuralAdditionScreenJLabel1)
-                                    .addComponent(hoursPerWeekExtramuralsAdditionScreenLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(166, 166, 166)
-                        .addGroup(extramuralsEditPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(extramuralNameInTextField1)
-                            .addComponent(extramuralsHoursPerWeekEditSpinner1, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
-                            .addComponent(extramuralDayOfWeekComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(hoursPerWeekExtramuralsAdditionScreenLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(166, 166, 166)
+                                .addGroup(extramuralsEditPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(extramuralNameInTextField1)
+                                    .addComponent(extramuralsHoursPerWeekEditSpinner1, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
+                                    .addComponent(extramuralDayOfWeekComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(extramuralsEditPaneLayout.createSequentialGroup()
+                                .addGap(182, 182, 182)
+                                .addComponent(fieldsDescriptionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(42, 42, 42))
                     .addGroup(extramuralsEditPaneLayout.createSequentialGroup()
                         .addComponent(extramuralSettingsListLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1435,34 +1482,43 @@ public class MainScreen extends javax.swing.JFrame
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(387, 387, 387)
                 .addComponent(deleteSubjectButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 625, Short.MAX_VALUE)
                 .addComponent(saveSubjectButton)
                 .addGap(30, 30, 30))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(subjectAdditionScreenNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(323, 323, 323))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(subjectNameInTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(editSubjectsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(214, 214, 214))))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(40, 40, 40)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(subjectsSettingsListLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(854, 854, 854))
+                            .addComponent(subjectsSettingsListLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(addSubjectToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(182, 271, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(editSubjectsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(6, 6, 6)
-                                    .addComponent(subjectAdditionScreenNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGap(166, 166, 166)
-                            .addComponent(subjectNameInTextField)
-                            .addGap(41, 41, 41)))))
+                                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addContainerGap(729, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(287, Short.MAX_VALUE)
+                .addGap(68, 68, 68)
+                .addComponent(editSubjectsLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(subjectAdditionScreenNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(subjectNameInTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 171, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(saveSubjectButton)
                     .addComponent(deleteSubjectButton))
@@ -1470,19 +1526,9 @@ public class MainScreen extends javax.swing.JFrame
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(51, 51, 51)
-                            .addComponent(editSubjectsLabel)
-                            .addGap(11, 11, 11)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(subjectAdditionScreenNameLabel)
-                                .addComponent(subjectNameInTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(117, 117, 117))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(subjectsSettingsListLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)))
+                    .addComponent(subjectsSettingsListLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
                     .addGap(40, 40, 40)
                     .addComponent(addSubjectToggleButton)
                     .addContainerGap()))
@@ -1532,7 +1578,7 @@ public class MainScreen extends javax.swing.JFrame
             .addGroup(settingsViewPanelLayout.createSequentialGroup()
                 .addComponent(settingsHeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(settingsMainBodyScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 726, Short.MAX_VALUE))
+                .addComponent(settingsMainBodyScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 951, Short.MAX_VALUE))
         );
 
         mainViewPanel.add(settingsViewPanel, "card5");
@@ -1682,6 +1728,65 @@ public class MainScreen extends javax.swing.JFrame
     private void sendTableButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_sendTableButtonActionPerformed
     {//GEN-HEADEREND:event_sendTableButtonActionPerformed
         // TODO add your handling code here:
+        
+        /*
+        1. Create a PDF document using the Document class.
+        2. Create a PdfWriter object using the PdfWriter.getInstance() method and pass the document and a FileOutputStream object as arguments.
+        3. Open the document using the open() method.
+        4. Create a PdfPTable object and add the column headers to it.
+        5. Iterate through the rows of the JTable and add each row to the PdfPTable object.
+        6. Add the PdfPTable object to the document using the add() method.
+        7. Close the document using the close() method.
+       */
+        try
+        {
+            Document doc = new Document();
+            String dateString = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy H-m-s"));
+            PdfWriter.getInstance(doc, new FileOutputStream("data\\BattingTable"+ dateString +".pdf"));
+            doc.setPageSize(new Rectangle((float)(29.7* 28.5), (long)(21*28.5)));
+            
+            doc.open();
+            int nrCols = battingTable.getColumnCount();
+            PdfPTable pdfTable = new PdfPTable(nrCols);
+            pdfTable.setTotalWidth(820);
+            for (int i = 0; i < nrCols; i++)
+            {
+                pdfTable.addCell(battingTable.getColumnName(i));
+            }
+            for (int row = 0; row < battingTable.getRowCount(); row ++)
+            {
+                for (int col = 0; col < nrCols; col++)
+                {
+                    pdfTable.addCell((String) battingTable.getValueAt(row, col));
+                }
+            }
+            doc.add(pdfTable);
+            doc.close();
+            
+            int confirmationInt = JOptionPane.showConfirmDialog(null, "Email the table?");
+            if(confirmationInt == 0)
+            {
+                Email_JavaMail emailer = new Email_JavaMail();
+                String fromAddress = JOptionPane.showInputDialog("Please enter your email addreess for the email to be sent from.");
+                
+                do
+                {
+                    emailer.mailAttachment(JOptionPane.showInputDialog("Please insert their email address."), fromAddress, "Batting Table for "+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), "", "data/BattingTable"+ dateString +".pdf");
+                    confirmationInt = JOptionPane.showConfirmDialog(null, "Email to another person?");
+                }while(confirmationInt == 0);
+            }
+            
+            battingModel.addBattings(battingModel.getBattingLessons());
+        }catch (DocumentException ex) 
+        {
+            ex.printStackTrace();
+        }catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }catch(SQLException ex)
+        {
+            ex.printStackTrace();
+        }
     }//GEN-LAST:event_sendTableButtonActionPerformed
 
     private void tblViewTimeTableMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_tblViewTimeTableMouseClicked
@@ -1693,10 +1798,12 @@ public class MainScreen extends javax.swing.JFrame
     private void teachersListMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_teachersListMouseClicked
     {//GEN-HEADEREND:event_teachersListMouseClicked
             // TODO add your handling code here:
-            
+        extramuralAddPane.setVisible(false);
+        teacherEditPane.setVisible(true);
+        
         teacherTree.setModel(TeacherModel.instance.getTreeModel(teachersList.getSelectedValue()));
         String teacherName = teachersList.getSelectedValue();
-        String email = teacherName.stripLeading() + '.' + teacherName.substring(teacherName.indexOf(" ")) + "@reddam.house";
+        String email = (teacherName.substring(0, teacherName.indexOf(" "))+ '.' + teacherName.substring(teacherName.indexOf(" ")+1).stripTrailing()).toLowerCase() + "@reddam.house";
         emailContactLabel.setText(email);
             
         try
@@ -1797,7 +1904,7 @@ public class MainScreen extends javax.swing.JFrame
         try 
         {
             if (addExtramuralToggleButton.isSelected()) addExtramural();
-            else
+            else if(!extramuralNameInTextField1.getText().isBlank() && Double.parseDouble("" +extramuralsHoursPerWeekEditSpinner1.getValue()) != 0)
             {
                 String emName = extramuralNameInTextField1.getText();
                 int dowInt = extramuralDayOfWeekComboBox.getSelectedIndex() + 1;
@@ -1806,14 +1913,18 @@ public class MainScreen extends javax.swing.JFrame
                 extramuralModel.updateExtramural(
                         extramuralModel.getExtramural(
                                 extramuralsJList1.getSelectedValue()), 
-                        new ExtraMural(
-                                emName, 
-                                hoursPW, 
-                                dowInt
+                                new ExtraMural(
+                                        emName, 
+                                        hoursPW, 
+                                        dowInt
                         )
                 );
                 
                 extramuralsJList1.setModel(extramuralModel.getListModel());
+            }
+            else 
+            {
+                JOptionPane.showMessageDialog(null, "Please fill in all of the fields", "Some areas not filled in.", JOptionPane.ERROR_MESSAGE);
             }
         }
         catch (SQLException ex)
@@ -1890,10 +2001,8 @@ public class MainScreen extends javax.swing.JFrame
     private void teacherTreeMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_teacherTreeMouseClicked
     {//GEN-HEADEREND:event_teacherTreeMouseClicked
         // TODO add your handling code here:
-        if (teacherTree.isExpanded(1)) 
-        {
-            extramuralAddPane.setVisible(true);
-        }
+        extramuralAddPane.setVisible(true);
+
     }//GEN-LAST:event_teacherTreeMouseClicked
 
     private void editExtramuralPortalButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_editExtramuralPortalButtonActionPerformed
@@ -1999,7 +2108,13 @@ public class MainScreen extends javax.swing.JFrame
     {//GEN-HEADEREND:event_deleteSubjectButtonActionPerformed
         try
         {
-            subjectModel.deleteSubject(subjectsSettingsJList.getSelectedValue());
+            int confirmedInt = JOptionPane.showConfirmDialog(this, "Are you certain you want to DELETE the subject \""+ subjectsSettingsJList.getSelectedValue() +"\" forever?");
+            
+            if(confirmedInt == 0)
+            {
+                subjectModel.deleteSubject(subjectsSettingsJList.getSelectedValue());
+                subjectsSettingsJList.setModel(new SubjectModel());
+            }
         } catch (SQLException ex)
         {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "SQL ERROR: ", JOptionPane.ERROR_MESSAGE);
@@ -2012,13 +2127,20 @@ public class MainScreen extends javax.swing.JFrame
         // TODO add your handling code here:
         try 
         {
-            if (addSubjectToggleButton.isSelected()) subjectModel.addSubject(subjectNameInTextField.getText());
-            else
+            if(!subjectNameInTextField.getText().isBlank())
             {
-                subjectModel.updateSubject(subjectsSettingsJList.getSelectedIndex(), subjectNameInTextField.getText());
-                
-                extramuralsJList1.setModel(extramuralModel.getListModel());
+                if (addSubjectToggleButton.isSelected()) 
+                subjectModel.addSubject(subjectNameInTextField.getText());
+                else if(!subjectNameInTextField.getText().isBlank())
+                {
+                    subjectModel.updateSubject(subjectsSettingsJList.getSelectedIndex(), subjectNameInTextField.getText());
+                }
             }
+            else 
+            {
+                JOptionPane.showMessageDialog(null, "Please fill in all of the fields", "Some areas not filled in.", JOptionPane.ERROR_MESSAGE);
+            }
+            subjectsSettingsJList.setModel(new SubjectModel());
         }
         catch (SQLException ex)
         {
@@ -2142,7 +2264,7 @@ public class MainScreen extends javax.swing.JFrame
         
         try
         {
-            battingTable.setModel(BattingModel.instance.getBattingTableModel(absentTeachers, teachersLessonsAbsent, absentDayDatePicker.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
+            battingTable.setModel(battingModel.getBattingTableModel(absentTeachers, teachersLessonsAbsent, absentDayDatePicker.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
         } catch (SQLException ex)
         {
             Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
@@ -2160,6 +2282,13 @@ public class MainScreen extends javax.swing.JFrame
             ex.printStackTrace();
         }
     }//GEN-LAST:event_deleteTeacherButtonActionPerformed
+
+    private void refreshAppButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_refreshAppButtonActionPerformed
+    {//GEN-HEADEREND:event_refreshAppButtonActionPerformed
+        // TODO add your handling code here:
+        new MainScreen().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_refreshAppButtonActionPerformed
 
     private void lightenBackColour(JComponent c)
     {
@@ -2214,7 +2343,8 @@ public class MainScreen extends javax.swing.JFrame
     private ArrayList<JComboBox> absentTeacherComboboxes;
     private ArrayList<Teacher> absentTeachers;
     private SubjectModel subjectModel;
-    private ExtramuralModel extramuralModel;    
+    private ExtramuralModel extramuralModel;
+    private BattingModel battingModel;    
     private LessonModel lessonModel;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.jdesktop.swingx.JXDatePicker absentDayDatePicker;
@@ -2269,6 +2399,7 @@ public class MainScreen extends javax.swing.JFrame
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -2286,12 +2417,14 @@ public class MainScreen extends javax.swing.JFrame
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane30;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JToggleButton jToggleButton3;
     private javax.swing.JPanel mainViewPanel;
     private javax.swing.JPanel menuPanel;
+    private javax.swing.JButton refreshAppButton;
     private javax.swing.JButton saveExtramuralButton;
     private javax.swing.JButton saveSubjectButton;
     private javax.swing.JButton saveTeacherDetailsButton;
@@ -2308,6 +2441,7 @@ public class MainScreen extends javax.swing.JFrame
     private javax.swing.JButton showSidePanelButton1;
     private javax.swing.JButton showSidePanelButton2;
     private javax.swing.JButton showSidePanelButton3;
+    private javax.swing.JTable statisticsBattingLessonsTable;
     private javax.swing.JPanel statisticsBodyPanel;
     private javax.swing.JPanel statisticsButtonPane;
     private javax.swing.JPanel statisticsHeaderPanel;

@@ -4,8 +4,10 @@
  */
 package testing;
 
+import Managers.Email_JavaMail;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
@@ -124,11 +126,13 @@ public class TransformTable_PNG_PDF extends javax.swing.JFrame
         {
             Document doc = new Document();
             PdfWriter.getInstance(doc, new FileOutputStream("data\\table"+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy H-m-s")) +".pdf"));
-            doc.open();
             
+            doc.setPageSize(new Rectangle((float)(29.7* 28.5), (long)(21*28.5)));
+            
+            doc.open();
             int nrCols = jTable1.getColumnCount();
             PdfPTable pdfTable = new PdfPTable(nrCols);
-            
+
             for (int i = 0; i < nrCols; i++)
             {
                 pdfTable.addCell(jTable1.getColumnName(i));

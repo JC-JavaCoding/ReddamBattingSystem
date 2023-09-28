@@ -53,12 +53,18 @@ public class SubjectModel implements ListModel<String>
 
     public void deleteSubject(String subjectName) throws SQLException
     {   
-        DatabaseManager.instance.update("Delete from tblSubjects Where `Subject` = "+ subjectName);
+        DatabaseManager.instance.update("Delete from tblSubjects Where `Subject` = \""+ subjectName +"\"");
         
+        String subjToRemove = "";
         for (String s : subjects)
         {
-            if (s.equals(subjectName)) subjects.remove(s);
+            if (s.equals(subjectName)) 
+            {
+                subjToRemove = s;
+                break;
+            }
         }
+        subjects.remove(subjToRemove);
     }
 
     public void addSubject(String subjectName) throws SQLException
@@ -69,7 +75,7 @@ public class SubjectModel implements ListModel<String>
 
     public void updateSubject(int selectedIndex, String subjectName) throws SQLException
     {
-        DatabaseManager.instance.update("Update tblSubjects Set `Subject` = \""+ subjectName +"\" Where `Subject` = \""+ subjects.get(selectedIndex) +"\"");
+        DatabaseManager.instance.update("Update tblSubjects Set `Subject` = \""+ subjectName +"\" AND Where `Subject` = \""+ subjects.get(selectedIndex) +"\"");
     }
     
 }
