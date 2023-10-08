@@ -30,10 +30,11 @@
             <version>2.5</version>
         </dependency>
         <dependency>
-            <groupId>unknown.binary</groupId>
+            <groupId>org.netbeans.external</groupId>
             <artifactId>AbsoluteLayout</artifactId>
-            <version>SNAPSHOT</version>
+            <version>RELEASE190</version>
         </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.swinglabs.swingx/swingx-core -->
         <dependency>
             <groupId>org.swinglabs.swingx</groupId>
@@ -51,15 +52,15 @@
             <version>1.1.1</version>
         </dependency>
         <dependency>
-            <groupId>unknown.binary</groupId>
+            <groupId>org.netbeans.modules</groupId>
             <artifactId>org-netbeans-modules-javafx2-platform</artifactId>
-            <version>SNAPSHOT</version>
+            <version>RELEASE190</version>
         </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>19</maven.compiler.source>
-        <maven.compiler.target>19</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <exec.mainClass>com.mycompany.teacherbattingproject.TeacherBattingProject</exec.mainClass>
     </properties>
 </project>
